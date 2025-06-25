@@ -134,7 +134,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     return wp, rpavg
 
 # 3d clustering xi(r)
-def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, 
+def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, correction,
          rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21)):
     
 #     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
@@ -146,7 +146,7 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
 #     X1, Y1, Z1 = r*np.cos(dec)*np.cos(ra), r*np.cos(dec)*np.sin(ra), r*np.sin(dec)
     
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree, distance=comoving_dist(tab_gcatlo['redshift_quaia']))
-    X1, Y1, Z1 = c.cartesian.xyz
+    X1, Y1, Z1 = c.cartesian.xyz.value - correction
 
     # refer to https://en.wikipedia.org/wiki/Hubble%27s_law#Dimensionless_Hubble_constant
     DD_counts, api_time = theory.DD(autocorr = 1, nthreads = 8, binfile = rbins, periodic = False,
@@ -155,7 +155,7 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
 
     # now measure clustering in random catalog
     c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia']))
-    X2, Y2, Z2 = c.cartesian.xyz
+    X2, Y2, Z2 = c.cartesian.xyz.value - correction
 
     DR_counts, api_time = theory.DD(autocorr = 0, nthreads = 8, binfile = rbins, periodic = False,
                                 X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], X2 = X2, Y2 = Y2, Z2 = Z2,
@@ -174,4 +174,6 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
     # All the pair counts are done, get the angular correlation function
     cf = convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
     
-    return cf, DD_counts
+    # make it easier to plot
+    ind = np.argsort(DD_counts['ravg'])
+    return cf[ind], DD_counts['ravg'][ind]
