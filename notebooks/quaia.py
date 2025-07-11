@@ -17,7 +17,7 @@ G_lo = 20.0
 fac_stdev = 1.5
 
 # read quaia data
-def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = fac_stdev, plot = True, cmap_map = 'plasma'):
+def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.45, plot = True, cmap_map = 'plasma'):
     
     NPIX = hp.nside2npix(NSIDE)
 
@@ -30,8 +30,13 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = fac
 
     print(f"Column names: {tab_gcatlo.columns}")
 
+    # apply mask
+    c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree)
+    mask_gcatlo = np.abs(c.galactic.b.value)>20
+    
     # make map of quasar number counts
-    pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'], tab_gcatlo['dec'], lonlat=True)
+    pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'][mask_gcatlo], tab_gcatlo['dec'][mask_gcatlo], lonlat=True)
+    # pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'], tab_gcatlo['dec'], lonlat=True)
     
     if plot == True:
         
@@ -56,7 +61,7 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = fac
                     norm='log', graticule=True,
                     cbar_ticks=[5, 20, 50]) 
         
-    return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo
+    return tab_gcatlo, pixel_indices_gcatlo, len(tab_gcatlo[mask_gcatlo]), mask_gcatlo
 
 # convert z to comoving distance in Mpc/h
 def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
@@ -73,7 +78,7 @@ def recenter(bins):
     return 0.5*(bins[1:]+bins[:-1])
 
 # 2D angular clustering w(theta)
-def w_theta(tab_gcatlo, selfunc_lo, pixel_indices_gcatlo, tab_randlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts,
+def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts,
             thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15)):
     
     # comoving distance
@@ -117,8 +122,17 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
                                          CZ2 = comoving_dist(tab_randlo['redshift_quaia'][::d]), 
-                                         weights2 = 1/selfunc_lo[pixel_indices_randlo], weight_type='pair_product', 
+                                         weights2 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product', 
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
+    
+    if RR_counts == None:
+        
+        RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = 8, pimax = pimax, binfile = rbins, 
+                                         RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
+                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia'][::d]), 
+                                         weights1 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product',
+                                         is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
+        RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
     
     DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
     DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
@@ -148,19 +162,34 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree, distance=comoving_dist(tab_gcatlo['redshift_quaia']))
     X1, Y1, Z1 = c.cartesian.xyz.value - correction
 
+    # # apply mask
+    # mask_gcatlo = np.abs(c.galactic.b.value)>20
+    # mask_gcatlo = [True]*len(X1)
+    
     # refer to https://en.wikipedia.org/wiki/Hubble%27s_law#Dimensionless_Hubble_constant
     DD_counts, api_time = theory.DD(autocorr = 1, nthreads = 8, binfile = rbins, periodic = False,
-                                X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], weight_type='pair_product', 
-                                output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
-
+                                    X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
+                                    weight_type='pair_product', output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
+    # DD_counts, api_time = theory.DD(autocorr = 1, nthreads = 8, binfile = rbins, periodic = False,
+    #                                 X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
+    #                                 weight_type='pair_product', output_ravg = True, c_api_timer = True)
+    
     # now measure clustering in random catalog
     c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia']))
     X2, Y2, Z2 = c.cartesian.xyz.value - correction
+    
+    # # apply mask
+    # mask_randlo = np.abs(c.galactic.b.value)>20
+    # mask_randlo = [True]*len(X2)
 
     DR_counts, api_time = theory.DD(autocorr = 0, nthreads = 8, binfile = rbins, periodic = False,
-                                X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], X2 = X2, Y2 = Y2, Z2 = Z2,
-                                weights2 = 1/selfunc_lo[pixel_indices_randlo], weight_type='pair_product', output_ravg = True, 
-                                c_api_timer = True)
+                                    X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
+                                    X2 = X2, Y2 = Y2, Z2 = Z2, weights2 = 1/selfunc_lo[pixel_indices_randlo],
+                                    weight_type='pair_product', output_ravg = True, c_api_timer = True)
+    # DR_counts, api_time = theory.DD(autocorr = 0, nthreads = 8, binfile = rbins, periodic = False,
+    #                                 X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
+    #                                 X2 = X2, Y2 = Y2, Z2 = Z2, weights2 = 1/selfunc_lo[pixel_indices_randlo],
+    #                                 weight_type='pair_product', output_ravg = True, c_api_timer = True)
     
     # RR_counts, api_time = theory.DD(autocorr = 1, nthreads = 8, binfile = rbins, periodic = False,
     #                             X1 = X2, Y1 = Y2, Z1 = Z2, weights1 = 1/selfunc_lo[pixel_indices_randlo], weight_type='pair_product',
@@ -176,4 +205,5 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
     
     # make it easier to plot
     ind = np.argsort(DD_counts['ravg'])
+    
     return cf[ind], DD_counts['ravg'][ind]
