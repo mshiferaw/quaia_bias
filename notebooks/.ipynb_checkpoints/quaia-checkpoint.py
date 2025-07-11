@@ -65,7 +65,8 @@ def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807
     cosmo = FlatLambdaCDM(H0=H0, Om0=0.302)
     comoving_r = cosmo.comoving_distance(z)
 
-    return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h
+    # convert from Mpc to Mpc/h
+    return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
 
 def recenter(bins):
     return 0.5*(bins[1:]+bins[:-1])
@@ -113,7 +114,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     # create the bins array
     rbins = np.logspace(np.log10(rmin), np.log10(rmax), nbins + 1)
     
-    # comoving distance # convert from Mpc to Mpc/h
+    # comoving distance 
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = 8, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'],  # where hubble distance = c/H0 and H0 = 100 km/s/Mpc h
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
