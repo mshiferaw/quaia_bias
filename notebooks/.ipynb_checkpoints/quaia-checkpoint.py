@@ -10,6 +10,8 @@ import astropy.cosmology.units as cu
 from Corrfunc.utils import convert_rp_pi_counts_to_wp
 from Corrfunc import theory
 from astropy.coordinates import SkyCoord
+import scipy.interpolate as interp
+from matplotlib import pyplot as plt
 
 # global variables
 NSIDE = 64
@@ -17,7 +19,7 @@ G_lo = 20.0
 fac_stdev = 1.5
 
 # read quaia data
-def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.45, plot = True, cmap_map = 'plasma'):
+def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.45, plot = True, cmap_map = 'plasma', mask = 20):
     
     NPIX = hp.nside2npix(NSIDE)
     tab_gcatlo = Table.read(fn_gcatlo)
@@ -28,8 +30,14 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.4
     print(f"Column names: {tab_gcatlo.columns}")
 
     # apply mask
+#     if mask == False:
+        
+#         mask_gcatlo = np.full(np.shape(tab_gcatlo['ra']), True)
+        
+#     else:
+        
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree)
-    mask_gcatlo = np.abs(c.galactic.b.value)>20
+    mask_gcatlo = np.abs(c.galactic.b.value)>=mask
     
     # make map of quasar number counts
     pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'][mask_gcatlo], tab_gcatlo['dec'][mask_gcatlo], lonlat=True)
@@ -37,6 +45,7 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.4
     if plot == True:
         
         map_gcatlo = np.bincount(pixel_indices_gcatlo, minlength=NPIX)
+        # print(np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), np.median(map_gcatlo), np.std(map_gcatlo))
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={len(tab_gcatlo):,})"
         projview(map_gcatlo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
@@ -70,6 +79,30 @@ def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807
 
 def recenter(bins):
     return 0.5*(bins[1:]+bins[:-1])
+
+def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_randlo_mask, mask = 20, plot = False):
+    
+    # Compute the empirical cumulative distribution function (ECDF)
+    z = np.sort(tab_gcatlo['redshift_quaia'][mask_gcatlo])
+    ecdf = np.arange(N_gcatlo_mask) / (N_gcatlo_mask - 1)
+
+    # Create an interpolation function for inverse transform sampling
+    inv_ecdf = interp.interp1d(ecdf, z) # have to interpolate, can't do binning method because each point --> cdf probability
+
+    # set random seed: https://builtin.com/data-science/numpy-random-seed
+    rng = np.random.default_rng(2023)
+    
+    if plot == True:
+        
+        plt.plot(z, ecdf, label = 'ecdf')
+        plt.hist(tab_gcatlo['redshift_quaia'][mask_gcatlo], cumulative = True, density = True, bins = 100)
+        plt.xlabel('$z$')
+        plt.legend()
+        plt.show()
+
+    # Generate new random samples from the estimated distribution
+    tab_randlo['redshift_quaia_'+str(mask)] = -1.0
+    tab_randlo['redshift_quaia_'+str(mask)][mask_randlo] = inv_ecdf(rng.random(size = N_randlo_mask))
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts,
@@ -109,7 +142,7 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
 
 # 3D projected clustering wp(rp)
 def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, rmin = 0.5, rmax = 60.0, 
-               nbins = 20, pimax = 40.0, d = 1):
+               nbins = 20, pimax = 40.0, d = 1, mask = 20):
     
     # create the bins array
     rbins = np.logspace(np.log10(rmin), np.log10(rmax), nbins + 1)
@@ -124,7 +157,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
-                                         CZ2 = comoving_dist(tab_randlo['redshift_quaia'][::d]), 
+                                         CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+str(mask)][::d]), 
                                          weights2 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product', 
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
     
@@ -133,7 +166,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
         
         RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = 8, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
-                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia'][::d]), 
+                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+str(mask)][::d]), 
                                          weights1 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product',
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
         RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
@@ -154,7 +187,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
 
 # 3d clustering xi(r)
 def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, correction,
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21)):
+         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), mask = 20):
     
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree, distance=comoving_dist(tab_gcatlo['redshift_quaia']))
@@ -164,7 +197,8 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
                                     weight_type='pair_product', output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
     
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
-    c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia']))
+    c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia_'+str(mask)]))
+    # c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(z))
     X2, Y2, Z2 = c.cartesian.xyz.value - correction
     DR_counts, api_time = theory.DD(autocorr = 0, nthreads = 8, binfile = rbins, periodic = False,
                                     X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
