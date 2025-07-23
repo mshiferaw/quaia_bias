@@ -19,7 +19,47 @@ G_lo = 20.0
 fac_stdev = 1.5
 
 # read quaia data
-def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.45, plot = True, cmap_map = 'plasma', mask = 20):
+def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = 1.45, cmap_map = 'plasma'):
+    
+    r"""Read in a Quaia catalog (e.g., data, randoms, mocks) given a mask.
+    
+    Returns the full unmasked catalog, as well as the pixel indices for each object in the masked catalog, the number of objects in the masked catalog, and the mask itself. Transforms RA and DEC coordinates to galactic coordinates for non-data catalogs.
+    
+    Parameters
+    ----------
+    fn_gcatlo : str
+        The location of the catalog in the user's directory.
+    G_lo : {int, float}
+        The magnitude cut of the catalog.
+    fn_sello : str
+        The location of the selection function catalog in the user's directory. 
+    NSIDE : int, optional
+        The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
+    mask : {int, float}
+        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired.
+        
+    Returns
+    -------
+    tab_gcatlo : astropy table
+        The unmasked Quaia catalog.
+    pixel_indices_gcatlo_mask : astropy table column
+        Pixel indices for each object in the masked catalog.
+    N_gcatlo_mask : int
+        The number of objects in the masked catalog.
+    mask_gcatlo : ndarray
+        The mask for the catalog, of length `tab_gcatlo`.
+        
+    Other Parameters
+    ----------------
+    plot : bool, optional
+        Whether or not to plot the healpy map of the catalog. Default is False.
+    name_catalog : str, optional
+        The title of the healpy plot. Default is '$Gaia$-$unWISE$ Quasar Catalog'.
+    fac_stdev : {int, float}, optional
+        The factor of standard deviation for the healpy plot. Default is 1.45.
+    cmap_map : str, optional
+        The colormap for the healpy plot. Default is 'plasma'.
+    """
     
     NPIX = hp.nside2npix(NSIDE)
     tab_gcatlo = Table.read(fn_gcatlo)
@@ -28,16 +68,12 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.4
     print(f"Number of data sources: {N_gcatlo}")
     print(tab_gcatlo.meta)
     print(f"Column names: {tab_gcatlo.columns}")
-
-    # apply mask
-#     if mask == False:
         
-#         mask_gcatlo = np.full(np.shape(tab_gcatlo['ra']), True)
-        
-#     else:
-        
-    c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree)
-    mask_gcatlo = np.abs(c.galactic.b.value)>=mask
+    try:
+        mask_gcatlo = np.abs(tab_gcatlo['b'])>=mask
+    except:
+        c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree)
+        mask_gcatlo = np.abs(c.galactic.b.value)>=mask
     
     # make map of quasar number counts
     pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'][mask_gcatlo], tab_gcatlo['dec'][mask_gcatlo], lonlat=True)
@@ -45,7 +81,6 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.4
     if plot == True:
         
         map_gcatlo = np.bincount(pixel_indices_gcatlo, minlength=NPIX)
-        # print(np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), np.median(map_gcatlo), np.std(map_gcatlo))
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={len(tab_gcatlo):,})"
         projview(map_gcatlo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
@@ -67,7 +102,24 @@ def read(fn_gcatlo, name_catalog, G_lo, fn_sello, NSIDE = NSIDE, fac_stdev = 1.4
 
 # convert z to comoving distance in Mpc/h
 def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
+
+    r"""Transforms redshift to comoving distance.
+    
+    Returns comoving distances in Mpc/h given a cosmology and redshift. Uses Astropy units and cosmology. Assumes flat Lambda-CDM, with Om0=0.302.
+    
+    Parameters
+    ----------
+    z : {int, float, array_like}
+        The input redshift.
+    h : {int, float}, optional
+        Little h.
         
+    Returns
+    -------
+    distance : {int, float, array_like}
+        Comoving distance at a given redshift `z` and cosmology.
+    """
+    
     H0 = h*100 * u.km/u.s/u.Mpc
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
@@ -78,9 +130,53 @@ def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807
     return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
 
 def recenter(bins):
+    
+    r"""Computes bin centers.
+    
+    Returns the centers of a given bin array. Will have length len(`bins`)-1. Useful for plotting the results of `quaia.wp_rp` and `quaia.xi_r` given the input `bins`.
+    
+    Parameters
+    ----------
+    bins : array_like
+        The input bins.
+        
+    Returns
+    -------
+    bins_center : array_like
+        The bin centers.
+        
+    See Also
+    --------
+    quaia.wp_rp, quaia.xi_r
+    """
+    
     return 0.5*(bins[1:]+bins[:-1])
 
 def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_randlo_mask, mask = 20, plot = False):
+    
+    r"""Assigns redshifts to `tab_randlo` given the redshift distribution of `tab_gcatlo`.
+    
+    Creates a new column in `tab_randlo` for each object's assigned redshift, given the redshift distribution of the masked `tab_gcatlo` catalog. Leaves the masked objects of `tab_randlo` with a redshift of -1.0. A random seed is fixed prior to interpolation of the cumulative redshift distribution.
+    
+    Parameters
+    ----------
+    tab_gcatlo : astropy table
+        The input catalog with the desired redshift distribution.
+    tab_randlo : astropy table
+        The target catalog that is assigned redshifts.
+    mask_gcatlo : array_like
+        The mask on `tab_gcatlo`.
+    mask_randlo : array_like
+        The mask on `tab_randlo`.
+    N_gcatlo_mask : int
+        The number of objects in `tab_gcatlo`.
+    N_randlo_mask : int
+        The number of objects in `tab_randlo`.
+    mask : {int, float}, optional 
+        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired.
+    plot : boolean, optional
+        Whether or not to display a histogram of the redshift distributions for `tab_gcatlo` (as given) and `tab_randlo` (as assigned). Default is False
+    """
     
     # Compute the empirical cumulative distribution function (ECDF)
     z = np.sort(tab_gcatlo['redshift_quaia'][mask_gcatlo])
@@ -106,15 +202,15 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts,
-            thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15)):
+            thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15), nthreads = 8):
     
     # comoving distance
-    DD_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = 8, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
+    DD_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
                                           DEC1 = tab_gcatlo['dec'], weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                           weight_type='pair_product', c_api_timer = True)
     
     # now measure clustering in random catalog
-    DR_counts, api_time = mocks.DDtheta_mocks(autocorr = 0,nthreads = 8, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
+    DR_counts, api_time = mocks.DDtheta_mocks(autocorr = 0,nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
                                           DEC1 = tab_gcatlo['dec'], weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
                                           RA2 = tab_randlo['ra'], DEC2 = tab_randlo['dec'], 
                                           weights2 = 1/selfunc_lo[pixel_indices_randlo], weight_type='pair_product', 
@@ -123,7 +219,7 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
     # now measure clustering in random catalog
     if RR_counts == None:
         
-        RR_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = 8, binfile = thetabins, RA1 = tab_randlo['ra'], 
+        RR_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_randlo['ra'], 
                                          DEC1 = tab_randlo['dec'], weights1 = 1/selfunc_lo[pixel_indices_randlo], 
                                          weight_type='pair_product', c_api_timer = True)
         RR_counts['thetaavg'] = np.mean([RR_counts['thetamin'], RR_counts['thetamax']], axis = 0)
@@ -142,18 +238,18 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
 
 # 3D projected clustering wp(rp)
 def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, rmin = 0.5, rmax = 60.0, 
-               nbins = 20, pimax = 40.0, d = 1, mask = 20):
+               nbins = 20, pimax = 40.0, d = 1, mask = 20, nthreads = 8):
     
     # create the bins array
     rbins = np.logspace(np.log10(rmin), np.log10(rmax), nbins + 1)
     
     # comoving distance 
-    DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = 8, pimax = pimax, binfile = rbins, 
+    DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'],  # where hubble distance = c/H0 and H0 = 100 km/s/Mpc h
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                          is_comoving_dist = True, weight_type='pair_product', output_rpavg = True, c_api_timer = True) 
     
-    DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = 8, pimax = pimax, binfile = rbins, 
+    DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
@@ -164,7 +260,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     # now measure clustering in random catalog
     if RR_counts == None:
         
-        RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = 8, pimax = pimax, binfile = rbins, 
+        RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
                                          CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+str(mask)][::d]), 
                                          weights1 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product',
@@ -187,20 +283,19 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
 
 # 3d clustering xi(r)
 def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, correction,
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), mask = 20):
+         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), mask = 20, nthreads = 8):
     
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree, distance=comoving_dist(tab_gcatlo['redshift_quaia']))
     X1, Y1, Z1 = c.cartesian.xyz.value - correction 
-    DD_counts, api_time = theory.DD(autocorr = 1, nthreads = 8, binfile = rbins, periodic = False,
+    DD_counts, api_time = theory.DD(autocorr = 1, nthreads = nthreads, binfile = rbins, periodic = False,
                                     X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                     weight_type='pair_product', output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
     
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
     c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia_'+str(mask)]))
-    # c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(z))
     X2, Y2, Z2 = c.cartesian.xyz.value - correction
-    DR_counts, api_time = theory.DD(autocorr = 0, nthreads = 8, binfile = rbins, periodic = False,
+    DR_counts, api_time = theory.DD(autocorr = 0, nthreads = nthreads, binfile = rbins, periodic = False,
                                     X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
                                     X2 = X2, Y2 = Y2, Z2 = Z2, weights2 = 1/selfunc_lo[pixel_indices_randlo],
                                     weight_type='pair_product', output_ravg = True, c_api_timer = True)
@@ -208,7 +303,7 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
     # now measure clustering in random catalog
     if RR_counts == None:
         
-        RR_counts, api_time = theory.DD(autocorr = 1, nthreads = 8, binfile = rbins, periodic = False,
+        RR_counts, api_time = theory.DD(autocorr = 1, nthreads = nthreads, binfile = rbins, periodic = False,
                                 X1 = X2, Y1 = Y2, Z1 = Z2, weights1 = 1/selfunc_lo[pixel_indices_randlo], 
                                 weight_type='pair_product',output_ravg = True, c_api_timer = True)
         RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
