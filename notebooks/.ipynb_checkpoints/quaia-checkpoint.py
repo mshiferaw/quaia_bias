@@ -16,10 +16,10 @@ from matplotlib import pyplot as plt
 # global variables
 NSIDE = 64
 G_lo = 20.0
-fac_stdev = 1.5
+fac_stdev = 1.45 #1.5
 
 # read quaia data
-def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = 1.45, cmap_map = 'plasma'):
+def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma'):
     
     r"""Read in a Quaia catalog (e.g., data, randoms, mocks) given a mask.
     
@@ -43,9 +43,9 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
     tab_gcatlo : astropy table
         The unmasked Quaia catalog.
     pixel_indices_gcatlo_mask : astropy table column
-        Pixel indices for each object in the masked catalog.
+        Pixel indices for each object in the masked `tab_gcatlo` catalog.
     N_gcatlo_mask : int
-        The number of objects in the masked catalog.
+        The number of objects in the masked `tab_gcatlo` catalog.
     mask_gcatlo : ndarray
         The mask for the catalog, of length `tab_gcatlo`.
         
@@ -84,7 +84,8 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={len(tab_gcatlo):,})"
         projview(map_gcatlo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
-                    min=np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
+                    min=0.1, max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
+                    # min=np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
                     norm='log', graticule=True,
                     cbar_ticks=[5, 10, 20]) 
         
@@ -94,7 +95,8 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={len(tab_gcatlo):,})"
         projview(map_selfunc_lo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
-                    min=np.nanmedian(map_selfunc_lo)-fac_stdev*np.nanstd(map_selfunc_lo), max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
+                    min=0.1, max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
+                    # min=np.nanmedian(map_selfunc_lo)-fac_stdev*np.nanstd(map_selfunc_lo), max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
                     norm='log', graticule=True,
                     cbar_ticks=[5, 20, 50]) 
         
@@ -133,7 +135,7 @@ def recenter(bins):
     
     r"""Computes bin centers.
     
-    Returns the centers of a given bin array. Will have length len(`bins`)-1. Useful for plotting the results of `quaia.wp_rp` and `quaia.xi_r` given the input `bins`.
+    Returns the centers of a given bin array. Will have length len(`bins`)-1. Useful for plotting the results of `quaia.w_theta` given the input `bins`.
     
     Parameters
     ----------
@@ -147,7 +149,7 @@ def recenter(bins):
         
     See Also
     --------
-    quaia.wp_rp, quaia.xi_r
+    quaia.w_theta
     """
     
     return 0.5*(bins[1:]+bins[:-1])
@@ -169,13 +171,13 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     mask_randlo : array_like
         The mask on `tab_randlo`.
     N_gcatlo_mask : int
-        The number of objects in `tab_gcatlo`.
+        The number of objects in the masked `tab_gcatlo` catalog.
     N_randlo_mask : int
-        The number of objects in `tab_randlo`.
+        The number of objects in the masked `tab_randlo` catalog.
     mask : {int, float}, optional 
         The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired.
     plot : boolean, optional
-        Whether or not to display a histogram of the redshift distributions for `tab_gcatlo` (as given) and `tab_randlo` (as assigned). Default is False
+        Whether or not to display a histogram of the redshift distributions for `tab_gcatlo` (as given) and `tab_randlo` (as assigned). Default is False.
     """
     
     # Compute the empirical cumulative distribution function (ECDF)
@@ -201,8 +203,46 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     tab_randlo['redshift_quaia_'+str(mask)][mask_randlo] = inv_ecdf(rng.random(size = N_randlo_mask))
 
 # 2D angular clustering w(theta)
-def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts,
-            thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15), nthreads = 8):
+def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8,
+            thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15)):
+    
+    r"""Computes the angular clustering of `tab_gcatlo`.
+    
+    Returns the two-point angular correlation function computed as a function of `thetabins` centers. Uses Corrfunc to compute the pair counts first, and then convert pair counts to clustering via the Landy-Szalay estimator. Provides the option to supply pre-computed random-random pair counts to speed up the computation. Leave `RR_counts` as None to avoid this option. 
+    
+    Parameters
+    ----------
+    tab_gcatlo : astropy table
+        The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    tab_randlo : astropy table
+        The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    selfunc_lo : array_like
+        The selection function.
+    pixel_indices_gcatlo : astropy table column
+        Pixel indices for each object in `tab_gcatlo`.
+    pixel_indices_randlo : astropy table column
+        Pixel indices for each object in `tab_randlo`.
+    N_gcatlo : int
+        The number of objects in `tab_gcatlo`.
+    N_randlo : int
+        The number of objects in `tab_randlo`.
+    RR_counts : array_like, optional 
+        The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
+    nthreads: int, optional
+        The number of OpenMP threads to use for computing each set of pair counts. Default is 8.
+    thetabins : array_like, optional
+        The angular bins. Default is ``np.logspace(np.log10(0.1), np.log10(10.0), 15)``.
+        
+    Returns
+    -------
+    wp : array_like
+        The angular correlation function.
+        
+    See Also
+    --------
+    quaia.recenter : Used to compute the bin centers of `thetabins`.
+    quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
+    """
     
     # comoving distance
     DD_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
@@ -237,11 +277,52 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
     return convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
 
 # 3D projected clustering wp(rp)
-def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, rmin = 0.5, rmax = 60.0, 
-               nbins = 20, pimax = 40.0, d = 1, mask = 20, nthreads = 8):
+def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8,
+          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 21, pimax = 40.0, d = 1, mask = 20):
     
-    # create the bins array
-    rbins = np.logspace(np.log10(rmin), np.log10(rmax), nbins + 1)
+    r"""Computes the two-point projected 3D clustering of `tab_gcatlo`.
+    
+    Returns the projected correlation function computed as a function of projected quasar separation. Uses Corrfunc to compute the pair counts first, and then convert pair counts to clustering via the Landy-Szalay estimator. Provides the option to supply pre-computed random-random pair counts to speed up the computation. Leave `RR_counts` as None to avoid this option. 
+    
+    Parameters
+    ----------
+    tab_gcatlo : astropy table
+        The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    tab_randlo : astropy table
+        The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    selfunc_lo : array_like
+        The selection function.
+    pixel_indices_gcatlo : astropy table column
+        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read.
+    pixel_indices_randlo : astropy table column
+        Pixel indices for each object in `tab_randlo`, obtained using quaia.read.
+    N_gcatlo : int
+        The number of objects in `tab_gcatlo`.
+    N_randlo : int
+        The number of objects in `tab_randlo`.
+    RR_counts : array_like, optional 
+        The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
+    nthreads: int, optional
+        The number of OpenMP threads to use for computing each set of pair counts. Default is 8.
+    rbins : array_like, optional
+        The projected separation bins. Default is ``np.logspace(np.log10(0.5), np.log10(60.0), 21)``.
+    pimax : {int, float}, optional
+        The maximum separation along the line-of-sight, in the Z-direction. Default is 40.0.
+    d : int, optional
+        The factor by which to downsample `tab_randlo` in order to reduce computation time. Default is 1. Increasing `d` comes at the cost of noise in the final clustering measurement.
+    mask : int, optional
+        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
+        
+    Returns
+    -------
+    wp : array_like
+        The projected correlation function.
+        
+    See Also
+    --------
+    quaia.z_dist : Used to assign redshifts and a mask to `tab_randlo`.
+    quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
+    """
     
     # comoving distance 
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
@@ -282,8 +363,50 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     return wp, rpavg
 
 # 3d clustering xi(r)
-def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts, correction,
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), mask = 20, nthreads = 8):
+def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8, 
+         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), correction = -5205.182232081812, mask = 20):
+    
+    r"""Computes the two-point  3D clustering of `tab_gcatlo`.
+    
+    Returns the correlation function computed as a function of quasar separation. Uses Corrfunc to compute the pair counts first, and then convert pair counts to clustering via the Landy-Szalay estimator. Provides the option to supply pre-computed random-random pair counts to speed up the computation. Leave `RR_counts` as None to avoid this option. 
+    
+    Parameters
+    ----------
+    tab_gcatlo : astropy table
+        The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    tab_randlo : astropy table
+        The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    selfunc_lo : array_like
+        The selection function.
+    pixel_indices_gcatlo : astropy table column
+        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read.
+    pixel_indices_randlo : astropy table column
+        Pixel indices for each object in `tab_randlo`, obtained using quaia.read.
+    N_gcatlo : int
+        The number of objects in `tab_gcatlo`.
+    N_randlo : int
+        The number of objects in `tab_randlo`.
+    RR_counts : array_like, optional 
+        The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
+    nthreads: int, optional
+        The number of OpenMP threads to use for computing each set of pair counts. Default is 8.
+    rbins : array_like, optional
+        The separation bins. Default is ``np.logspace(np.log10(0.1), np.log10(20.0), 21)``.
+    correction: {int, float}, optional
+        The distance, in Mpc/h, by which to shift the catalog to ensure that it exists in a box of coordinates [0, boxsize].
+    mask : int, optional
+        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
+        
+    Returns
+    -------
+    cf : array_like
+        The 3D correlation function.
+        
+    See Also
+    --------
+    quaia.z_dist : Used to assign redshifts and a mask to `tab_randlo`.
+    quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
+    """
     
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree, distance=comoving_dist(tab_gcatlo['redshift_quaia']))
