@@ -19,7 +19,8 @@ G_lo = 20.0
 fac_stdev = 1.45 #1.5
 
 # read quaia data
-def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma'):
+def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, selfunc_lo = None, plot = False, 
+         name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma'):
     
     r"""Read in a Quaia catalog (e.g., data, randoms, mocks) given a mask.
     
@@ -35,8 +36,12 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
         The location of the selection function catalog in the user's directory. 
     NSIDE : int, optional
         The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
-    mask : {int, float}
-        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired.
+    b : {int, float}, optional
+        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired. The choice does not matter for a selection function-based mask.
+    mask_type : {str}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    selfunc_lo : array_like
+        The selection function. Default is ``None``. Leave as ``None`` if using a galactic latitude-based mask.
         
     Returns
     -------
@@ -68,20 +73,29 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
     print(f"Number of data sources: {N_gcatlo}")
     print(tab_gcatlo.meta)
     print(f"Column names: {tab_gcatlo.columns}")
-        
+    
     try:
-        mask_gcatlo = np.abs(tab_gcatlo['b'])>=mask
+        mask_gcatlo = np.abs(tab_gcatlo['b'])>=b
     except:
         c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree)
-        mask_gcatlo = np.abs(c.galactic.b.value)>=mask
-    
+        mask_gcatlo = np.abs(c.galactic.b.value)>=b
+
     # make map of quasar number counts
     pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'][mask_gcatlo], tab_gcatlo['dec'][mask_gcatlo], lonlat=True)
+    
+    # to do selfunc based mask
+    # if not np.array_equal(selfunc_lo, None):
+    if mask_type == 'selfunc':
+        pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'], tab_gcatlo['dec'], lonlat=True)
+        mask_gcatlo = selfunc_lo[pixel_indices_gcatlo]>=0.5
+        pixel_indices_gcatlo = pixel_indices_gcatlo[mask_gcatlo]
+    
+    N_gcatlo = len(tab_gcatlo[mask_gcatlo])
     
     if plot == True:
         
         map_gcatlo = np.bincount(pixel_indices_gcatlo, minlength=NPIX)
-        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={len(tab_gcatlo):,})"
+        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo:,})"
         projview(map_gcatlo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
                     min=0.1, max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
@@ -92,7 +106,7 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
         # remove the selection function
         selfunc_lo = hp.fitsfunc.read_map(fn_sello)
         map_selfunc_lo = map_gcatlo/selfunc_lo
-        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={len(tab_gcatlo):,})"
+        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo:,})"
         projview(map_selfunc_lo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
                     min=0.1, max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
@@ -100,7 +114,7 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, mask = 20, plot = False, name
                     norm='log', graticule=True,
                     cbar_ticks=[5, 20, 50]) 
         
-    return tab_gcatlo, pixel_indices_gcatlo, len(tab_gcatlo[mask_gcatlo]), mask_gcatlo
+    return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo, mask_gcatlo
 
 # convert z to comoving distance in Mpc/h
 def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
@@ -154,7 +168,7 @@ def recenter(bins):
     
     return 0.5*(bins[1:]+bins[:-1])
 
-def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_randlo_mask, mask = 20, plot = False):
+def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_randlo_mask, b = 0, mask_type = None, plot = False):
     
     r"""Assigns redshifts to `tab_randlo` given the redshift distribution of `tab_gcatlo`.
     
@@ -174,8 +188,18 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
         The number of objects in the masked `tab_gcatlo` catalog.
     N_randlo_mask : int
         The number of objects in the masked `tab_randlo` catalog.
-    mask : {int, float}, optional 
-        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired.
+    b : {int, float}, optional
+        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired.
+    mask_type : {str}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+        
+    Returns
+    -------
+    key : str
+        The suffix of the new key created for the random redshifts. Use as ``tab_randlo['redshift_quaia_'+key].``
+        
+    Other Parameters
+    ----------------
     plot : boolean, optional
         Whether or not to display a histogram of the redshift distributions for `tab_gcatlo` (as given) and `tab_randlo` (as assigned). Default is False.
     """
@@ -199,8 +223,14 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
         plt.show()
 
     # Generate new random samples from the estimated distribution
-    tab_randlo['redshift_quaia_'+str(mask)] = -1.0
-    tab_randlo['redshift_quaia_'+str(mask)][mask_randlo] = inv_ecdf(rng.random(size = N_randlo_mask))
+    if mask_type == 'selfunc':
+        key = mask_type
+    else:
+        key = str(b)
+    tab_randlo['redshift_quaia_'+key] = -1.0
+    tab_randlo['redshift_quaia_'+key][mask_randlo] = inv_ecdf(rng.random(size = N_randlo_mask))
+    
+    return key
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8,
@@ -277,8 +307,8 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
     return convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
 
 # 3D projected clustering wp(rp)
-def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8,
-          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 21, pimax = 40.0, d = 1, mask = 20):
+def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, key, RR_counts = None, nthreads = 8,
+          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 21, pimax = 40.0, d = 1):
     
     r"""Computes the two-point projected 3D clustering of `tab_gcatlo`.
     
@@ -310,8 +340,10 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
         The maximum separation along the line-of-sight, in the Z-direction. Default is 40.0.
     d : int, optional
         The factor by which to downsample `tab_randlo` in order to reduce computation time. Default is 1. Increasing `d` comes at the cost of noise in the final clustering measurement.
-    mask : int, optional
-        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
+    b : int, optional
+        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
+    mask_type : {str}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
         
     Returns
     -------
@@ -330,11 +362,16 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                          is_comoving_dist = True, weight_type='pair_product', output_rpavg = True, c_api_timer = True) 
     
+    # if mask_type == 'selfunc':
+    #     key = mask_type
+    # else:
+    #     key = str(b)
+        
     DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
-                                         CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+str(mask)][::d]), 
+                                         CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
                                          weights2 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product', 
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
     
@@ -343,7 +380,7 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
         
         RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
-                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+str(mask)][::d]), 
+                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
                                          weights1 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product',
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
         RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
@@ -363,8 +400,8 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     return wp, rpavg
 
 # 3d clustering xi(r)
-def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8, 
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), correction = -5205.182232081812, mask = 20):
+def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, key, RR_counts = None, nthreads = 8, 
+         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), correction = -5205.182232081812):
     
     r"""Computes the two-point  3D clustering of `tab_gcatlo`.
     
@@ -394,8 +431,10 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
         The separation bins. Default is ``np.logspace(np.log10(0.1), np.log10(20.0), 21)``.
     correction: {int, float}, optional
         The distance, in Mpc/h, by which to shift the catalog to ensure that it exists in a box of coordinates [0, boxsize].
-    mask : int, optional
-        The cut-off for the mask in galactic latitude b. Default is 20. Pass in 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
+    b : int, optional
+        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
+    mask_type : {str}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
         
     Returns
     -------
@@ -415,8 +454,13 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
                                     X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
                                     weight_type='pair_product', output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
     
+    # if mask_type == 'selfunc':
+    #     key = mask_type
+    # else:
+    #     key = str(b)
+        
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
-    c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia_'+str(mask)]))
+    c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia_'+key]))
     X2, Y2, Z2 = c.cartesian.xyz.value - correction
     DR_counts, api_time = theory.DD(autocorr = 0, nthreads = nthreads, binfile = rbins, periodic = False,
                                     X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
