@@ -19,7 +19,7 @@ G_lo = 20.0
 fac_stdev = 1.45 #1.5
 
 # read quaia data
-def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, selfunc_lo = None, plot = False, 
+def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot = False, 
          name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma'):
     
     r"""Read in a Quaia catalog (e.g., data, randoms, mocks) given a mask.
@@ -38,8 +38,8 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, self
         The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
     b : {int, float}, optional
         The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired. The choice does not matter for a selection function-based mask.
-    mask_type : {str}, optional
-        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
     selfunc_lo : array_like
         The selection function. Default is ``None``. Leave as ``None`` if using a galactic latitude-based mask.
         
@@ -73,7 +73,7 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, self
     print(f"Number of data sources: {N_gcatlo}")
     print(tab_gcatlo.meta)
     print(f"Column names: {tab_gcatlo.columns}")
-    
+            
     try:
         mask_gcatlo = np.abs(tab_gcatlo['b'])>=b
     except:
@@ -84,18 +84,18 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, self
     pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'][mask_gcatlo], tab_gcatlo['dec'][mask_gcatlo], lonlat=True)
     
     # to do selfunc based mask
-    # if not np.array_equal(selfunc_lo, None):
+    selfunc_lo = hp.fitsfunc.read_map(fn_sello)
     if mask_type == 'selfunc':
         pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'], tab_gcatlo['dec'], lonlat=True)
         mask_gcatlo = selfunc_lo[pixel_indices_gcatlo]>=0.5
         pixel_indices_gcatlo = pixel_indices_gcatlo[mask_gcatlo]
     
-    N_gcatlo = len(tab_gcatlo[mask_gcatlo])
+    N_gcatlo_mask = len(tab_gcatlo[mask_gcatlo])
     
     if plot == True:
         
         map_gcatlo = np.bincount(pixel_indices_gcatlo, minlength=NPIX)
-        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo:,})"
+        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
         projview(map_gcatlo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
                     min=0.1, max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
@@ -104,9 +104,9 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, self
                     cbar_ticks=[5, 10, 20]) 
         
         # remove the selection function
-        selfunc_lo = hp.fitsfunc.read_map(fn_sello)
+        # selfunc_lo = hp.fitsfunc.read_map(fn_sello)
         map_selfunc_lo = map_gcatlo/selfunc_lo
-        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo:,})"
+        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
         projview(map_selfunc_lo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
                     min=0.1, max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
@@ -114,7 +114,7 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, self
                     norm='log', graticule=True,
                     cbar_ticks=[5, 20, 50]) 
         
-    return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo, mask_gcatlo
+    return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo_mask, mask_gcatlo
 
 # convert z to comoving distance in Mpc/h
 def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
@@ -168,7 +168,7 @@ def recenter(bins):
     
     return 0.5*(bins[1:]+bins[:-1])
 
-def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_randlo_mask, b = 0, mask_type = None, plot = False):
+def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_randlo_mask, b = 0, mask_type = None, plot = False, new = False):
     
     r"""Assigns redshifts to `tab_randlo` given the redshift distribution of `tab_gcatlo`.
     
@@ -190,8 +190,8 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
         The number of objects in the masked `tab_randlo` catalog.
     b : {int, float}, optional
         The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired.
-    mask_type : {str}, optional
-        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
         
     Returns
     -------
@@ -223,18 +223,21 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
         plt.show()
 
     # Generate new random samples from the estimated distribution
-    if mask_type == 'selfunc':
+    if type(mask_type) == str:
         key = mask_type
     else:
         key = str(b)
     tab_randlo['redshift_quaia_'+key] = -1.0
     tab_randlo['redshift_quaia_'+key][mask_randlo] = inv_ecdf(rng.random(size = N_randlo_mask))
     
-    return key
+    if new == True:
+        return key, tab_randlo
+    else:
+        return key
 
 # 2D angular clustering w(theta)
-def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, RR_counts = None, nthreads = 8,
-            thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15)):
+def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
+            weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15)):
     
     r"""Computes the angular clustering of `tab_gcatlo`.
     
@@ -246,18 +249,20 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
         The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
     tab_randlo : astropy table
         The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
-    selfunc_lo : array_like
-        The selection function.
-    pixel_indices_gcatlo : astropy table column
-        Pixel indices for each object in `tab_gcatlo`.
-    pixel_indices_randlo : astropy table column
-        Pixel indices for each object in `tab_randlo`.
     N_gcatlo : int
         The number of objects in `tab_gcatlo`.
     N_randlo : int
         The number of objects in `tab_randlo`.
+    selfunc_lo : array_like, optional
+        The selection function. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_gcatlo : astropy table column, optional
+        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_randlo : astropy table column, optional 
+        Pixel indices for each object in `tab_randlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    weight_type : {None, 'pair_product'}, optional
+        Whether or not to weight pair counts by the selection function. Default is None.
     RR_counts : array_like, optional 
-        The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
+        The number of random-random pair counts in `tab_randlo`. Default is None if pre-computed pair counts are not supplied.
     nthreads: int, optional
         The number of OpenMP threads to use for computing each set of pair counts. Default is 8.
     thetabins : array_like, optional
@@ -268,47 +273,62 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indi
     wp : array_like
         The angular correlation function.
         
+    Other Parameters
+    ----------------
+    weights1 : None, optional
+        Weights for the first set of points. Default is None if not weighting pair counts by the selection function. 
+    weights2 : None, optional
+        Weights for the second set of points. Default is None if not weighting pair counts by the selection function.
+        
     See Also
     --------
     quaia.recenter : Used to compute the bin centers of `thetabins`.
     quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
     """
     
+    if weight_type == 'pair_product':
+        weights1 = 1/selfunc_lo[pixel_indices_gcatlo]
+        weights2 = 1/selfunc_lo[pixel_indices_randlo]
+        
     # comoving distance
     DD_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
-                                          DEC1 = tab_gcatlo['dec'], weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
-                                          weight_type='pair_product', c_api_timer = True)
+                                          DEC1 = tab_gcatlo['dec'], weights1 = weights1,
+                                          weight_type=weight_type, c_api_timer = True)
     
     # now measure clustering in random catalog
     DR_counts, api_time = mocks.DDtheta_mocks(autocorr = 0,nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
-                                          DEC1 = tab_gcatlo['dec'], weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
+                                          DEC1 = tab_gcatlo['dec'], weights1 = weights1, 
                                           RA2 = tab_randlo['ra'], DEC2 = tab_randlo['dec'], 
-                                          weights2 = 1/selfunc_lo[pixel_indices_randlo], weight_type='pair_product', 
+                                          weights2 = weights2, weight_type=weight_type, 
                                           c_api_timer = True)
     
     # now measure clustering in random catalog
     if RR_counts == None:
         
         RR_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_randlo['ra'], 
-                                         DEC1 = tab_randlo['dec'], weights1 = 1/selfunc_lo[pixel_indices_randlo], 
-                                         weight_type='pair_product', c_api_timer = True)
+                                         DEC1 = tab_randlo['dec'], weights1 = weights2, 
+                                         weight_type=weight_type, c_api_timer = True)
         RR_counts['thetaavg'] = np.mean([RR_counts['thetamin'], RR_counts['thetamax']], axis = 0)
-        RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
+        
+        if weight_type == 'pair_product':
+            RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
     
     # compute bin centers for theta
     DD_counts['thetaavg'] = np.mean([DD_counts['thetamin'], DD_counts['thetamax']], axis = 0)
     DR_counts['thetaavg'] = np.mean([DR_counts['thetamin'], DR_counts['thetamax']], axis = 0)
 
     # compute weighted pair counts
-    DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
-    DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
+    if weight_type == 'pair_product':
+        DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
+        DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
     
     # All the pair counts are done, get the angular correlation function
     return convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
 
 # 3D projected clustering wp(rp)
-def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, key, RR_counts = None, nthreads = 8,
-          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 21, pimax = 40.0, d = 1):
+def wp_rp(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None, 
+          weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, 
+          d = 1):
     
     r"""Computes the two-point projected 3D clustering of `tab_gcatlo`.
     
@@ -320,35 +340,44 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
         The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
     tab_randlo : astropy table
         The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
-    selfunc_lo : array_like
-        The selection function.
-    pixel_indices_gcatlo : astropy table column
-        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read.
-    pixel_indices_randlo : astropy table column
-        Pixel indices for each object in `tab_randlo`, obtained using quaia.read.
     N_gcatlo : int
         The number of objects in `tab_gcatlo`.
     N_randlo : int
         The number of objects in `tab_randlo`.
+    selfunc_lo : array_like, optional
+        The selection function. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_gcatlo : astropy table column, optional
+        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_randlo : astropy table column, optional 
+        Pixel indices for each object in `tab_randlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    weight_type : {None, 'pair_product'}, optional
+        Whether or not to weight pair counts by the selection function. Default is None.
     RR_counts : array_like, optional 
         The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
     nthreads: int, optional
         The number of OpenMP threads to use for computing each set of pair counts. Default is 8.
     rbins : array_like, optional
         The projected separation bins. Default is ``np.logspace(np.log10(0.5), np.log10(60.0), 21)``.
+    nbins : int, optional
+        The number of bins in `rbins`. Default is 20.
     pimax : {int, float}, optional
-        The maximum separation along the line-of-sight, in the Z-direction. Default is 40.0.
-    d : int, optional
-        The factor by which to downsample `tab_randlo` in order to reduce computation time. Default is 1. Increasing `d` comes at the cost of noise in the final clustering measurement.
-    b : int, optional
-        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
-    mask_type : {str}, optional
-        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+        The maximum separation along the line-of-sight, in the z-direction. Default is 40.0.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
         
     Returns
     -------
     wp : array_like
         The projected correlation function.
+        
+    Other Parameters
+    ----------------
+    weights1 : None, optional
+        Weights for the first set of points. Default is None if not weighting pair counts by the selection function. 
+    weights2 : None, optional
+        Weights for the second set of points. Default is None if not weighting pair counts by the selection function.
+    d : int, optional
+        The factor by which to downsample `tab_randlo` in order to reduce computation time. Default is 1. Increasing `d` comes at the cost of noise in the final clustering measurement.
         
     See Also
     --------
@@ -356,38 +385,39 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
     """
     
+    if weight_type == 'pair_product':
+        weights1 = 1/selfunc_lo[pixel_indices_gcatlo][::d]
+        weights2 = 1/selfunc_lo[pixel_indices_randlo][::d]
+        
     # comoving distance 
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'],  # where hubble distance = c/H0 and H0 = 100 km/s/Mpc h
-                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
-                                         is_comoving_dist = True, weight_type='pair_product', output_rpavg = True, c_api_timer = True) 
+                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1,
+                                         is_comoving_dist = True, weight_type=weight_type, output_rpavg = True, c_api_timer = True) 
     
-    # if mask_type == 'selfunc':
-    #     key = mask_type
-    # else:
-    #     key = str(b)
-        
     DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
-                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
+                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1,
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
                                          CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
-                                         weights2 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product', 
+                                         weights2 = weights2, weight_type=weight_type,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
-    
+
     # now measure clustering in random catalog
     if RR_counts == None:
         
         RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
                                          CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
-                                         weights1 = 1/selfunc_lo[pixel_indices_randlo][::d], weight_type='pair_product',
+                                         weights1 = weights2, weight_type=weight_type,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
-        RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
-    
+        if weight_type == 'pair_product':
+            RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
+
     # compute weighted pair counts
-    DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
-    DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
+    if weight_type == 'pair_product':
+        DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
+        DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
     
     # All the pair counts are done, get the angular correlation function
     wp = convert_rp_pi_counts_to_wp(N_gcatlo, N_gcatlo, int(N_randlo/d), int(N_randlo/d),
@@ -400,8 +430,9 @@ def wp_rp(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indice
     return wp, rpavg
 
 # 3d clustering xi(r)
-def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices_randlo, N_gcatlo, N_randlo, key, RR_counts = None, nthreads = 8, 
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), correction = -5205.182232081812):
+def xi_r(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
+         weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), 
+         correction = -5205.182232081812):
     
     r"""Computes the two-point  3D clustering of `tab_gcatlo`.
     
@@ -413,16 +444,20 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
         The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
     tab_randlo : astropy table
         The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
-    selfunc_lo : array_like
-        The selection function.
-    pixel_indices_gcatlo : astropy table column
-        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read.
-    pixel_indices_randlo : astropy table column
-        Pixel indices for each object in `tab_randlo`, obtained using quaia.read.
     N_gcatlo : int
         The number of objects in `tab_gcatlo`.
     N_randlo : int
         The number of objects in `tab_randlo`.
+    key : str
+        The suffix of the key for redshifts assigned to `tab_randlo`, created under the desired masking scheme using quaia.z_dist.
+    selfunc_lo : array_like, optional
+        The selection function. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_gcatlo : astropy table column, optional
+        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_randlo : astropy table column, optional 
+        Pixel indices for each object in `tab_randlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    weight_type : {None, 'pair_product'}, optional
+        Whether or not to weight pair counts by the selection function. Default is None.
     RR_counts : array_like, optional 
         The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
     nthreads: int, optional
@@ -431,15 +466,20 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
         The separation bins. Default is ``np.logspace(np.log10(0.1), np.log10(20.0), 21)``.
     correction: {int, float}, optional
         The distance, in Mpc/h, by which to shift the catalog to ensure that it exists in a box of coordinates [0, boxsize].
-    b : int, optional
-        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired. The mask should be applied to `tab_randlo` in advance using `quaia.z_dist`.
-    mask_type : {str}, optional
-        Choose either a galactic latitude-based mask or a selection function-based mask. Options are ``{None, 'selfunc'}``. Default is None. Leave as None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
         
     Returns
     -------
     cf : array_like
         The 3D correlation function.
+        
+    Other Parameters
+    ----------------
+    weights1 : None, optional
+        Weights for the first set of points. Default is None if not weighting pair counts by the selection function. 
+    weights2 : None, optional
+        Weights for the second set of points. Default is None if not weighting pair counts by the selection function.
         
     See Also
     --------
@@ -447,37 +487,37 @@ def xi_r(tab_gcatlo, tab_randlo, selfunc_lo, pixel_indices_gcatlo, pixel_indices
     quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
     """
     
+    if weight_type == 'pair_product':
+        weights1 = 1/selfunc_lo[pixel_indices_gcatlo]
+        weights2 = 1/selfunc_lo[pixel_indices_randlo]
+
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
     c = SkyCoord(ra=tab_gcatlo['ra'].value*u.degree, dec=tab_gcatlo['dec'].value*u.degree, distance=comoving_dist(tab_gcatlo['redshift_quaia']))
     X1, Y1, Z1 = c.cartesian.xyz.value - correction 
     DD_counts, api_time = theory.DD(autocorr = 1, nthreads = nthreads, binfile = rbins, periodic = False,
-                                    X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo],
-                                    weight_type='pair_product', output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
-    
-    # if mask_type == 'selfunc':
-    #     key = mask_type
-    # else:
-    #     key = str(b)
-        
+                                    X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = weights1,
+                                    weight_type=weight_type, output_ravg = True, c_api_timer = True) # cz/H0 = Mpc/h = m/s * km/1000 m / (100 km/s/Mpc h)
+
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.     
     c = SkyCoord(ra=tab_randlo['ra'], dec=tab_randlo['dec'], distance=comoving_dist(tab_randlo['redshift_quaia_'+key]))
     X2, Y2, Z2 = c.cartesian.xyz.value - correction
     DR_counts, api_time = theory.DD(autocorr = 0, nthreads = nthreads, binfile = rbins, periodic = False,
-                                    X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = 1/selfunc_lo[pixel_indices_gcatlo], 
-                                    X2 = X2, Y2 = Y2, Z2 = Z2, weights2 = 1/selfunc_lo[pixel_indices_randlo],
-                                    weight_type='pair_product', output_ravg = True, c_api_timer = True)
-    
+                                    X1 = X1, Y1 = Y1, Z1 = Z1, weights1 = weights1, 
+                                    X2 = X2, Y2 = Y2, Z2 = Z2, weights2 = weights2,
+                                    weight_type=weight_type, output_ravg = True, c_api_timer = True)
     # now measure clustering in random catalog
     if RR_counts == None:
         
         RR_counts, api_time = theory.DD(autocorr = 1, nthreads = nthreads, binfile = rbins, periodic = False,
-                                X1 = X2, Y1 = Y2, Z1 = Z2, weights1 = 1/selfunc_lo[pixel_indices_randlo], 
-                                weight_type='pair_product',output_ravg = True, c_api_timer = True)
-        RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
+                                X1 = X2, Y1 = Y2, Z1 = Z2, weights1 = weights2, 
+                                weight_type=weight_type, output_ravg = True, c_api_timer = True)
+        if weight_type == 'pair_product':
+            RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
         
     # compute weighted pair counts
-    DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
-    DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
+    if weight_type == 'pair_product':
+        DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
+        DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
     
     # All the pair counts are done, get the angular correlation function
     cf = convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
