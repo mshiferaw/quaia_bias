@@ -41,7 +41,7 @@ def main():
     #make_redshift_split_catalogs(G_max, z_bins=z_bins)
     # z_bins = [2.9,3.5,5.0]
     # make_redshift_split_catalogs(G_max, z_bins=z_bins)
-    make_redshift_split_catalogs(sys.argv[1], z_bins=sys.argv[2])
+    make_redshift_split_catalogs(sys.argv[1], n_zbins=int(sys.argv[2]))
 
 
 def merge_gaia_spzs_and_cutGmax(G_max=20.5, tag_qspec='', tag_cat='', overwrite=False):
@@ -140,7 +140,8 @@ def make_redshift_split_catalogs(G_max, n_zbins=None, z_bins=None, overwrite=Tru
         if z_bins is None:
             fn_gcat_zbin = f'../data/quaia_G{G_max}_zsplit{n_zbins}bin{bb}{save_tag}.fits'
         else:
-            fn_gcat_zbin = f'../data/quaia_G{G_max}_zmin{z_bins[bb]}zmax{z_bins[bb+1]}{save_tag}.fits' 
+            # fn_gcat_zbin = f'../data/quaia_G{G_max}_zmin{z_bins[bb]}zmax{z_bins[bb+1]}{save_tag}.fits' 
+            fn_gcat_zbin = f'../data/quaia_G{G_max}_zsplit{n_zbins}bin{bb}{save_tag}.fits'
         tab_gcat_zbin.write(fn_gcat_zbin, overwrite=overwrite)
         print("zmin:", np.min(tab_gcat_zbin['redshift_quaia']))
         print("zmax:", np.max(tab_gcat_zbin['redshift_quaia']))

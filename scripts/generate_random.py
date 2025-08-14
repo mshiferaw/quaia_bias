@@ -49,30 +49,43 @@ def parse_args():
          f"fn_rand={args.fn_rand}, fn_catalog={args.fn_catalog}")
     run(args.fn_selfunc, args.NSIDE_map, args.fn_rand, fn_catalog=args.fn_catalog)
 
-
 def main():
 
-    G_max = 20.5
-    #tag_cat = '_qeboss'
-    tag_cat = ''
-    tag_sel = '_allsky'
-
+    G_max = sys.argv[1]
     fac_rand = 10
     NSIDE_map = 64
 
     # File names (fn_selfunc is selection function map)
-    #fn_selfunc = f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{tag_cat}{tag_sel}.fits'
-    fn_gaia = f'../data/quaia_G{G_max}{tag_cat}.fits'
-    #fn_rand = f'../data/randoms/random_G{G_max}{tag_cat}{tag_sel}_{fac_rand}x_retry.fits'
-
-    #fn_selfunc = f'../data/maps/selfunc_test.fits'
-    fn_selfunc = f'../data/maps/selection_function_NSIDE64_ones.fits'
-    #fn_rand = f'../data/randoms/random_test.fits'
-    fn_rand = f'../data/randoms/random_G{G_max}{tag_cat}{tag_sel}_{fac_rand}x.fits'
+    fn_catalog = f'../data/quaia_G{G_max}{sys.argv[2]}.fits'
+    fn_selfunc =  f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{sys.argv[2]}.fits'
+    fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[2]}_{fac_rand}x.fits'
     overwrite = True
 
-    run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=fn_gaia,
-        fac_rand=fac_rand, overwrite=overwrite)
+    run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+
+# def main():
+
+#     G_max = 20.5
+#     #tag_cat = '_qeboss'
+#     tag_cat = ''
+#     tag_sel = '_allsky'
+
+#     fac_rand = 10
+#     NSIDE_map = 64
+
+#     # File names (fn_selfunc is selection function map)
+#     #fn_selfunc = f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{tag_cat}{tag_sel}.fits'
+#     fn_gaia = f'../data/quaia_G{G_max}{tag_cat}.fits'
+#     #fn_rand = f'../data/randoms/random_G{G_max}{tag_cat}{tag_sel}_{fac_rand}x_retry.fits'
+
+#     #fn_selfunc = f'../data/maps/selfunc_test.fits'
+#     fn_selfunc = f'../data/maps/selection_function_NSIDE64_ones.fits'
+#     #fn_rand = f'../data/randoms/random_test.fits'
+#     fn_rand = f'../data/randoms/random_G{G_max}{tag_cat}{tag_sel}_{fac_rand}x.fits'
+#     overwrite = True
+
+#     run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=fn_gaia,
+#         fac_rand=fac_rand, overwrite=overwrite)
 
 
 
@@ -135,5 +148,5 @@ def subsample_by_probmap(NSIDE_map, rng, ra, dec, fn_selfunc,
 
 
 if __name__=='__main__':
-    #main()
-    parse_args()
+    main()
+    # parse_args()
