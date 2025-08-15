@@ -14,6 +14,8 @@ import utils
 import masks
 import maps
 
+import sys
+
 
 """
 Generate a new random catalog the following command on the commandline: 
