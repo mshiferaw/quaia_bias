@@ -1,0 +1,33 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks.py", line 11, in <module>
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.zbins(G, zbin, i=i+1)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 341, in zbins
+    tab_datahi_zbin0 = Table.read(fn_datahi_zbin0)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
+    out = self.registry.read(cls, *args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 202, in read
+    fileobj = ctx.__enter__()
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/utils/data.py", line 351, in get_readable_fileobj
+    fileobj = io.FileIO(name_or_obj, "r")
+FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20_zsplit2bin0.fits'

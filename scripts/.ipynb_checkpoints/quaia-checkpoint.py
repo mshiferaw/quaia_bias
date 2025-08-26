@@ -16,11 +16,12 @@ from matplotlib import pyplot as plt
 # global variables
 NSIDE = 64
 G_lo = 20.0
-fac_stdev = 1.45 #1.5
+fac_stdev = 1.5 #1.45
 
 # read quaia data
 def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot = False, 
-         name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma'):
+         name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma', cbar_ticks = [5, 10, 20], 
+         cbar_ticks_selfunc = [5, 20, 50]):
     
     r"""Read in a Quaia catalog (e.g., data, randoms, mocks) given a mask.
     
@@ -61,9 +62,13 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot
     name_catalog : str, optional
         The title of the healpy plot. Default is '$Gaia$-$unWISE$ Quasar Catalog'.
     fac_stdev : {int, float}, optional
-        The factor of standard deviation for the healpy plot. Default is 1.45.
+        The factor of standard deviation for the healpy plot. Default is 1.5.
     cmap_map : str, optional
         The colormap for the healpy plot. Default is 'plasma'.
+    cmap_ticks : array_like, optional
+        The ticks of the colorbar for the healpy plot. Default is [5, 10, 20].
+    cmap_ticks_selfunc : array_like, optional
+        The ticks of the colorbar for the selection function-corrected healpy plot. Default is [5, 20, 50].
     """
     
     NPIX = hp.nside2npix(NSIDE)
@@ -98,26 +103,25 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
         projview(map_gcatlo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
-                    min=0.1, max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
-                    # min=np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
-                    norm='log', graticule=True,
-                    cbar_ticks=[5, 10, 20]) 
+                    # min=0.1, max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
+                    min=np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
+                    norm='log', graticule=True, cbar_ticks=cbar_ticks)
+                    # cbar_ticks=[5, 10, 20]) 
         
         # remove the selection function
-        # selfunc_lo = hp.fitsfunc.read_map(fn_sello)
         map_selfunc_lo = map_gcatlo/selfunc_lo
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
         projview(map_selfunc_lo, title=title_gcatlo,
                     unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
-                    min=0.1, max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
-                    # min=np.nanmedian(map_selfunc_lo)-fac_stdev*np.nanstd(map_selfunc_lo), max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
-                    norm='log', graticule=True,
-                    cbar_ticks=[5, 20, 50]) 
+                    # min=0.1, max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
+                    min=np.nanmedian(map_selfunc_lo)-fac_stdev*np.nanstd(map_selfunc_lo), max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
+                    norm='log', graticule=True, cbar_ticks=cbar_ticks_selfunc) 
+                    # cbar_ticks=[5, 20, 50]) 
         
     return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo_mask, mask_gcatlo
 
 # convert z to comoving distance in Mpc/h
-def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
+def comoving_dist(z, h = 0.6844, units = 'Mpc/h'): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
 
     r"""Transforms redshift to comoving distance.
     
@@ -128,7 +132,7 @@ def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807
     z : {int, float, array_like}
         The input redshift.
     h : {int, float}, optional
-        Little h.
+        Little h. Default is 0.6844.
         
     Returns
     -------
@@ -143,7 +147,83 @@ def comoving_dist(z, h = 0.6844): # col 2 in fig 7 of https://arxiv.org/pdf/1807
     comoving_r = cosmo.comoving_distance(z)
 
     # convert from Mpc to Mpc/h
-    return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
+    if units == 'Mpc/h':
+        return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
+    else:
+        return comoving_r.to(u.pc)
+
+# # convert z to comoving distance in Mpc/h
+# def luminosity_dist(z, h = 0.6844, units = 'Mpc/h'): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
+
+#     r"""Transforms redshift to luminosity distance.
+    
+#     Returns comoving distances in Mpc/h given a cosmology and redshift. Uses Astropy units and cosmology. Assumes flat Lambda-CDM, with Om0=0.302.
+    
+#     Parameters
+#     ----------
+#     z : {int, float, array_like}
+#         The input redshift.
+#     h : {int, float}, optional
+#         Little h.
+        
+#     Returns
+#     -------
+#     distance : {int, float, array_like}
+#         Luminosity distance at a given redshift `z` and cosmology.
+#     """
+    
+#     H0 = h*100 * u.km/u.s/u.Mpc
+
+#     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
+#     cosmo = FlatLambdaCDM(H0=H0, Om0=0.302)
+#     comoving_r = cosmo.luminosity_distance(z)
+
+#     # # convert from Mpc to Mpc/h
+#     # if units == 'Mpc/h':
+#     #     return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
+#     # else:
+#     #     return comoving_r.to(u.pc)
+#     return comoving_r
+
+def absolute(tab_datalo, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h = 0.6844, NSIDE = NSIDE, 
+             k = np.loadtxt('../data/maps/datafile4.txt')):
+    
+    r"""Transforms apparent to absolute magnitude.
+    
+    Returns absolute magnitude in the G-band given a cosmology and redshift. Uses Astropy units and cosmology. Assumes flat Lambda-CDM, with Om0=0.302.
+    
+    Parameters
+    ----------
+    tab_datalo : astropy table
+        The input catalog.
+    dust : array_like, optional
+        The dust map. Default is the Quaia dust map.
+    h : {int, float}, optional
+        Little h. Default is 0.6844.
+    NSIDE : int, optional
+        The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
+        
+    Returns
+    -------
+    M : float
+        Absolute magnitude at a given redshift `z` and cosmology.
+    """
+    
+    m_i = tab_datalo['phot_g_mean_mag'] # need to convert to i band!
+    
+    H0 = h*100 * u.km/u.s/u.Mpc
+
+    # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
+    cosmo = FlatLambdaCDM(H0=H0, Om0=0.302)
+    d = cosmo.luminosity_distance(tab_datalo['redshift_quaia']).value
+    
+    pixel_indices_datalo = hp.ang2pix(NSIDE, tab_datalo['ra'], tab_datalo['dec'], lonlat=True)
+    A_i = 1.698*dust[pixel_indices_datalo]
+    
+    k_z = interp.interp1d(k[:,0], k[:,1])
+    K_i = k_z(tab_datalo['redshift_quaia'])
+    
+    tab_datalo['G']=m_i-25-5*np.log10(d)-A_i-K_i # d is in Mpc
 
 def recenter(bins):
     
@@ -234,6 +314,65 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
         return key, tab_randlo
     else:
         return key
+
+def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', mask_type = 'selfunc'):
+    
+    if data == 'mocks':
+        fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+        tab_gcat = Table.read(fn_datahi)
+
+        z_percentiles = np.linspace(0.0, 100.0, n_zbins+1)
+        print(z_percentiles)
+        z_bins = np.percentile(list(tab_gcat['redshift_quaia']), z_percentiles)
+        z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+        z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+
+        print("zbins:", z_bins)
+        print("n_zbins:", n_zbins)
+
+        # for bb in range(n_zbins):
+        i_zbin = (tab_gcat['redshift_quaia'] >= z_bins[bb]) & (tab_gcat['redshift_quaia'] < z_bins[bb+1])
+        tab_datahi_zbin0 = tab_gcat[i_zbin]
+        print("zmin:", np.min(tab_datahi_zbin0['redshift_quaia']))
+        print("zmax:", np.max(tab_datahi_zbin0['redshift_quaia']))
+    
+    else:
+        fn_datahi_zbin0 = '../data/quaia_G{:.1f}_zsplit{}bin{}.fits'.format(G, n_zbins, bb)
+        tab_datahi_zbin0 = Table.read(fn_datahi_zbin0)
+        
+    # parameters
+    fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64_G{:.1f}_zsplit{}bin{}.fits'.format(G, n_zbins, bb)
+    selfunc_hi_zbin0 = hp.fitsfunc.read_map(fn_selhi_zbin0)
+
+    # quasar data catalog
+    pixel_indices_datahi_zbin0 = hp.ang2pix(NSIDE, tab_datahi_zbin0['ra'], tab_datahi_zbin0['dec'], lonlat=True)
+    
+    mask_datahi_zbin0 = selfunc_hi_zbin0[pixel_indices_datahi_zbin0]>=0.5 
+
+    # impose zbin and selfunc mask on data
+    tab_datahi_mask_zbin0 = tab_datahi_zbin0[mask_datahi_zbin0]
+    
+    # record N in each bin
+    N_datahi_mask_zbin0 = len(tab_datahi_mask_zbin0)
+    
+    # random catalog
+    fn_randhi_zbin0 = '../data/randoms/random_G{:.1f}_zsplit{}bin{}_10x.fits'.format(G, n_zbins, bb)
+    tab_randhi_zbin0 = Table.read(fn_randhi_zbin0)
+        
+    # get the pixel indices for objects in each random zbin
+    pixel_indices_randhi_zbin0 = hp.ang2pix(NSIDE, tab_randhi_zbin0['ra'], tab_randhi_zbin0['dec'], lonlat=True)
+
+    # select where the randoms in each zbin pass the selfunc mask
+    mask_randhi_zbin0 = selfunc_hi_zbin0[pixel_indices_randhi_zbin0]>=0.5
+
+    # assign redshifts to randoms in each zbin, mimicking the distribution of data in each zbin that pass the selfunc mask
+    tab_randhi_mask_zbin0 = tab_randhi_zbin0[mask_randhi_zbin0]
+    N_randhi_mask_zbin0 = len(tab_randhi_mask_zbin0)
+    key_zbin0 = z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
+                             np.full(N_randhi_mask_zbin0, True), N_datahi_mask_zbin0, N_randhi_mask_zbin0, plot = plot, 
+                             mask_type = mask_type+'_zbin0')
+    
+    return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
@@ -526,3 +665,104 @@ def xi_r(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pix
     ind = np.argsort(DD_counts['ravg'])
     
     return cf[ind], DD_counts['ravg'][ind]
+
+# 3d clustering xi(r) computed with 1 mu bin
+def xi_s(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None,
+         weight_type = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21)):
+    
+    r"""Computes the two-point  3D clustering of `tab_gcatlo`.
+    
+    Returns the correlation function computed as a function of quasar separation in redshift-space. Uses Corrfunc to compute the pair counts first, and then convert pair counts to clustering via the Landy-Szalay estimator. Provides the option to supply pre-computed random-random pair counts to speed up the computation. Leave `RR_counts` as None to avoid this option. 
+    
+    Parameters
+    ----------
+    tab_gcatlo : astropy table
+        The quasar catalog. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    tab_randlo : astropy table
+        The random catalog, used for computing the clustering from pair counts. Pass in a masked catalog as ``tab_randlo[mask_randlo]``. Obtain the mask using quaia.read.
+    N_gcatlo : int
+        The number of objects in `tab_gcatlo`.
+    N_randlo : int
+        The number of objects in `tab_randlo`.
+    key : str
+        The suffix of the key for redshifts assigned to `tab_randlo`, created under the desired masking scheme using quaia.z_dist.
+    selfunc_lo : array_like, optional
+        The selection function. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_gcatlo : astropy table column, optional
+        Pixel indices for each object in `tab_gcatlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    pixel_indices_randlo : astropy table column, optional 
+        Pixel indices for each object in `tab_randlo`, obtained using quaia.read. Default is None if not weighting pair counts by the selection function.
+    weight_type : {None, 'pair_product'}, optional
+        Whether or not to weight pair counts by the selection function. Default is None.
+    RR_counts : array_like, optional 
+        The number of random-random pair counts in `tab_randlo`. Default option is None if pre-computed pair counts are not supplied.
+    nthreads: int, optional
+        The number of OpenMP threads to use for computing each set of pair counts. Default is 8.
+    rbins : array_like, optional
+        The separation bins. Default is ``np.logspace(np.log10(0.1), np.log10(20.0), 21)``.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+        
+    Returns
+    -------
+    cf : array_like
+        The 3D correlation function.
+        
+    Other Parameters
+    ----------------
+    weights1 : None, optional
+        Weights for the first set of points. Default is None if not weighting pair counts by the selection function. 
+    weights2 : None, optional
+        Weights for the second set of points. Default is None if not weighting pair counts by the selection function.
+        
+    See Also
+    --------
+    quaia.z_dist : Used to assign redshifts and a mask to `tab_randlo`.
+    quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
+    """
+    
+    if weight_type == 'pair_product':
+        weights1 = 1/selfunc_lo[pixel_indices_gcatlo]
+        weights2 = 1/selfunc_lo[pixel_indices_randlo]
+
+    # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.   
+    DD_counts, api_time = mocks.DDsmu_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1, 
+                                            RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
+                                            CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1, 
+                                            weight_type = weight_type, output_savg = True, is_comoving_dist=True, c_api_timer = True)
+
+    # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.   
+    DR_counts, api_time = mocks.DDsmu_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1, 
+                                            RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
+                                            CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1, 
+                                            RA2 = tab_randlo['ra'], DEC2 = tab_randlo['dec'], 
+                                            CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key]), weights2 = weights2, 
+                                            weight_type = weight_type, output_savg = True, is_comoving_dist = True, c_api_timer = True)
+    
+    # now measure clustering in random catalog
+    if RR_counts == None:
+        
+        RR_counts, api_time = mocks.DDsmu_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1,
+                                                RA1 = tab_randlo['ra'], DEC1 = tab_randlo['dec'], 
+                                                CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key]), weights1 = weights2, 
+                                                weight_type = weight_type, output_savg = True, is_comoving_dist=True, c_api_timer = True)
+        if weight_type == 'pair_product':
+            RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
+        
+    # compute weighted pair counts
+    if weight_type == 'pair_product':
+        DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
+        DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
+    
+    # All the pair counts are done, get the angular correlation function
+    cf = convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
+    
+    # make it easier to plot
+    ind = np.argsort(DD_counts['savg'])
+    
+    # calculate the x axis
+    rpavg = [np.sum((DD_counts['savg']*DD_counts['npairs'])[DD_counts['smin']==i])/np.sum(DD_counts['npairs'][DD_counts['smin']==i]) 
+         for i in rbins[:-1]]
+    
+    # return cf[ind], DD_counts['savg'][ind], cf, DD_counts['savg'], rpavg
+    return cf

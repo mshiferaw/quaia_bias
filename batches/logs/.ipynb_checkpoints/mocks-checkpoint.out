@@ -1,0 +1,30 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+[  0.  50. 100.]
+zbins: [0.07396391 1.44728857 4.54363288]
+n_zbins: 2
+zmin: 0.08396390830091038
+zmax: 1.4472875589183094
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks.py", line 11, in <module>
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.zbins(G, zbin, i+1)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 367, in zbins
+    key_zbin0 = quaia.z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
+NameError: name 'quaia' is not defined. Did you mean: 'quit'?
