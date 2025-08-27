@@ -13,7 +13,13 @@ def main():
             tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.zbins(G, zbin)
             wtheta_datahi_zbin0 = quaia.w_theta(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, 
                                                                N_randhi_mask_zbin0, nthreads = nthreads, thetabins = thetabins)
+            print(G, N_datahi_mask_zbin0)
             np.save('../results/wtheta_G{:.1f}_zsplit2bin{}'.format(G, zbin), wtheta_datahi_zbin0)
+
+        tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.zbins(G, None, n_zbins = 1)
+        wtheta_datahi_zbin0 = quaia.w_theta(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, 
+                                                           N_randhi_mask_zbin0, nthreads = nthreads, thetabins = thetabins)
+        np.save('../results/wtheta_G{:.1f}'.format(G), wtheta_datahi_zbin0)
 
 if __name__=='__main__':
     main()

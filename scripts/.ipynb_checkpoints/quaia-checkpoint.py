@@ -315,20 +315,72 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     else:
         return key
 
-def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', mask_type = 'selfunc'):
+# def make_zbins(n_zbins, tab_gcat):
+    
+#     z_percentiles = np.linspace(0.0, 100.0, n_zbins+1)
+#     print(z_percentiles)
+#     z_bins = np.percentile(list(tab_gcat['redshift_quaia']), z_percentiles)
+#     z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+#     z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+
+#     print("zbins:", z_bins)
+#     print("n_zbins:", n_zbins)
+    
+#     return z_bins
+    
+def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', mask_type = 'selfunc', tab_gcat = None, tab_datahi_zbin0 = None, z_bins = [0.0, 1.0, 2.0, 3.0, 4.0]):
+    
+    r"""Computes catalogs binned in redshift.
+    
+    Based on the G threshold cut and the method of binning (percentile vs equal in redshift), returns the catalog in a specific redshift bin.
+    
+    Parameters
+    ----------
+    tab_gcatlo : astropy table
+        The input catalog with the desired redshift distribution.
+    tab_randlo : astropy table
+        The target catalog that is assigned redshifts.
+    mask_gcatlo : array_like
+        The mask on `tab_gcatlo`.
+    mask_randlo : array_like
+        The mask on `tab_randlo`.
+    N_gcatlo_mask : int
+        The number of objects in the masked `tab_gcatlo` catalog.
+    N_randlo_mask : int
+        The number of objects in the masked `tab_randlo` catalog.
+    b : {int, float}, optional
+        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+        
+    Returns
+    -------
+    key : str
+        The suffix of the new key created for the random redshifts. Use as ``tab_randlo['redshift_quaia_'+key].``
+        
+    Other Parameters
+    ----------------
+    plot : boolean, optional
+        Whether or not to display a histogram of the redshift distributions for `tab_gcatlo` (as given) and `tab_randlo` (as assigned). Default is False.
+    """
     
     if data == 'mocks':
-        fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
-        tab_gcat = Table.read(fn_datahi)
+        
+        if tab_gcat is None:
+            fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+            tab_gcat = Table.read(fn_datahi)
 
-        z_percentiles = np.linspace(0.0, 100.0, n_zbins+1)
-        print(z_percentiles)
-        z_bins = np.percentile(list(tab_gcat['redshift_quaia']), z_percentiles)
-        z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
-        z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+        if n_zbins is not None:
+            z_percentiles = np.linspace(0.0, 100.0, n_zbins+1)
+            print(z_percentiles)
+            z_bins = np.percentile(list(tab_gcat['redshift_quaia']), z_percentiles)
+            z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+            z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
 
-        print("zbins:", z_bins)
-        print("n_zbins:", n_zbins)
+            print("zbins:", z_bins)
+            print("n_zbins:", n_zbins)
+
+            # z_bins = make_zbins(n_zbins, tab_gcat)
 
         # for bb in range(n_zbins):
         i_zbin = (tab_gcat['redshift_quaia'] >= z_bins[bb]) & (tab_gcat['redshift_quaia'] < z_bins[bb+1])
@@ -336,12 +388,29 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
         print("zmin:", np.min(tab_datahi_zbin0['redshift_quaia']))
         print("zmax:", np.max(tab_datahi_zbin0['redshift_quaia']))
     
-    else:
-        fn_datahi_zbin0 = '../data/quaia_G{:.1f}_zsplit{}bin{}.fits'.format(G, n_zbins, bb)
+    elif data == 'data':
+        
+        if n_zbins == 1:
+            fn_datahi_zbin0 = '../data/quaia_G{:.1f}.fits'.format(G)            
+            fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64_G{:.1f}.fits'.format(G)
+            fn_randhi_zbin0 = '../data/randoms/random_G{:.1f}_10x.fits'.format(G)
+        
+        else:
+            fn_datahi_zbin0 = '../data/quaia_G{:.1f}_zsplit{}bin{}.fits'.format(G, n_zbins, bb)
+            
         tab_datahi_zbin0 = Table.read(fn_datahi_zbin0)
         
-    # parameters
-    fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64_G{:.1f}_zsplit{}bin{}.fits'.format(G, n_zbins, bb)
+    if n_zbins is None:
+        
+        # parameters
+        fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64_G{:.1f}_zmin{}zmax{}.fits'.format(G, z_bins[bb], z_bins[bb+1])
+        fn_randhi_zbin0 = '../data/randoms/random_G{:.1f}_zmin{}zmax{}_10x.fits'.format(G, z_bins[bb], z_bins[bb+1])
+        
+    elif n_zbins>1:
+        # parameters
+        fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64_G{:.1f}_zsplit{}bin{}.fits'.format(G, n_zbins, bb)
+        fn_randhi_zbin0 = '../data/randoms/random_G{:.1f}_zsplit{}bin{}_10x.fits'.format(G, n_zbins, bb)
+        
     selfunc_hi_zbin0 = hp.fitsfunc.read_map(fn_selhi_zbin0)
 
     # quasar data catalog
@@ -356,7 +425,6 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
     N_datahi_mask_zbin0 = len(tab_datahi_mask_zbin0)
     
     # random catalog
-    fn_randhi_zbin0 = '../data/randoms/random_G{:.1f}_zsplit{}bin{}_10x.fits'.format(G, n_zbins, bb)
     tab_randhi_zbin0 = Table.read(fn_randhi_zbin0)
         
     # get the pixel indices for objects in each random zbin

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=quaia
+#SBATCH --job-name=quaia_debug
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48

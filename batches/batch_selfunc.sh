@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=selection_function_G20.0_zminzmax
+#SBATCH --job-name=selfunc_G20.0_zminzmax
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48

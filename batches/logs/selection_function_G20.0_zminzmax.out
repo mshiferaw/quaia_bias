@@ -25,37 +25,72 @@ Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
 Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
 M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
-Generating new unWISE map (../data/maps/map_unwise_NSIDE64.npy)
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.242640687119285
+Training fitter
+X_train: (41043, 7) y_train: (41043,)
+y_train min: 1.0 y_train: 18.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.92059274 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 2.8903717578961645
+yerr: [1.73205081 1.41421356 2.64575131 ... 2.44948974 2.44948974 1.41421356] [0.57735027 0.70710678 0.37796447 ... 0.40824829 0.40824829 0.70710678]
+p compute: [ 0.         -2.92059274 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -26242.992821166383
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 26177.814369526557
+        x: [ 9.347e-01 -2.166e+00  1.218e+00  5.796e+00  2.667e+00
+             5.517e+00  1.435e+00  2.984e+00  2.829e+01]
+      nit: 43
+      jac: [-5.466e-06  6.811e-06 -1.021e-06 -2.475e-06  1.300e-07
+            -2.635e-06 -5.103e-07 -6.120e-06 -2.829e-09]
+ hess_inv: [[ 8.783e-02 -2.010e-02 ... -2.019e-02 -2.250e+02]
+            [-2.010e-02  2.118e-01 ...  8.193e-02 -4.811e+01]
+            ...
+            [-2.019e-02  8.193e-02 ...  2.481e-01 -3.514e+02]
+            [-2.250e+02 -4.811e+01 ... -3.514e+02  1.212e+08]]
+     nfev: 46
+     njev: 46
+p post op: [ 0.93473497 -2.16571577  1.21750878  5.7960841   2.66707091  5.51696031
+  1.4349094   2.98394458 28.28827123]
+lnlike final: -26177.814369526557
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 0.93473497 -2.16571577  1.21750878  5.7960841   2.66707091  5.51696031
+  1.4349094   2.98394458 28.28827123]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin0.0zmax1.0.fits
 Traceback (most recent call last):
   File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
     parse_args()
   File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
     run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 141, in run
-    maps_forsel = load_maps(NSIDE, map_names)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 330, in load_maps
-    maps_forsel.append( map_functions[map_name](NSIDE=NSIDE, fn_map=fn_map, **map_kwargs[map_name]) )
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/maps.py", line 89, in get_unwise_map
-    tab_unwise = utils.load_table(fn_unwise)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 215, in run
+    hp.write_map(fn_ypred, y_pred_full, overwrite=overwrite_ypred)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/healpy/fitsfunc.py", line 296, in write_map
+    tbhdu.writeto(str(filename), overwrite=overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/base.py", line 1599, in writeto
+    hdulist.writeto(name, output_verify, overwrite=overwrite, checksum=checksum)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1010, in writeto
+    fileobj = _File(fileobj, mode=mode, overwrite=overwrite)
   File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
     self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/unwise_rand0.01_nm_prim.fits.gz'
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 615, in _open_filename
+    self._overwrite_existing(overwrite, None, True)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 498, in _overwrite_existing
+    raise OSError(NOT_OVERWRITING_MSG.format(self.name))
+OSError: File ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin0.0zmax1.0.fits already exists. If you mean to replace it then use the argument "overwrite=True".
 Running selection function with fn_catalog=../data/quaia_G20.0_zmin1.0zmax2.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin1.0zmax2.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
 Loading data
 Making QSO map
@@ -64,37 +99,72 @@ Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
 Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
 M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
-Generating new unWISE map (../data/maps/map_unwise_NSIDE64.npy)
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 5.477225575051661
+Training fitter
+X_train: (41137, 7) y_train: (41137,)
+y_train min: 1.0 y_train: 30.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.84593398 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.4011973816621555
+yerr: [2.44948974 2.23606798 3.         ... 2.23606798 3.31662479 2.23606798] [0.40824829 0.4472136  0.33333333 ... 0.4472136  0.30151134 0.4472136 ]
+p compute: [ 0.         -2.84593398 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -15650.082354225222
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 15593.446002620454
+        x: [ 1.452e+00 -2.098e+00 -3.731e-01  1.882e+00  2.236e-01
+             6.594e+00  1.033e+00  3.127e+00  2.782e+01]
+      nit: 46
+      jac: [-4.401e-06  5.792e-09  1.343e-06 -6.435e-06 -5.251e-07
+            -1.641e-07 -7.658e-07  1.414e-06 -1.954e-10]
+ hess_inv: [[ 5.908e-02 -8.354e-03 ... -3.941e-03  4.708e+02]
+            [-8.354e-03  1.286e-01 ...  1.139e-01 -7.889e+02]
+            ...
+            [-3.941e-03  1.139e-01 ...  4.823e-01 -5.640e+01]
+            [ 4.708e+02 -7.889e+02 ... -5.640e+01  1.774e+09]]
+     nfev: 51
+     njev: 51
+p post op: [ 1.45158989 -2.09784198 -0.37313459  1.88198259  0.22363243  6.594187
+  1.03337216  3.12706585 27.82440352]
+lnlike final: -15593.446002620454
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.45158989 -2.09784198 -0.37313459  1.88198259  0.22363243  6.594187
+  1.03337216  3.12706585 27.82440352]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin1.0zmax2.0.fits
 Traceback (most recent call last):
   File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
     parse_args()
   File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
     run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 141, in run
-    maps_forsel = load_maps(NSIDE, map_names)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 330, in load_maps
-    maps_forsel.append( map_functions[map_name](NSIDE=NSIDE, fn_map=fn_map, **map_kwargs[map_name]) )
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/maps.py", line 89, in get_unwise_map
-    tab_unwise = utils.load_table(fn_unwise)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 215, in run
+    hp.write_map(fn_ypred, y_pred_full, overwrite=overwrite_ypred)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/healpy/fitsfunc.py", line 296, in write_map
+    tbhdu.writeto(str(filename), overwrite=overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/base.py", line 1599, in writeto
+    hdulist.writeto(name, output_verify, overwrite=overwrite, checksum=checksum)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1010, in writeto
+    fileobj = _File(fileobj, mode=mode, overwrite=overwrite)
   File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
     self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/unwise_rand0.01_nm_prim.fits.gz'
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 615, in _open_filename
+    self._overwrite_existing(overwrite, None, True)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 498, in _overwrite_existing
+    raise OSError(NOT_OVERWRITING_MSG.format(self.name))
+OSError: File ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin1.0zmax2.0.fits already exists. If you mean to replace it then use the argument "overwrite=True".
 Running selection function with fn_catalog=../data/quaia_G20.0_zmin2.0zmax3.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin2.0zmax3.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
 Loading data
 Making QSO map
@@ -103,73 +173,14 @@ Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
 Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
 M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
-Generating new unWISE map (../data/maps/map_unwise_NSIDE64.npy)
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 141, in run
-    maps_forsel = load_maps(NSIDE, map_names)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 330, in load_maps
-    maps_forsel.append( map_functions[map_name](NSIDE=NSIDE, fn_map=fn_map, **map_kwargs[map_name]) )
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/maps.py", line 89, in get_unwise_map
-    tab_unwise = utils.load_table(fn_unwise)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/unwise_rand0.01_nm_prim.fits.gz'
-Running selection function with fn_catalog=../data/quaia_G20.0_zmin3.0zmax4.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin3.0zmax4.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
-Loading data
-Making QSO map
-Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
-Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
-Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
-M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
-MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
-Generating new unWISE map (../data/maps/map_unwise_NSIDE64.npy)
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 141, in run
-    maps_forsel = load_maps(NSIDE, map_names)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 330, in load_maps
-    maps_forsel.append( map_functions[map_name](NSIDE=NSIDE, fn_map=fn_map, **map_kwargs[map_name]) )
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/maps.py", line 89, in get_unwise_map
-    tab_unwise = utils.load_table(fn_unwise)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/unwise_rand0.01_nm_prim.fits.gz'
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.123105625617661
+Training fitter
+X_train: (38581, 7) y_train: (38581,)
+y_train min: 1.0 y_train: 17.0
