@@ -17,7 +17,7 @@ def main():
             # np.save('../results/wtheta_G{:.1f}_zsplit2bin{}'.format(G, zbin), wtheta_datahi_zbin0)
             
             #more debugging
-            tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.make_zbins(G, zbin, False, method = 'zsplit', n_zbins = 2)
+            tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.make_zbins(G, zbin, False, method = 'zsplit', n_zbins = 2, tab_gcat_type = 'data')
             wtheta_datahi_zbin0 = quaia.w_theta(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, 
                                                                N_randhi_mask_zbin0, nthreads = nthreads, thetabins = thetabins)
             print(G, N_datahi_mask_zbin0)
