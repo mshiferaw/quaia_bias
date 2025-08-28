@@ -510,7 +510,7 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
             fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
             tab_gcat = Table.read(fn_datahi)
         elif tab_gcat_type == 'data':
-            fn_datahi = '../data/quaia_G{}.fits'.format(G)
+            fn_datahi = '../data/quaia{}.fits'.format(fname)
             tab_gcat = Table.read(fn_datahi)
         else:
             if tab_gcat is None:
@@ -539,9 +539,8 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
     # quasar data catalog
     pixel_indices_datahi_zbin0 = hp.ang2pix(NSIDE, tab_datahi_zbin0['ra'], tab_datahi_zbin0['dec'], lonlat=True)
     
-    mask_datahi_zbin0 = selfunc_hi_zbin0[pixel_indices_datahi_zbin0]>=0.5 
-
     # impose zbin and selfunc mask on data
+    mask_datahi_zbin0 = selfunc_hi_zbin0[pixel_indices_datahi_zbin0]>=0.5 
     tab_datahi_mask_zbin0 = tab_datahi_zbin0[mask_datahi_zbin0]
     
     # record N in each bin
@@ -556,15 +555,15 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
 
     # select where the randoms in each zbin pass the selfunc mask
     mask_randhi_zbin0 = selfunc_hi_zbin0[pixel_indices_randhi_zbin0]>=0.5
+    tab_randhi_mask_zbin0 = tab_randhi_zbin0[mask_randhi_zbin0]
 
     # assign redshifts to randoms in each zbin, mimicking the distribution of data in each zbin that pass the selfunc mask
-    tab_randhi_mask_zbin0 = tab_randhi_zbin0[mask_randhi_zbin0]
     N_randhi_mask_zbin0 = len(tab_randhi_mask_zbin0)
     key_zbin0 = z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
                              np.full(N_randhi_mask_zbin0, True), N_datahi_mask_zbin0, N_randhi_mask_zbin0, plot = plot, 
                              mask_type = mask_type+'_zbin0')
     
-    return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0
+    return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0, z_bins
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
