@@ -340,6 +340,8 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
         Threshold cut of input catalog.
     bb : int
         Desired redshift bin.
+    i : float, optional
+        Mock number. Default is 1.
     n_zbins : int, optional
         The number of redshift bins. Default is 2. Set to None if using zminzmax method.
     data : str, optional
@@ -368,6 +370,7 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
     
     if data == 'mocks':
         
+        # check if unbinned catalog is provided
         if tab_gcat is None:
             fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
             tab_gcat = Table.read(fn_datahi)
@@ -427,6 +430,125 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
     N_datahi_mask_zbin0 = len(tab_datahi_mask_zbin0)
     
     # random catalog
+    tab_randhi_zbin0 = Table.read(fn_randhi_zbin0)
+        
+    # get the pixel indices for objects in each random zbin
+    pixel_indices_randhi_zbin0 = hp.ang2pix(NSIDE, tab_randhi_zbin0['ra'], tab_randhi_zbin0['dec'], lonlat=True)
+
+    # select where the randoms in each zbin pass the selfunc mask
+    mask_randhi_zbin0 = selfunc_hi_zbin0[pixel_indices_randhi_zbin0]>=0.5
+
+    # assign redshifts to randoms in each zbin, mimicking the distribution of data in each zbin that pass the selfunc mask
+    tab_randhi_mask_zbin0 = tab_randhi_zbin0[mask_randhi_zbin0]
+    N_randhi_mask_zbin0 = len(tab_randhi_mask_zbin0)
+    key_zbin0 = z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
+                             np.full(N_randhi_mask_zbin0, True), N_datahi_mask_zbin0, N_randhi_mask_zbin0, plot = plot, 
+                             mask_type = mask_type+'_zbin0')
+    
+    return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0
+
+def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = None, NSIDE = NSIDE, tab_gcat_type = None, mask_type = 'selfunc', tab_gcat = None, z_bins = None):
+    
+    r"""Computes catalogs binned in redshift with a selection-function based mask.
+    
+    Based on the G threshold cut and the method of binning (zsplit vs zminzmax), returns the catalog in a specific redshift bin.
+    
+    Parameters
+    ----------
+    G : {int, float}
+        Threshold cut of input catalog.
+    bb : int
+        Desired redshift bin.
+    n_zbins : int, optional
+        The number of redshift bins. Default is 2. Set to None if using zminzmax method.
+    data : str, optional
+        The type of input catalog. Options are "data" or "mocks".
+    tab_gcat : array_like, optional
+        The input catalog. Default is None, as it will be loaded based on `G` and `n_zbins`. Optional to pass in if another input catalog is desired.
+    tab_datahi_zbin0 : array_like, optional
+        The input catalog in the desired redshift bin. Default is None, as it will be calculated based on `G`, `bb`, and `n_zbins`. Optional to pass in a pre-binned input catalog.
+    z_bins : array_like, optional
+        The redshift bins using the zminzmax method. Default is [0.0, 1.0, 2.0, 3.0, 4.0]. Set n_zbins = None to avoid the zsplit method. 
+        
+    Returns
+    -------
+    key : str
+        The suffix of the new key created for the random redshifts. Use as ``tab_randlo['redshift_quaia_'+key].``
+        
+    Other Parameters
+    ----------------
+    NSIDE : int, optional
+        The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
+    plot : boolean, optional
+        Whether or not to display a histogram of the redshift distributions for `tab_datahi_mask_zbin0` and `tab_randhi_mask_zbin0`. Default is False.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    """
+        
+    # select binning method
+    if method == 'zsplit':
+        fname = '_G{:.1f}_zsplit{}bin{}'.format(G, n_zbins, bb)
+    elif method == 'zminzmax':
+        fname = '_G{:.1f}_zmin{}zmax{}'.format(G, z_bins[bb], z_bins[bb+1])
+    else:
+        print('Leaving tab_gcat_catalog unbinned')
+        fname = '_G{:.1f}'.format(G)
+        if prebinned == True:
+            raise Exception('To do so, set prebinned = False')
+        
+    # for prebinned catalogs (only data)
+    if prebinned == True:
+        if tab_gcat_type != 'data':
+            raise Exception('Only data catalogs are prebinned currently')
+        fn_datahi_zbin0 = '../data/quaia{}.fits'.format(fname)
+        tab_datahi_zbin0 = Table.read(fn_datahi_zbin0)
+        
+    # for catalogs that need to be binned
+    elif prebinned == False:
+        
+        if tab_gcat_type == 'mocks':
+            fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+            tab_gcat = Table.read(fn_datahi)
+        elif tab_gcat_type == 'data':
+            fn_datahi = '../data/quaia_G{}.fits'.format(G)
+            tab_gcat = Table.read(fn_datahi)
+        else:
+            if tab_gcat is None:
+                raise Exception('Must provide unbinned tab_gcat catalog if binned == False and tab_gcat_type != mocks or data')
+            
+        if method == 'zsplit':
+                z_percentiles = np.linspace(0.0, 100.0, n_zbins+1)
+                print(z_percentiles)
+                z_bins = np.percentile(list(tab_gcat['redshift_quaia']), z_percentiles)
+                z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+                z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+
+                print("zbins:", z_bins)
+                print("n_zbins:", n_zbins)
+
+        # for bb in range(n_zbins):
+        i_zbin = (tab_gcat['redshift_quaia'] >= z_bins[bb]) & (tab_gcat['redshift_quaia'] < z_bins[bb+1])
+        tab_datahi_zbin0 = tab_gcat[i_zbin]
+        print("zmin:", np.min(tab_datahi_zbin0['redshift_quaia']))
+        print("zmax:", np.max(tab_datahi_zbin0['redshift_quaia']))
+            
+    # load selection function
+    fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
+    selfunc_hi_zbin0 = hp.fitsfunc.read_map(fn_selhi_zbin0)
+
+    # quasar data catalog
+    pixel_indices_datahi_zbin0 = hp.ang2pix(NSIDE, tab_datahi_zbin0['ra'], tab_datahi_zbin0['dec'], lonlat=True)
+    
+    mask_datahi_zbin0 = selfunc_hi_zbin0[pixel_indices_datahi_zbin0]>=0.5 
+
+    # impose zbin and selfunc mask on data
+    tab_datahi_mask_zbin0 = tab_datahi_zbin0[mask_datahi_zbin0]
+    
+    # record N in each bin
+    N_datahi_mask_zbin0 = len(tab_datahi_mask_zbin0)
+    
+    # random catalog
+    fn_randhi_zbin0 = '../data/randoms/random{}_10x.fits'.format(fname)
     tab_randhi_zbin0 = Table.read(fn_randhi_zbin0)
         
     # get the pixel indices for objects in each random zbin
