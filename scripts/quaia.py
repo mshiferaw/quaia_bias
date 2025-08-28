@@ -330,28 +330,26 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     
 def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', mask_type = 'selfunc', tab_gcat = None, tab_datahi_zbin0 = None, z_bins = [0.0, 1.0, 2.0, 3.0, 4.0]):
     
-    r"""Computes catalogs binned in redshift.
+    r"""Computes catalogs binned in redshift with a selection-function based mask.
     
-    Based on the G threshold cut and the method of binning (percentile vs equal in redshift), returns the catalog in a specific redshift bin.
+    Based on the G threshold cut and the method of binning (zsplit vs zminzmax), returns the catalog in a specific redshift bin.
     
     Parameters
     ----------
-    tab_gcatlo : astropy table
-        The input catalog with the desired redshift distribution.
-    tab_randlo : astropy table
-        The target catalog that is assigned redshifts.
-    mask_gcatlo : array_like
-        The mask on `tab_gcatlo`.
-    mask_randlo : array_like
-        The mask on `tab_randlo`.
-    N_gcatlo_mask : int
-        The number of objects in the masked `tab_gcatlo` catalog.
-    N_randlo_mask : int
-        The number of objects in the masked `tab_randlo` catalog.
-    b : {int, float}, optional
-        The cut-off for the mask in galactic latitude. Default is 0. Leave as 0 if unmasked catalog is desired.
-    mask_type : {None, 'selfunc'}, optional
-        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    G : {int, float}
+        Threshold cut of input catalog.
+    bb : int
+        Desired redshift bin.
+    n_zbins : int, optional
+        The number of redshift bins. Default is 2. Set to None if using zminzmax method.
+    data : str, optional
+        The type of input catalog. Options are "data" or "mocks".
+    tab_gcat : array_like, optional
+        The input catalog. Default is None, as it will be loaded based on `G` and `n_zbins`. Optional to pass in if another input catalog is desired.
+    tab_datahi_zbin0 : array_like, optional
+        The input catalog in the desired redshift bin. Default is None, as it will be calculated based on `G`, `bb`, and `n_zbins`. Optional to pass in a pre-binned input catalog.
+    z_bins : array_like, optional
+        The redshift bins using the zminzmax method. Default is [0.0, 1.0, 2.0, 3.0, 4.0]. Set n_zbins = None to avoid the zsplit method. 
         
     Returns
     -------
@@ -360,8 +358,12 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
         
     Other Parameters
     ----------------
+    NSIDE : int, optional
+        The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
     plot : boolean, optional
-        Whether or not to display a histogram of the redshift distributions for `tab_gcatlo` (as given) and `tab_randlo` (as assigned). Default is False.
+        Whether or not to display a histogram of the redshift distributions for `tab_datahi_mask_zbin0` and `tab_randhi_mask_zbin0`. Default is False.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
     """
     
     if data == 'mocks':
