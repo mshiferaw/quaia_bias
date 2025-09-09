@@ -1,0 +1,51 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py:162: RuntimeWarning: invalid value encountered in divide
+  p_rand /= np.max(p_rand)
+allsky 
+Loading data
+Number of data sources: 27
+Estimating reduction factor
+Sel func min and max: 0.0 inf
+Subsampling by 0.000 for probability map
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 170, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 78, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 129, in run
+    N_rand_init = int(N_rand_target/reduction_factor_estimate)
+ZeroDivisionError: float division by zero
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py:162: RuntimeWarning: invalid value encountered in divide
+  p_rand /= np.max(p_rand)
+allsky 
+Loading data
+Number of data sources: 33
+Estimating reduction factor
+Sel func min and max: 0.0 inf
+Subsampling by 0.000 for probability map
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 170, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 78, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 129, in run
+    N_rand_init = int(N_rand_target/reduction_factor_estimate)
+ZeroDivisionError: float division by zero

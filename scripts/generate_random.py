@@ -54,16 +54,28 @@ def parse_args():
 def main():
 
     G_max = sys.argv[1]
-    fac_rand = 10
+    # fac_rand = 10
+    fac_rand = int(sys.argv[2])
     NSIDE_map = 64
-
+    fname = sys.argv[3]
+    # print('allsky', allsky)
+    if len(sys.argv)>4:
+        allsky = sys.argv[4]
+    else:
+        allsky = ''
+    print('allsky', allsky)
     # File names (fn_selfunc is selection function map)
-    fn_catalog = f'../data/quaia_G{G_max}{sys.argv[2]}.fits'
-    fn_selfunc =  f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{sys.argv[2]}.fits'
-    fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[2]}_{fac_rand}x.fits'
+    fn_catalog = f'../data/quaia_G{G_max}{sys.argv[3]}.fits'
+    fn_selfunc =  f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{fname}.fits'
+    # fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_{fac_rand}x.fits'
+    # if allsky == 'True':
+    #     fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_allsky_{fac_rand}x.fits'
+    # else:
+    #     fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_{fac_rand}x.fits'
+    fn_rand = f'../data/randoms/random_G{G_max}{fname}{allsky}_{fac_rand}x.fits'
     overwrite = True
 
-    run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
 
 # def main():
 
@@ -91,7 +103,7 @@ def main():
 
 
 
-def run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=None, fac_rand=1,
+def run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=None, fac_rand=1,
         N_rand_target=1000000, overwrite=False):
 
     rng = default_rng(seed=42)
@@ -116,8 +128,14 @@ def run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=None, fac_rand=1,
     # Generate actual random, using estimated reduction factor to get correct number
     N_rand_init = int(N_rand_target/reduction_factor_estimate)
     ra_rand_init, dec_rand_init = utils.random_ra_dec_on_sphere(rng, N_rand_init)
-    print(f"Generating random with {fac_rand} times N_data")
-    ra_rand, dec_rand = subsample_by_probmap(NSIDE_map, rng, ra_rand_init, dec_rand_init, fn_selfunc)
+    if allsky == '_allsky':
+        # print(f"Making allsky randoms: {N_rand_target}")
+        # ra_rand, dec_rand = utils.random_ra_dec_on_sphere(rng, N_rand_target)
+        print(f"Generating allksy random with {fac_rand} times N_data")
+        ra_rand, dec_rand = ra_rand_init, dec_rand_init
+    else:
+        print(f"Generating random with {fac_rand} times N_data")
+        ra_rand, dec_rand = subsample_by_probmap(NSIDE_map, rng, ra_rand_init, dec_rand_init, fn_selfunc)
 
     print(f"Number of final random sources: {len(ra_rand)}")
 
@@ -127,7 +145,6 @@ def run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=None, fac_rand=1,
     col_names = ['ra', 'dec', 'ebv']
     utils.write_table(fn_rand, result, col_names, overwrite=overwrite)
     print(f"Wrote random to {fn_rand}!")
-
 
 def indices_for_downsample(rng, probability_accept):
     # if probability is greater than random, keep

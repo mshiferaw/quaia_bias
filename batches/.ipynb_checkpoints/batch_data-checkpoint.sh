@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=quaia_sanitycheck
+#SBATCH --job-name=data_debug3
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48

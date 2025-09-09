@@ -1,0 +1,158 @@
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.5_Lmin-31.0Lmax-30.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lmin-31.0Lmax-30.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.8284271247461903
+Training fitter
+X_train: (216, 7) y_train: (216,)
+y_train min: 1.0 y_train: 8.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.        -4.7063026 -0.5        1.5       -1.         5.
+  0.8        0.        10.       ]
+y minmax 0.0 2.0794415416798357
+yerr: [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.41421356 1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         2.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.73205081 1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.41421356 1.73205081 1.         1.         1.         2.82842712
+ 2.         1.         2.23606798 1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ] [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 0.70710678 1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         0.5
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         0.57735027 1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 0.70710678 0.57735027 1.         1.         1.         0.35355339
+ 0.5        1.         0.4472136  1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ]
+p compute: [ 0.        -4.7063026 -0.5        1.5       -1.         5.
+  0.8        0.        10.       ]
+lnlike compute: -219.89853668445127
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 208.816114374528
+        x: [ 5.396e-01 -3.019e+00  9.244e-01  1.076e+04  8.903e+03
+             4.498e+00  9.576e+03  1.097e+04  2.096e+01]
+      nit: 54
+      jac: [ 3.128e-06 -2.171e-06 -6.475e-07 -0.000e+00 -0.000e+00
+             1.304e-07 -0.000e+00 -0.000e+00 -1.154e-09]
+ hess_inv: [[ 9.042e-02 -1.008e-02 ... -2.541e+05 -2.545e+02]
+            [-1.008e-02  3.831e-01 ...  1.365e+06  1.367e+03]
+            ...
+            [-2.541e+05  1.365e+06 ...  2.883e+14  2.887e+11]
+            [-2.545e+02  1.367e+03 ...  2.887e+11  2.891e+08]]
+     nfev: 59
+     njev: 59
+p post op: [ 5.39550371e-01 -3.01917877e+00  9.24406061e-01  1.07557120e+04
+  8.90290978e+03  4.49841444e+00  9.57624163e+03  1.09682687e+04
+  2.09556516e+01]
+lnlike final: -208.816114374528
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 5.39550371e-01 -3.01917877e+00  9.24406061e-01  1.07557120e+04
+  8.90290978e+03  4.49841444e+00  9.57624163e+03  1.09682687e+04
+  2.09556516e+01]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-31.0Lmax-30.0.fits
+y_pred_full: [1.00604525 0.99749067 0.98605865 ... 0.98729629 0.98736129 0.98659886]
+0
+RMSE: 0.4270496855633782
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 27.261535350027824
+map_prob: [6.13272235 6.08057473 6.01088659 ... 6.01843112 6.01882733 6.0141797 ]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-31.0Lmax-30.0.fits!
+Time: 78.8827817440033 s (1.3147130290667215 min)

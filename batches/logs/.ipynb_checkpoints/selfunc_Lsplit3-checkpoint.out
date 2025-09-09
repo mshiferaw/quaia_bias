@@ -1,0 +1,171 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.0_Lsplit3bin0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lsplit3bin0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.47213595499958
+Training fitter
+X_train: (41584, 7) y_train: (41584,)
+y_train min: 1.0 y_train: 20.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -3.02490432 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 2.995732273553991
+yerr: [2.64575131 2.64575131 2.64575131 ... 2.82842712 3.         2.23606798] [0.37796447 0.37796447 0.37796447 ... 0.35355339 0.33333333 0.4472136 ]
+p compute: [ 0.         -3.02490432 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -22465.367869502916
+Minimizing
+  message: Desired error not necessarily achieved due to precision loss.
+  success: False
+   status: 2
+      fun: 22421.287658660716
+        x: [ 1.302e+00 -2.904e+00 -6.095e-01  1.459e+00 -3.699e-01
+             4.391e+00  2.699e-01  9.051e-01  9.540e+00]
+      nit: 23
+      jac: [-1.116e-05  2.578e-05  2.978e-06 -3.092e-05 -2.567e-06
+            -7.302e-07 -1.475e-05 -3.638e-06  4.047e-07]
+ hess_inv: [[ 2.991e-02 -2.276e-02 ... -6.916e-02 -2.341e-02]
+            [-2.276e-02  1.122e-01 ...  2.684e-01  6.262e-04]
+            ...
+            [-6.916e-02  2.684e-01 ...  1.587e+00 -1.177e-01]
+            [-2.341e-02  6.262e-04 ... -1.177e-01  1.567e+01]]
+     nfev: 63
+     njev: 51
+p post op: [ 1.30185693 -2.90372502 -0.60947824  1.45869897 -0.36993767  4.39085692
+  0.269935    0.90510963  9.53977404]
+lnlike final: -22421.287658660716
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.30185693 -2.90372502 -0.60947824  1.45869897 -0.36993767  4.39085692
+  0.269935    0.90510963  9.53977404]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lsplit3bin0.fits
+y_pred_full: [5.25041687 5.97324336 6.97652163 ... 6.24049846 6.25706606 6.27549369]
+0
+RMSE: 2.514436826513048
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.9774928780139738
+map_prob: [0.41645258 0.47378573 0.55336376 ... 0.49498387 0.49629798 0.49775963]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lsplit3bin0.fits!
+Time: 31271.395544290543 s (521.1899257381757 min)
+Running selection function with fn_catalog=../data/quaia_G20.5_Lsplit3bin0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lsplit3bin0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 5.656854249492381
+Training fitter
+X_train: (42345, 7) y_train: (42345,)
+y_train min: 1.0 y_train: 32.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.95966853 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.4657359027997265
+yerr: [3.74165739 3.87298335 3.60555128 ... 3.31662479 3.74165739 3.31662479] [0.26726124 0.25819889 0.2773501  ... 0.30151134 0.26726124 0.30151134]
+p compute: [ 0.         -2.95966853 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -13537.360449573636
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 13438.818267280109
+        x: [ 1.838e+00 -2.710e+00 -7.139e-01  1.389e+00 -1.678e+00
+             4.356e+00  2.952e-01 -8.905e-01  2.869e+01]
+      nit: 42
+      jac: [ 1.786e-06  3.360e-06  1.635e-07 -5.079e-07 -1.148e-07
+             6.855e-07 -1.268e-06  6.097e-07 -5.653e-10]
+ hess_inv: [[ 2.115e-02 -8.723e-03 ... -6.270e-03 -8.066e+00]
+            [-8.723e-03  2.785e-02 ...  7.458e-03 -1.846e+02]
+            ...
+            [-6.270e-03  7.458e-03 ...  3.579e-02 -7.558e+01]
+            [-8.066e+00 -1.846e+02 ... -7.558e+01  6.061e+08]]
+     nfev: 48
+     njev: 48
+p post op: [ 1.83808804 -2.71031648 -0.71388278  1.38901399 -1.67816538  4.35593134
+  0.29524718 -0.890474   28.68858351]
+lnlike final: -13438.818267280109
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.83808804 -2.71031648 -0.71388278  1.38901399 -1.67816538  4.35593134
+  0.29524718 -0.890474   28.68858351]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lsplit3bin0.fits
+y_pred_full: [10.07476762 10.7015167  11.17506558 ... 10.47152759 10.3269682
+ 10.61350358]
+0
+RMSE: 3.2946341395743026
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 1.525553269686286
+map_prob: [0.52229687 0.55478885 0.5793386  ... 0.54286573 0.53537148 0.55022606]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lsplit3bin0.fits!
+Time: 28401.303559303284 s (473.3550593217214 min)
+Running selection function with fn_catalog=../data/quaia_G20.0_Lsplit3bin1.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lsplit3bin1.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.58257569495584
+Training fitter
+X_train: (40277, 7) y_train: (40277,)
+y_train min: 1.0 y_train: 21.0

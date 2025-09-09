@@ -1,0 +1,79 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+allsky None
+Loading data
+Number of data sources: 755850
+Estimating reduction factor
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Number of final random sources: 18891763
+Wrote random to ../data/randoms/random_G20.0None_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 755850
+Estimating reduction factor
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 32261520
+Wrote random to ../data/randoms/random_G20.0_allsky_25x.fits!
+allsky None
+Loading data
+Number of data sources: 755850
+Estimating reduction factor
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Generating random with 50 times N_data
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Number of final random sources: 37787511
+Wrote random to ../data/randoms/random_G20.0None_50x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 755850
+Estimating reduction factor
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Generating allksy random with 50 times N_data
+Number of final random sources: 64523040
+Wrote random to ../data/randoms/random_G20.0_allsky_50x.fits!
+allsky None
+Loading data
+Number of data sources: 755850
+Estimating reduction factor
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Generating random with 100 times N_data
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Number of final random sources: 75579272
+Wrote random to ../data/randoms/random_G20.0None_100x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 755850
+Estimating reduction factor
+Sel func min and max: 0.0 0.7873269787302883
+Subsampling by 0.586 for probability map
+Generating allksy random with 100 times N_data
+Number of final random sources: 129046081
+Wrote random to ../data/randoms/random_G20.0_allsky_100x.fits!

@@ -185,7 +185,7 @@ def comoving_dist(z, h = 0.6844, units = 'Mpc/h'): # col 2 in fig 7 of https://a
 #     #     return comoving_r.to(u.pc)
 #     return comoving_r
 
-def absolute(tab_datalo, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h = 0.6844, NSIDE = NSIDE, 
+def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h = 0.6844, NSIDE = NSIDE, 
              k = np.loadtxt('../data/maps/datafile4.txt')):
     
     r"""Transforms apparent to absolute magnitude.
@@ -209,7 +209,10 @@ def absolute(tab_datalo, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h 
         Absolute magnitude at a given redshift `z` and cosmology.
     """
     
-    m_i = tab_datalo['phot_g_mean_mag'] # need to convert to i band!
+    G_i = {20: 0.09177204284667972, 20.5: 0.10518160949706967} # {20: 0.09178003723144457, 20.5: 0.10519113616943265}
+    
+    m_g = tab_datalo['phot_g_mean_mag'] # need to convert to i band!
+    m_i = m_g - G_i[G]  # 0.05688247070312613  # 0.08305740356445312
     
     H0 = h*100 * u.km/u.s/u.Mpc
 
@@ -223,7 +226,7 @@ def absolute(tab_datalo, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h 
     k_z = interp.interp1d(k[:,0], k[:,1])
     K_i = k_z(tab_datalo['redshift_quaia'])
     
-    tab_datalo['G']=m_i-25-5*np.log10(d)-A_i-K_i # d is in Mpc
+    tab_datalo['M_i']=m_i-25-5*np.log10(d)-A_i-K_i # d is in Mpc
 
 def recenter(bins):
     
@@ -447,7 +450,7 @@ def zbins(G, bb, i=1, plot = False, n_zbins = 2, NSIDE = NSIDE, data = 'data', m
     
     return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0
 
-def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = None, NSIDE = NSIDE, tab_gcat_type = None, mask_type = 'selfunc', tab_gcat = None, z_bins = None):
+def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = None, NSIDE = NSIDE, tab_gcat_type = None, mask_type = 'selfunc', tab_gcat = None, z_bins = None, z = True, fac_rand = 10):
     
     r"""Computes catalogs binned in redshift with a selection-function based mask.
     
@@ -495,7 +498,8 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
         fname = '_G{:.1f}'.format(G)
         if prebinned == True:
             raise Exception('To do so, set prebinned = False')
-        
+    print(fname)
+    
     # for prebinned catalogs (only data)
     if prebinned == True:
         if tab_gcat_type != 'data':
@@ -510,7 +514,7 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
             fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
             tab_gcat = Table.read(fn_datahi)
         elif tab_gcat_type == 'data':
-            fn_datahi = '../data/quaia{}.fits'.format(fname)
+            fn_datahi = '../data/quaia_G{:.1f}.fits'.format(G)
             tab_gcat = Table.read(fn_datahi)
         else:
             if tab_gcat is None:
@@ -547,7 +551,7 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
     N_datahi_mask_zbin0 = len(tab_datahi_mask_zbin0)
     
     # random catalog
-    fn_randhi_zbin0 = '../data/randoms/random{}_10x.fits'.format(fname)
+    fn_randhi_zbin0 = '../data/randoms/random{}_{}x.fits'.format(fname, fac_rand)
     tab_randhi_zbin0 = Table.read(fn_randhi_zbin0)
         
     # get the pixel indices for objects in each random zbin
@@ -559,11 +563,151 @@ def make_zbins(G, bb, prebinned, method = None, i=None, plot = False, n_zbins = 
 
     # assign redshifts to randoms in each zbin, mimicking the distribution of data in each zbin that pass the selfunc mask
     N_randhi_mask_zbin0 = len(tab_randhi_mask_zbin0)
-    key_zbin0 = z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
+    if z == True:
+        key_zbin0 = z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
                              np.full(N_randhi_mask_zbin0, True), N_datahi_mask_zbin0, N_randhi_mask_zbin0, plot = plot, 
                              mask_type = mask_type+'_zbin0')
+    else:
+        key_zbin0 = None
     
     return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0, z_bins
+
+def make_bins(G, bb, prebinned, cut, method = None, i=None, plot = False, n_zbins = None, NSIDE = NSIDE, tab_gcat_type = None, mask_type = 'selfunc', tab_gcat = None, z_bins = None, z = True, fac_rand = 10, allsky = ''):
+    
+    r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
+    
+    Based on the G threshold cut and the method of binning (Lsplit vs LminLmax), returns the catalog in a specific redshift bin.
+    
+    Parameters
+    ----------
+    G : {int, float}
+        Threshold cut of input catalog.
+    bb : int
+        Desired redshift bin.
+    n_zbins : int, optional
+        The number of redshift bins. Default is 2. Set to None if using zminzmax method.
+    data : str, optional
+        The type of input catalog. Options are "data" or "mocks".
+    tab_gcat : array_like, optional
+        The input catalog. Default is None, as it will be loaded based on `G` and `n_zbins`. Optional to pass in if another input catalog is desired.
+    tab_datahi_zbin0 : array_like, optional
+        The input catalog in the desired redshift bin. Default is None, as it will be calculated based on `G`, `bb`, and `n_zbins`. Optional to pass in a pre-binned input catalog.
+    z_bins : array_like, optional
+        The redshift bins using the zminzmax method. Default is [0.0, 1.0, 2.0, 3.0, 4.0]. Set n_zbins = None to avoid the zsplit method. 
+        
+    Returns
+    -------
+    key : str
+        The suffix of the new key created for the random redshifts. Use as ``tab_randlo['redshift_quaia_'+key].``
+        
+    Other Parameters
+    ----------------
+    NSIDE : int, optional
+        The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
+    plot : boolean, optional
+        Whether or not to display a histogram of the redshift distributions for `tab_datahi_mask_zbin0` and `tab_randhi_mask_zbin0`. Default is False.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+    """
+        
+    # select binning method
+    if method == 'split':
+        fname = '_G{:.1f}_{}split{}bin{}'.format(G, cut, n_zbins, bb)
+    elif method == 'minmax':
+        fname = '_G{:.1f}_{}min{}{}max{}'.format(G, cut, z_bins[bb], cut, z_bins[bb+1])
+    else:
+        print('Leaving tab_gcat_catalog unbinned')
+        fname = '_G{:.1f}'.format(G)
+        if prebinned == True:
+            raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = False. To use prebinned catalogs, select either the \'split\' or \'minmax\' method.')
+    print(fname)
+    
+    # for prebinned catalogs (only data)
+    if prebinned == True:
+        if tab_gcat_type != 'data':
+            raise Exception('Only data catalogs are prebinned currently')
+        fn_datahi_zbin0 = '../data/quaia{}.fits'.format(fname)
+        tab_datahi_zbin0 = Table.read(fn_datahi_zbin0)
+        
+    # for catalogs that need to be binned
+    elif prebinned == False:
+        
+        if tab_gcat_type == 'mocks':
+            fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+            tab_gcat = Table.read(fn_datahi)
+        elif tab_gcat_type == 'data':
+            fn_datahi = '../data/quaia_G{:.1f}.fits'.format(G)
+            tab_gcat = Table.read(fn_datahi)
+        else:
+            if tab_gcat is None:
+                raise Exception('Must provide unbinned tab_gcat catalog if binned == False and tab_gcat_type != mocks or data')
+            
+        if cut == 'z':
+            key = 'redshift_quaia'
+        else:
+            absolute(tab_gcat, G)
+            key = 'M_i'
+                    
+        if method == 'split':
+                z_percentiles = np.linspace(0.0, 100.0, n_zbins+1)
+                print(z_percentiles)
+                z_bins = np.percentile(list(tab_gcat[key]), z_percentiles)
+                z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+                z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+
+                print("zbins:", z_bins)
+                print("n_zbins:", n_zbins)
+
+        # for bb in range(n_zbins):
+        i_zbin = (tab_gcat[key] >= z_bins[bb]) & (tab_gcat[key] < z_bins[bb+1])
+        tab_datahi_zbin0 = tab_gcat[i_zbin]
+        print("min:", np.min(tab_datahi_zbin0[key]))
+        print("max:", np.max(tab_datahi_zbin0[key]))
+    else:
+        raise Exception('prebinned bust be a boolean')
+            
+    # load selection function
+    fn_selhi_zbin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
+    selfunc_hi_zbin0 = hp.fitsfunc.read_map(fn_selhi_zbin0)
+
+    # quasar data catalog
+    pixel_indices_datahi_zbin0 = hp.ang2pix(NSIDE, tab_datahi_zbin0['ra'], tab_datahi_zbin0['dec'], lonlat=True)
+    
+    # impose zbin and selfunc mask on data
+    mask_datahi_zbin0 = selfunc_hi_zbin0[pixel_indices_datahi_zbin0]>=0.5 
+    tab_datahi_mask_zbin0 = tab_datahi_zbin0[mask_datahi_zbin0]
+    
+    # record N in each bin
+    N_datahi_mask_zbin0 = len(tab_datahi_mask_zbin0)
+    
+    # random catalog
+    # if allsky = True:
+    #     fn_randhi_zbin0 = '../data/randoms/random{}_allsky_{}x.fits'.format(fname, fac_rand)
+    # else:
+    # fn_randhi_zbin0 = '../data/randoms/random{}_{}x.fits'.format(fname, fac_rand)
+    fn_randhi_zbin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
+    tab_randhi_zbin0 = Table.read(fn_randhi_zbin0)
+        
+    # get the pixel indices for objects in each random zbin
+    pixel_indices_randhi_zbin0 = hp.ang2pix(NSIDE, tab_randhi_zbin0['ra'], tab_randhi_zbin0['dec'], lonlat=True)
+    
+    # select where the randoms in each zbin pass the selfunc mask
+    # if allsky == '':
+    mask_randhi_zbin0 = selfunc_hi_zbin0[pixel_indices_randhi_zbin0]>=0.5
+    tab_randhi_mask_zbin0 = tab_randhi_zbin0[mask_randhi_zbin0]
+    # else:
+        # tab_randhi_mask_zbin0 = tab_randhi_zbin0
+
+    # assign redshifts to randoms in each zbin, mimicking the distribution of data in each zbin that pass the selfunc mask
+    N_randhi_mask_zbin0 = len(tab_randhi_mask_zbin0)
+    if z == True:
+        key_zbin0 = z_dist(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, np.full(N_datahi_mask_zbin0, True), 
+                             np.full(N_randhi_mask_zbin0, True), N_datahi_mask_zbin0, N_randhi_mask_zbin0, plot = plot, 
+                             mask_type = mask_type+'_zbin0')
+    else:
+        key_zbin0 = None
+    
+    return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, z_bins, 1/selfunc_hi_zbin0[pixel_indices_datahi_zbin0][mask_datahi_zbin0]
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
@@ -624,6 +768,7 @@ def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel
     DD_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
                                           DEC1 = tab_gcatlo['dec'], weights1 = weights1,
                                           weight_type=weight_type, c_api_timer = True)
+    print('DD: {}'.format(api_time))
     
     # now measure clustering in random catalog
     DR_counts, api_time = mocks.DDtheta_mocks(autocorr = 0,nthreads = nthreads, binfile = thetabins, RA1 = tab_gcatlo['ra'], 
@@ -631,6 +776,7 @@ def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel
                                           RA2 = tab_randlo['ra'], DEC2 = tab_randlo['dec'], 
                                           weights2 = weights2, weight_type=weight_type, 
                                           c_api_timer = True)
+    print('DR: {}'.format(api_time))
     
     # now measure clustering in random catalog
     if RR_counts == None:
@@ -638,6 +784,7 @@ def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel
         RR_counts, api_time = mocks.DDtheta_mocks(autocorr = 1, nthreads = nthreads, binfile = thetabins, RA1 = tab_randlo['ra'], 
                                          DEC1 = tab_randlo['dec'], weights1 = weights2, 
                                          weight_type=weight_type, c_api_timer = True)
+        print('RR: {}'.format(api_time))
         RR_counts['thetaavg'] = np.mean([RR_counts['thetamin'], RR_counts['thetamax']], axis = 0)
         
         if weight_type == 'pair_product':
@@ -656,7 +803,7 @@ def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel
     return convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
 
 # 3D projected clustering wp(rp)
-def wp_rp(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None, 
+def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None, 
           weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, 
           d = 1):
     
@@ -715,9 +862,27 @@ def wp_rp(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pi
     quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
     """
     
-    if weight_type == 'pair_product':
-        weights1 = 1/selfunc_lo[pixel_indices_gcatlo][::d]
-        weights2 = 1/selfunc_lo[pixel_indices_randlo][::d]
+    # if weight_type == 'pair_product':
+    #     weights1 = 1/selfunc_lo[pixel_indices_gcatlo][::d]
+    #     weights2 = 1/selfunc_lo[pixel_indices_randlo][::d]
+    
+    if type(weights1) == np.ndarray or type(weights2) == np.ndarray:
+        print('weighting DR')
+        weight_type12 = 'pair_product'
+    else:
+        weight_type12 = None
+    if type(weights1) == np.ndarray:
+        print('weighting DD')
+        weight_type1 = 'pair_product'
+    else:
+        weight_type1 = None
+        weights1 = np.ones(len(tab_gcatlo))
+    if type(weights2) == np.ndarray:
+        print('weighting RR')
+        weight_type2 = 'pair_product'
+    else:
+        weight_type2 = None
+        weights2 = np.ones(len(tab_randlo))
         
     # comoving distance 
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
@@ -741,15 +906,20 @@ def wp_rp(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pi
                                          CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
                                          weights1 = weights2, weight_type=weight_type,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
-        if weight_type == 'pair_product':
+        # if weight_type == 'pair_product':
+        if weight_type2 == 'pair_product':
             RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
 
     # compute weighted pair counts
-    if weight_type == 'pair_product':
+    # if weight_type == 'pair_product':
+    if weight_type1 == 'pair_product':
         DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
+    if weight_type12 == 'pair_product':
         DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
     
     # All the pair counts are done, get the angular correlation function
+    N_gcatlo = np.sum(weights1)
+    N_randlo = np.sum(weights2)
     wp = convert_rp_pi_counts_to_wp(N_gcatlo, N_gcatlo, int(N_randlo/d), int(N_randlo/d),
                                 DD_counts, DR_counts, DR_counts, RR_counts, nbins, pimax)
     
@@ -858,8 +1028,8 @@ def xi_r(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pix
     return cf[ind], DD_counts['ravg'][ind]
 
 # 3d clustering xi(r) computed with 1 mu bin
-def xi_s(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None,
-         weight_type = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21)):
+def xi_s(tab_gcatlo, tab_randlo, key, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None,
+         weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21)):
     
     r"""Computes the two-point  3D clustering of `tab_gcatlo`.
     
@@ -911,16 +1081,47 @@ def xi_s(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pix
     quaia.z_dist : Used to assign redshifts and a mask to `tab_randlo`.
     quaia.read: Used to obtain the pixel indices and mask for `tab_gcatlo` and `tab_randlo`.
     """
+        
+    # if weights1 == True or weights2 == True:
+    #     weight_type = 'pair_product'
+    # else:
+    #     weight_type = None
+    # print(weight_type)
+    # if weights1 == True:
+    #     weights1 = 1/selfunc_lo[pixel_indices_gcatlo]
+    # else:
+    #     weights1 = None
+    # if weights2 == True:
+    #     weights2 = 1/selfunc_lo[pixel_indices_randlo]
+    # else:
+    #     weights2 = None
+        
+        
+    if type(weights1) == np.ndarray or type(weights2) == np.ndarray:
+        print('weighting DR')
+        weight_type12 = 'pair_product'
+    else:
+        weight_type12 = None
+    if type(weights1) == np.ndarray:
+        print('weighting DD')
+        weight_type1 = 'pair_product'
+    else:
+        weight_type1 = None
+        weights1 = np.ones(len(tab_gcatlo))
+    if type(weights2) == np.ndarray:
+        print('weighting RR')
+        weight_type2 = 'pair_product'
+    else:
+        weight_type2 = None
+        weights2 = np.ones(len(tab_randlo))
     
-    if weight_type == 'pair_product':
-        weights1 = 1/selfunc_lo[pixel_indices_gcatlo]
-        weights2 = 1/selfunc_lo[pixel_indices_randlo]
+    # tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key = params
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.   
     DD_counts, api_time = mocks.DDsmu_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1, 
                                             RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
                                             CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1, 
-                                            weight_type = weight_type, output_savg = True, is_comoving_dist=True, c_api_timer = True)
+                                            weight_type = weight_type1, output_savg = True, is_comoving_dist=True, c_api_timer = True)
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.   
     DR_counts, api_time = mocks.DDsmu_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1, 
@@ -928,7 +1129,7 @@ def xi_s(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pix
                                             CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1, 
                                             RA2 = tab_randlo['ra'], DEC2 = tab_randlo['dec'], 
                                             CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key]), weights2 = weights2, 
-                                            weight_type = weight_type, output_savg = True, is_comoving_dist = True, c_api_timer = True)
+                                            weight_type = weight_type12, output_savg = True, is_comoving_dist = True, c_api_timer = True)
     
     # now measure clustering in random catalog
     if RR_counts == None:
@@ -936,24 +1137,35 @@ def xi_s(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, key, selfunc_lo = None, pix
         RR_counts, api_time = mocks.DDsmu_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1,
                                                 RA1 = tab_randlo['ra'], DEC1 = tab_randlo['dec'], 
                                                 CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key]), weights1 = weights2, 
-                                                weight_type = weight_type, output_savg = True, is_comoving_dist=True, c_api_timer = True)
-        if weight_type == 'pair_product':
+                                                weight_type = weight_type2, output_savg = True, is_comoving_dist=True, c_api_timer = True)
+        if weight_type2 == 'pair_product':
+        # if weights2 != None:
+            # print('weighting RR counts')
             RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
         
     # compute weighted pair counts
-    if weight_type == 'pair_product':
+    if weight_type1 == 'pair_product':
+    # if weights1 != None:
+        # print('weighting DD counts')
         DD_counts['npairs'] = DD_counts['npairs']*DD_counts['weightavg']
+    if weight_type12 == 'pair_product':
+    # if weights1 != None or weights2 != None:
+    #     print('weighting DR counts')
         DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
     
     # All the pair counts are done, get the angular correlation function
+    # N_gcatlo = len(tab_gcatlo)
+    # N_randlo = len(tab_randlo)
+    N_gcatlo = np.sum(weights1)
+    N_randlo = np.sum(weights2)
     cf = convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
     
     # make it easier to plot
     ind = np.argsort(DD_counts['savg'])
     
-    # calculate the x axis
-    rpavg = [np.sum((DD_counts['savg']*DD_counts['npairs'])[DD_counts['smin']==i])/np.sum(DD_counts['npairs'][DD_counts['smin']==i]) 
-         for i in rbins[:-1]]
+    # # calculate the x axis
+    # rpavg = [np.sum((DD_counts['savg']*DD_counts['npairs'])[DD_counts['smin']==i])/np.sum(DD_counts['npairs'][DD_counts['smin']==i]) 
+    #      for i in rbins[:-1]]
     
     # return cf[ind], DD_counts['savg'][ind], cf, DD_counts['savg'], rpavg
     return cf

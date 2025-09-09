@@ -17,10 +17,19 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
-/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
-  warnings.warn("One or more input array has non-native endianness!  A copy will"\
-/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
-  warnings.warn("One or more input array has non-native endianness!  A copy will"\
-/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
-  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data.py", line 46, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data.py", line 27, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, N_datahi_mask_zbin0, N_randhi_mask_zbin0, key_zbin0 = quaia.make_zbins(G, zbin, False, method = 'zsplit', n_zbins = 2, tab_gcat_type = 'data', z = False)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 515, in make_zbins
+    tab_gcat = Table.read(fn_datahi)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
+    out = self.registry.read(cls, *args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 202, in read
+    fileobj = ctx.__enter__()
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/utils/data.py", line 351, in get_readable_fileobj
+    fileobj = io.FileIO(name_or_obj, "r")
+FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.fits'

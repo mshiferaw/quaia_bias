@@ -1,0 +1,117 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.0_Lsplit3bin2.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lsplit3bin2.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.69041575982343
+Training fitter
+X_train: (39348, 7) y_train: (39348,)
+y_train min: 1.0 y_train: 22.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.73117477 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.0910424533583156
+yerr: [1.         1.         2.64575131 ... 2.23606798 2.44948974 1.        ] [1.         1.         0.37796447 ... 0.4472136  0.40824829 1.        ]
+p compute: [ 0.         -2.73117477 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -20710.949754746263
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 20630.792617912884
+        x: [ 1.697e+00 -1.178e+00  7.577e-01  5.454e+00  3.387e+00
+             6.838e+00  2.069e+00  3.698e+00  1.716e+01]
+      nit: 42
+      jac: [-1.489e-06  4.218e-07 -2.992e-06 -2.989e-07 -8.994e-07
+             5.471e-07  1.379e-07  2.872e-07  5.299e-10]
+ hess_inv: [[ 5.407e-01  4.361e-02 ... -1.141e-02 -7.539e+00]
+            [ 4.361e-02  4.616e-01 ...  2.063e-01  3.342e+01]
+            ...
+            [-1.141e-02  2.063e-01 ...  4.565e-01 -2.182e+01]
+            [-7.539e+00  3.342e+01 ... -2.182e+01  1.038e+06]]
+     nfev: 45
+     njev: 45
+p post op: [ 1.69712256 -1.17761922  0.75771688  5.45435389  3.38710483  6.83805381
+  2.06851253  3.69760911 17.16272953]
+lnlike final: -20630.792617912884
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.69712256 -1.17761922  0.75771688  5.45435389  3.38710483  6.83805381
+  2.06851253  3.69760911 17.16272953]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lsplit3bin2.fits
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
+    parse_args()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
+    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 215, in run
+    hp.write_map(fn_ypred, y_pred_full, overwrite=overwrite_ypred)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/healpy/fitsfunc.py", line 296, in write_map
+    tbhdu.writeto(str(filename), overwrite=overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/base.py", line 1599, in writeto
+    hdulist.writeto(name, output_verify, overwrite=overwrite, checksum=checksum)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1010, in writeto
+    fileobj = _File(fileobj, mode=mode, overwrite=overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 615, in _open_filename
+    self._overwrite_existing(overwrite, None, True)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 498, in _overwrite_existing
+    raise OSError(NOT_OVERWRITING_MSG.format(self.name))
+OSError: File ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lsplit3bin2.fits already exists. If you mean to replace it then use the argument "overwrite=True".
+Running selection function with fn_catalog=../data/quaia_G20.5_Lsplit3bin2.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lsplit3bin2.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lsplit3bin2.fits
+y_pred_full: [2.65903022 3.23862079 5.68399781 ... 6.78526637 6.87305897 6.45119692]
+0
+RMSE: 3.4045364052055005
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.7645213908642501
+map_prob: [0.11037617 0.13443494 0.23594238 ... 0.28165597 0.28530024 0.26778877]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lsplit3bin2.fits!
+Time: 1.2250304222106934 s (0.020417173703511555 min)

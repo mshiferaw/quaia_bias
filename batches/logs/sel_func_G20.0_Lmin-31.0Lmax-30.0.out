@@ -1,0 +1,154 @@
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-31.0Lmax-30.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-31.0Lmax-30.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 1.7320508075688772
+Training fitter
+X_train: (206, 7) y_train: (206,)
+y_train min: 1.0 y_train: 3.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -5.26362356 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 1.0986122886681096
+yerr: [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.73205081 1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.73205081 1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.41421356 1.73205081
+ 1.         1.         1.73205081 1.73205081 1.         1.73205081
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.        ] [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         0.57735027 1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         0.57735027 1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         0.70710678 0.57735027
+ 1.         1.         0.57735027 0.57735027 1.         0.57735027
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.        ]
+p compute: [ 0.         -5.26362356 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -197.5500352638829
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 193.90659289664757
+        x: [ 3.819e-01 -4.018e+00  3.511e+00  3.332e+01  3.117e+01
+             2.083e+01  4.853e+01  2.967e+01  2.608e+00]
+      nit: 72
+      jac: [ 4.594e-06  5.573e-07 -5.649e-07 -5.376e-14 -4.403e-15
+            -8.238e-09 -1.541e-21 -2.566e-13 -1.090e-07]
+ hess_inv: [[ 6.053e-02  7.665e-02 ...  2.635e+02 -3.160e-02]
+            [ 7.665e-02  1.170e+00 ... -3.364e+01 -2.143e-01]
+            ...
+            [ 2.635e+02 -3.364e+01 ...  1.434e+09 -8.435e+03]
+            [-3.160e-02 -2.143e-01 ... -8.435e+03  8.076e+01]]
+     nfev: 94
+     njev: 94
+p post op: [ 0.38189209 -4.0184143   3.51073476 33.31918207 31.17429667 20.83266007
+ 48.53015669 29.67487929  2.60810776]
+lnlike final: -193.90659289664757
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 0.38189209 -4.0184143   3.51073476 33.31918207 31.17429667 20.83266007
+ 48.53015669 29.67487929  2.60810776]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-31.0Lmax-30.0.fits
+y_pred_full: [1.04911736 1.04651262 1.03952174 ... 1.0365595  1.03650268 1.03729697]
+0
+RMSE: 0.26433938489667197
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 12.471014933618521
+map_prob: [6.39528441 6.37940621 6.33679076 ... 6.31873331 6.31838695 6.32322885]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-31.0Lmax-30.0.fits!
+Time: 71.83438014984131 s (1.197239669164022 min)

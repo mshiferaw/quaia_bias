@@ -3,6 +3,7 @@ from astropy.table import Table, join
 import utils
 import sys
 import argparse
+import quaia
 
 def main():
     overwrite = True
@@ -47,12 +48,18 @@ def main():
     parser.add_argument("G", help="magnitude cut", type = float)
     parser.add_argument("--n_zbins", help="number of z bins", type = int)
     parser.add_argument("--z_bins", help="z bins", type = float, nargs = '*')
+    parser.add_argument("--n_Lbins", help="number of L bins", type = int)
+    parser.add_argument("--L_bins", help="L bins", type = float, nargs = '*')
     args = parser.parse_args()
     if args.n_zbins:
         make_redshift_split_catalogs(args.G, n_zbins=int(args.n_zbins))
-    else:
+    elif args.z_bins:
         # print(args.z_bins)
         make_redshift_split_catalogs(args.G, z_bins=args.z_bins)
+    elif args.n_Lbins:
+        make_luminosity_split_catalogs(args.G, n_Lbins=int(args.n_Lbins))
+    elif args.L_bins:
+        make_luminosity_split_catalogs(args.G, L_bins=args.L_bins)
 
     zbins = sys.argv[2]
     # print(zbins)
@@ -131,15 +138,16 @@ def make_public_catalog(G_max=20.5, tag_qspec='', tag_cat='', overwrite=False):
 
 
 def make_redshift_split_catalogs(G_max, n_zbins=None, z_bins=None, overwrite=True,
-                                 save_tag=''):
+                                 save_tag='', z_split = True):
 
     assert n_zbins is not None or z_bins is not None, "Either n_zbins or z_bins must be passed!"
 
     if z_bins is not None and n_zbins is not None:
         print("z_bins passed, ignoring n_zbins")
     if z_bins is not None:
-        n_zbins = len(z_bins)
+        n_zbins = len(z_bins)-1
         print(f"z_bins: {z_bins}, setting n_zbins={n_zbins}")
+        z_split = False
 
     fn_gcat = f'../data/quaia_G{G_max}.fits'
     tab_gcat = utils.load_table(fn_gcat)
@@ -151,14 +159,14 @@ def make_redshift_split_catalogs(G_max, n_zbins=None, z_bins=None, overwrite=Tru
         z_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
         z_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
 
-    n_zbins = len(z_bins)-1
     print("zbins:", z_bins)
     print("n_zbins:", n_zbins)
 
     for bb in range(n_zbins):
         i_zbin = (tab_gcat['redshift_quaia'] >= z_bins[bb]) & (tab_gcat['redshift_quaia'] < z_bins[bb+1])
         tab_gcat_zbin = tab_gcat[i_zbin]
-        if z_bins is None:
+        # if z_bins is None:
+        if z_split == True:
             fn_gcat_zbin = f'../data/quaia_G{G_max}_zsplit{n_zbins}bin{bb}{save_tag}.fits'
         else:
             fn_gcat_zbin = f'../data/quaia_G{G_max}_zmin{z_bins[bb]}zmax{z_bins[bb+1]}{save_tag}.fits' 
@@ -168,6 +176,44 @@ def make_redshift_split_catalogs(G_max, n_zbins=None, z_bins=None, overwrite=Tru
         print("zmax:", np.max(tab_gcat_zbin['redshift_quaia']))
         print(f"Wrote table with {len(tab_gcat_zbin)} objects to {fn_gcat_zbin}")
 
+def make_luminosity_split_catalogs(G_max, n_Lbins=None, L_bins=None, overwrite=True,
+                                 save_tag='', L_split = True):
+
+    assert n_Lbins is not None or L_bins is not None, "Either n_Lbins or L_bins must be passed!"
+
+    if L_bins is not None and n_Lbins is not None:
+        print("L_bins passed, ignoring n_Lbins")
+    if L_bins is not None:
+        n_Lbins = len(L_bins)-1
+        print(f"L_bins: {L_bins}, setting n_Lbins={n_Lbins}")
+        L_split = False
+
+    fn_gcat = f'../data/quaia_G{G_max}.fits'
+    tab_gcat = utils.load_table(fn_gcat)
+
+    quaia.absolute(tab_gcat, G_max)
+    if L_bins is None:
+        L_percentiles = np.linspace(0.0, 100.0, n_Lbins+1)
+        print(L_percentiles)
+        L_bins = np.percentile(list(tab_gcat['M_i']), L_percentiles)
+        L_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+        L_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+
+    print("Lbins:", L_bins)
+    print("n_Lbins:", n_Lbins)
+
+    for bb in range(n_Lbins):
+        i_Lbin = (tab_gcat['M_i'] >= L_bins[bb]) & (tab_gcat['M_i'] < L_bins[bb+1])
+        tab_gcat_Lbin = tab_gcat[i_Lbin]
+        # if L_bins is None:
+        if L_split == True:
+            fn_gcat_Lbin = f'../data/quaia_G{G_max}_Lsplit{n_Lbins}bin{bb}{save_tag}.fits'
+        else:
+            fn_gcat_Lbin = f'../data/quaia_G{G_max}_Lmin{L_bins[bb]}Lmax{L_bins[bb+1]}{save_tag}.fits' 
+        tab_gcat_Lbin.write(fn_gcat_Lbin, overwrite=overwrite)
+        print("Lmin:", np.min(tab_gcat_Lbin['M_i']))
+        print("Lmax:", np.max(tab_gcat_Lbin['M_i']))
+        print(f"Wrote table with {len(tab_gcat_Lbin)} objects to {fn_gcat_Lbin}")
 
 if __name__=='__main__':
     main()

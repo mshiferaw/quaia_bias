@@ -1,0 +1,86 @@
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-22.0Lmax-21.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-22.0Lmax-21.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.0
+Training fitter
+X_train: (5427, 7) y_train: (5427,)
+y_train min: 1.0 y_train: 4.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -5.11260822 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 1.3862943611198906
+yerr: [1. 1. 1. ... 1. 1. 1.] [1. 1. 1. ... 1. 1. 1.]
+p compute: [ 0.         -5.11260822 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -5059.248936264406
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 5050.554507583664
+        x: [ 1.202e-01 -2.782e+01 -1.760e+01 -1.260e+00  7.683e-01
+             5.624e+00  7.164e-01  5.371e+00  1.001e+01]
+      nit: 35
+      jac: [ 6.768e-06  1.415e-08  1.257e-11 -5.482e-11 -5.081e-13
+             1.127e-12  4.431e-13 -8.470e-15  2.026e-14]
+ hess_inv: [[ 1.256e-04 -7.385e-02 ...  1.877e-02  2.325e-05]
+            [-7.385e-02  2.447e+07 ... -6.448e+06 -8.849e+03]
+            ...
+            [ 1.877e-02 -6.448e+06 ...  1.699e+06  2.332e+03]
+            [ 2.325e-05 -8.849e+03 ...  2.332e+03  4.200e+00]]
+     nfev: 39
+     njev: 39
+p post op: [  0.12023412 -27.82397637 -17.60287278  -1.25999789   0.76834642
+   5.62381489   0.71636173   5.37078759  10.0069728 ]
+lnlike final: -5050.554507583664
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [  0.12023412 -27.82397637 -17.60287278  -1.25999789   0.76834642
+   5.62381489   0.71636173   5.37078759  10.0069728 ]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-22.0Lmax-21.0.fits
+y_pred_full: [1.12776085 1.12776085 1.12776085 ... 1.12776085 1.12776085 1.12776085]
+0
+RMSE: 0.31546313286539723
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.8727756200714921
+map_prob: [0.87277562 0.87277562 0.87277562 ... 0.87277562 0.87277562 0.87277562]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-22.0Lmax-21.0.fits!
+Time: 1429.3559606075287 s (23.822599343458812 min)

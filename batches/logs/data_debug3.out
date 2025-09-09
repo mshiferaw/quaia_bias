@@ -1,0 +1,42 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+_G20.0_zsplit2bin0
+DD: 1.4170989999999999
+DR: 34.640522
+RR: 173.585109
+20 291542 291542
+_G20.0_zsplit2bin1
+DD: 1.366991
+DR: 34.128905
+RR: 177.460557
+20 284634 284634
+_G20.5_zsplit2bin0
+DD: 5.668082
+DR: 126.48129
+RR: 605.297633
+20.5 618131 618131
+_G20.5_zsplit2bin1
+DD: 5.337034
+DR: 125.171536
+RR: 626.898678
+20.5 601222 601222

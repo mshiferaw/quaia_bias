@@ -1,0 +1,88 @@
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-32.0Lmax-31.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-31.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 1.0
+Training fitter
+X_train: (27, 7) y_train: (27,)
+y_train min: 1.0 y_train: 1.0
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/george/kernels.py:94: RuntimeWarning: divide by zero encountered in log
+  log_constant = np.log(float(b)/self.ndim)
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+y minmax 0.0 0.0
+yerr: [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1.] [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1.]
+p compute: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+lnlike compute: -24.811340396543034
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 24.811340396543034
+        x: [ 0.000e+00       -inf -5.000e-01  1.500e+00 -1.000e+00
+             5.000e+00  8.000e-01  0.000e+00  1.000e+01]
+      nit: 0
+      jac: [-0.000e+00 -0.000e+00 -0.000e+00 -0.000e+00 -0.000e+00
+            -0.000e+00 -0.000e+00 -0.000e+00 -0.000e+00]
+ hess_inv: [[1 0 ... 0 0]
+            [0 1 ... 0 0]
+            ...
+            [0 0 ... 1 0]
+            [0 0 ... 0 1]]
+     nfev: 1
+     njev: 1
+p post op: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+lnlike final: -24.811340396543034
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-31.0.fits
+y_pred_full: [1. 1. 1. ... 1. 1. 1.]
+0
+RMSE: 0.0
+Making selection function map
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py:286: RuntimeWarning: divide by zero encountered in divide
+  map_prob = map_expected / nqso_max
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: inf
+map_prob: [inf inf inf ... inf inf inf]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-31.0.fits!
+Time: 50.813793897628784 s (0.8468965649604797 min)
