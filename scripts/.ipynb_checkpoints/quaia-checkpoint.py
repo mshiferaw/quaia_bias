@@ -710,7 +710,7 @@ def make_bins(G, bb, prebinned, cut, method = None, i=None, plot = False, n_zbin
     return tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, z_bins, 1/selfunc_hi_zbin0[pixel_indices_datahi_zbin0][mask_datahi_zbin0]
 
 # 2D angular clustering w(theta)
-def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
+def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, weight_type = None,
             weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, thetabins = np.logspace(np.log10(0.1), np.log10(10.0), 15)):
     
     r"""Computes the angular clustering of `tab_gcatlo`.
@@ -800,6 +800,9 @@ def w_theta(tab_gcatlo, tab_randlo, N_gcatlo, N_randlo, selfunc_lo = None, pixel
         DR_counts['npairs'] = DR_counts['npairs']*DR_counts['weightavg']
     
     # All the pair counts are done, get the angular correlation function
+    N_gcatlo = len(tab_gcatlo)
+    N_randlo = len(tab_randlo)
+   
     return convert_3d_counts_to_cf(N_gcatlo, N_gcatlo, N_randlo, N_randlo, DD_counts, DR_counts, DR_counts, RR_counts)
 
 # 3D projected clustering wp(rp)
