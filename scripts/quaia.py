@@ -615,14 +615,14 @@ def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weigh
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'],  # where hubble distance = c/H0 and H0 = 100 km/s/Mpc h
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1[::d],
-                                         is_comoving_dist = True, weight_type=weight_type, output_rpavg = True, c_api_timer = True) 
+                                         is_comoving_dist = True, weight_type=weight_type1, output_rpavg = True, c_api_timer = True) 
     
     DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
                                          CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1[::d],
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
                                          CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
-                                         weights2 = weights2[::d], weight_type=weight_type,
+                                         weights2 = weights2[::d], weight_type=weight_type12,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
 
     # now measure clustering in random catalog
@@ -631,7 +631,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weigh
         RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
                                          CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
-                                         weights1 = weights2[::d], weight_type=weight_type,
+                                         weights1 = weights2[::d], weight_type=weight_type2,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
 
         if weight_type2 == 'pair_product':
