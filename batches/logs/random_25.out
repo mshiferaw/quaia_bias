@@ -17,35 +17,75 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py:162: RuntimeWarning: invalid value encountered in divide
-  p_rand /= np.max(p_rand)
-allsky 
+allsky _allsky
 Loading data
-Number of data sources: 27
+Number of data sources: 324336
 Estimating reduction factor
-Sel func min and max: 0.0 inf
-Subsampling by 0.000 for probability map
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 170, in <module>
-    main()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 78, in main
-    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 129, in run
-    N_rand_init = int(N_rand_target/reduction_factor_estimate)
-ZeroDivisionError: float division by zero
-/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py:162: RuntimeWarning: invalid value encountered in divide
-  p_rand /= np.max(p_rand)
-allsky 
+Sel func min and max: 0.0 0.7735255789265651
+Subsampling by 0.561 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 14443023
+Wrote random to ../data/randoms/random_G20.5_zmin0.0zmax1.0_allsky_25x.fits!
+allsky _allsky
 Loading data
-Number of data sources: 33
+Number of data sources: 648196
 Estimating reduction factor
-Sel func min and max: 0.0 inf
-Subsampling by 0.000 for probability map
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 170, in <module>
-    main()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 78, in main
-    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 129, in run
-    N_rand_init = int(N_rand_target/reduction_factor_estimate)
-ZeroDivisionError: float division by zero
+Sel func min and max: 0.0 0.8029652278706577
+Subsampling by 0.562 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 28826237
+Wrote random to ../data/randoms/random_G20.5_zmin1.0zmax2.0_allsky_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 286508
+Estimating reduction factor
+Sel func min and max: 0.0 1.0705880135820203
+Subsampling by 0.348 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 20562971
+Wrote random to ../data/randoms/random_G20.5_zmin2.0zmax3.0_allsky_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 35630
+Estimating reduction factor
+Sel func min and max: 0.0 0.566234418771567
+Subsampling by 0.685 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 1300784
+Wrote random to ../data/randoms/random_G20.5_zmin3.0zmax4.0_allsky_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 200785
+Estimating reduction factor
+Sel func min and max: 0.0 0.6640735997736479
+Subsampling by 0.622 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 8073005
+Wrote random to ../data/randoms/random_G20.0_zmin0.0zmax1.0_allsky_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 369335
+Estimating reduction factor
+Sel func min and max: 0.0 0.6930112714204136
+Subsampling by 0.616 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 14997352
+Wrote random to ../data/randoms/random_G20.0_zmin1.0zmax2.0_allsky_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 165277
+Estimating reduction factor
+Sel func min and max: 0.0 0.6002519161631639
+Subsampling by 0.611 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 6765440
+Wrote random to ../data/randoms/random_G20.0_zmin2.0zmax3.0_allsky_25x.fits!
+allsky _allsky
+Loading data
+Number of data sources: 20035
+Estimating reduction factor
+Sel func min and max: 0.0 0.6393355978244327
+Subsampling by 0.739 for probability map
+Generating allksy random with 25 times N_data
+Number of final random sources: 677929
+Wrote random to ../data/randoms/random_G20.0_zmin3.0zmax4.0_allsky_25x.fits!

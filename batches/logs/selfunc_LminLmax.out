@@ -17,7 +17,7 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-24.0Lmax-20.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-24.0Lmax-20.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Running selection function with fn_catalog=../data/quaia_G20.5_Lmin-32.0Lmax-30.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-30.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
 Loading data
 Making QSO map
 Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
@@ -28,20 +28,142 @@ MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
 unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
 unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
-y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-24.0Lmax-20.0.fits
-y_pred_full: [1.19283124 1.2739838  1.6547502  ... 1.87494921 1.86349322 1.80996281]
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.8284271247461903
+Training fitter
+X_train: (240, 7) y_train: (240,)
+y_train min: 1.0 y_train: 8.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -4.48787462 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 2.0794415416798357
+yerr: [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.41421356
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 2.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         2.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.41421356 1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.41421356 1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.41421356 2.         1.
+ 1.         1.         2.82842712 2.64575131 1.         2.64575131
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ] [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         0.70710678
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 0.5        1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         0.5        1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         0.70710678 1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         0.70710678 1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         0.70710678 0.5        1.
+ 1.         1.         0.35355339 0.37796447 1.         0.37796447
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ]
+p compute: [ 0.         -4.48787462 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -249.22038944921528
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 232.67081162651237
+        x: [ 5.839e-01 -2.585e+00  1.106e+00  1.062e+03  8.301e+02
+             4.516e+00  9.628e+02  1.023e+03  2.184e+01]
+      nit: 52
+      jac: [ 2.285e-06 -5.204e-06  4.864e-06 -0.000e+00 -0.000e+00
+             2.129e-06 -0.000e+00 -0.000e+00 -2.545e-09]
+ hess_inv: [[ 1.616e-01 -3.660e-03 ...  1.854e+04  2.167e+02]
+            [-3.660e-03  4.021e-01 ...  9.613e+02  1.123e+01]
+            ...
+            [ 1.854e+04  9.613e+02 ...  9.110e+11  1.065e+10]
+            [ 2.167e+02  1.123e+01 ...  1.065e+10  1.244e+08]]
+     nfev: 53
+     njev: 53
+p post op: [ 5.83900112e-01 -2.58452423e+00  1.10552741e+00  1.06240494e+03
+  8.30147218e+02  4.51635165e+00  9.62798331e+02  1.02290911e+03
+  2.18353812e+01]
+lnlike final: -232.67081162651237
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 5.83900112e-01 -2.58452423e+00  1.10552741e+00  1.06240494e+03
+  8.30147218e+02  4.51635165e+00  9.62798331e+02  1.02290911e+03
+  2.18353812e+01]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-30.0.fits
+y_pred_full: [1.02787136 1.01614065 0.99472844 ... 0.99119864 0.99116962 0.9917132 ]
 0
-RMSE: 1.3255073242069113
+RMSE: 0.43384273146308394
 Making selection function map
 setting the output map dtype to [dtype('float64')]
 Number of clean healpixels: 479 (Total: 49152)
 Using parent catalog to determine zero-probability pixels
 (If i_keep also passed, will be ignored!)
-min: 0.0, max: 0.5949314306435795
-map_prob: [0.19822636 0.21171241 0.2749887  ... 0.31158168 0.30967791 0.30078215]
-Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-24.0Lmax-20.0.fits!
-Time: 0.9269285202026367 s (0.015448808670043945 min)
-Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-32.0Lmax-28.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-28.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+min: 0.0, max: 39.13210587620682
+map_prob: [6.26577151 6.1942626  6.06373656 ... 6.04221932 6.04204244 6.04535604]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-30.0.fits!
+Time: 51.080214500427246 s (0.8513369083404541 min)
+Running selection function with fn_catalog=../data/quaia_G20.5_Lmin-30.0Lmax-28.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lmin-30.0Lmax-28.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
 Loading data
 Making QSO map
 Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
@@ -52,20 +174,62 @@ MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
 unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
 unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
-y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-28.0.fits
-y_pred_full: [1.89219243 1.91768215 1.82660819 ... 1.64285975 1.69887053 1.68479194]
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.242640687119285
+Training fitter
+X_train: (22047, 7) y_train: (22047,)
+y_train min: 1.0 y_train: 18.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -3.73279301 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 2.8903717578961645
+yerr: [1.         2.         1.         ... 1.         1.         1.41421356] [1.         0.5        1.         ... 1.         1.         0.70710678]
+p compute: [ 0.         -3.73279301 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -20841.190971395827
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 20797.732522561982
+        x: [ 6.377e-01 -2.611e+00 -1.367e-01  9.176e+01  1.092e+02
+             1.274e+00  1.870e+00  4.010e+00  2.938e+01]
+      nit: 48
+      jac: [-3.869e-06 -1.088e-06 -2.816e-06 -1.498e-37 -2.118e-46
+            -2.927e-07  2.076e-07 -2.704e-06 -1.181e-10]
+ hess_inv: [[ 5.906e-02 -2.931e-02 ... -9.203e-04  8.626e+02]
+            [-2.931e-02  1.513e-01 ...  7.147e-02 -2.122e+03]
+            ...
+            [-9.203e-04  7.147e-02 ...  5.417e-01 -1.083e+04]
+            [ 8.626e+02 -2.122e+03 ... -1.083e+04  2.840e+09]]
+     nfev: 50
+     njev: 50
+p post op: [  0.63767936  -2.6110609   -0.13673276  91.76167313 109.23427864
+   1.2744083    1.86977508   4.0100754   29.3771673 ]
+lnlike final: -20797.732522561982
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [  0.63767936  -2.6110609   -0.13673276  91.76167313 109.23427864
+   1.2744083    1.86977508   4.0100754   29.3771673 ]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-30.0Lmax-28.0.fits
+y_pred_full: [2.08666917 2.09359575 1.90538158 ... 1.6785846  1.73689692 1.728205  ]
 0
-RMSE: 0.713570622416859
+RMSE: 0.7340911918838912
 Making selection function map
 setting the output map dtype to [dtype('float64')]
 Number of clean healpixels: 479 (Total: 49152)
 Using parent catalog to determine zero-probability pixels
 (If i_keep also passed, will be ignored!)
-min: 0.0, max: 3.226872549845212
-map_prob: [0.8643494  0.87599304 0.83439066 ... 0.75045477 0.77604037 0.7696093 ]
-Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-28.0.fits!
-Time: 0.37776756286621094 s (0.006296126047770182 min)
-Running selection function with fn_catalog=../data/quaia_G20.5_Lmin-24.0Lmax-20.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lmin-24.0Lmax-20.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+min: 0.0, max: 6.081208675961273
+map_prob: [0.94452186 0.94765714 0.86246281 ... 0.75980413 0.78619895 0.78226459]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-30.0Lmax-28.0.fits!
+Time: 6841.195117473602 s (114.01991862456003 min)
+Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-32.0Lmax-30.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-30.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
 Loading data
 Making QSO map
 Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
@@ -76,20 +240,136 @@ MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
 unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
 unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
-y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-24.0Lmax-20.0.fits
-y_pred_full: [1.48712811 1.65513196 2.45148309 ... 2.86541101 2.91746339 2.75210399]
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.0
+Training fitter
+X_train: (228, 7) y_train: (228,)
+y_train min: 1.0 y_train: 4.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -5.03066953 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 1.3862943611198906
+yerr: [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.73205081 1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         2.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.41421356 1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.41421356 1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.41421356
+ 2.         1.         1.         1.73205081 2.         1.
+ 1.73205081 1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ] [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         0.57735027 1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         0.5        1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         0.70710678 1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 0.70710678 1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         0.70710678
+ 0.5        1.         1.         0.57735027 0.5        1.
+ 0.57735027 1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ]
+p compute: [ 0.         -5.03066953 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -222.3799922257497
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 216.84461547115956
+        x: [ 4.738e-01 -3.637e+00  3.448e+00  2.317e+02  1.893e+02
+             1.763e+01  2.812e+02  2.143e+02  2.716e+00]
+      nit: 53
+      jac: [-9.740e-06  3.144e-06  5.756e-07 -6.512e-100 -1.472e-83
+            -2.994e-07 -2.626e-122 -2.724e-93 -4.946e-09]
+ hess_inv: [[ 8.482e-02  6.155e-02 ...  2.183e+00 -5.734e-02]
+            [ 6.155e-02  8.452e-01 ...  2.729e+00  1.834e-02]
+            ...
+            [ 2.183e+00  2.729e+00 ...  5.917e+04 -1.859e+03]
+            [-5.734e-02  1.834e-02 ... -1.859e+03  6.515e+01]]
+     nfev: 70
+     njev: 70
+p post op: [  0.47378975  -3.63729278   3.44829945 231.71956864 189.31058682
+  17.63237672 281.20419145 214.26180964   2.71641877]
+lnlike final: -216.84461547115956
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [  0.47378975  -3.63729278   3.44829945 231.71956864 189.31058682
+  17.63237672 281.20419145 214.26180964   2.71641877]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-30.0.fits
+y_pred_full: [1.06309931 1.05862835 1.04645974 ... 1.04121149 1.04111018 1.04252415]
 0
-RMSE: 2.096255960774485
+RMSE: 0.33515837741723237
 Making selection function map
 setting the output map dtype to [dtype('float64')]
 Number of clean healpixels: 479 (Total: 49152)
 Using parent catalog to determine zero-probability pixels
 (If i_keep also passed, will be ignored!)
-min: 0.0, max: 0.6595773745175498
-map_prob: [0.13443842 0.1496262  0.22161744 ... 0.25903709 0.2637427  0.24879398]
-Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-24.0Lmax-20.0.fits!
-Time: 0.9197022914886475 s (0.01532837152481079 min)
-Running selection function with fn_catalog=../data/quaia_G20.5_Lmin-32.0Lmax-28.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-28.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+min: 0.0, max: 15.041625482674704
+map_prob: [6.48051656 6.45326216 6.37908391 ... 6.34709121 6.34647364 6.35509303]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-32.0Lmax-30.0.fits!
+Time: 48.009135723114014 s (0.8001522620519003 min)
+Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-30.0Lmax-28.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-30.0Lmax-28.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
 Loading data
 Making QSO map
 Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
@@ -100,16 +380,58 @@ MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
 unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
 unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
-y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-28.0.fits
-y_pred_full: [2.08443046 2.09242033 1.91328985 ... 1.68441022 1.74539436 1.73479541]
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 3.0
+Training fitter
+X_train: (21433, 7) y_train: (21433,)
+y_train min: 1.0 y_train: 9.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.       -3.785434 -0.5       1.5      -1.        5.        0.8
+  0.       10.      ]
+y minmax 0.0 2.197224577336219
+yerr: [1.         2.         1.         ... 1.         1.         1.41421356] [1.         0.5        1.         ... 1.         1.         0.70710678]
+p compute: [ 0.       -3.785434 -0.5       1.5      -1.        5.        0.8
+  0.       10.      ]
+lnlike compute: -20213.811321124813
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 20185.326110296184
+        x: [ 4.493e-01 -3.686e+00 -1.145e-01  7.491e+01  1.138e+02
+             6.335e-01  1.158e+00  4.289e+00  2.403e+01]
+      nit: 45
+      jac: [ 4.257e-06 -4.700e-06  2.313e-06 -8.292e-31 -5.757e-49
+             1.346e-06 -1.205e-07 -5.420e-07 -8.333e-09]
+ hess_inv: [[ 2.596e-02 -8.577e-03 ... -2.181e-02  2.892e+01]
+            [-8.577e-03  1.731e-01 ...  8.501e-02 -1.679e+02]
+            ...
+            [-2.181e-02  8.501e-02 ...  1.978e+00 -3.301e+02]
+            [ 2.892e+01 -1.679e+02 ... -3.301e+02  4.131e+07]]
+     nfev: 50
+     njev: 50
+p post op: [  0.44928733  -3.68560758  -0.11451401  74.9120461  113.82154394
+   0.63352789   1.15801653   4.28860074  24.02754208]
+lnlike final: -20185.326110296184
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [  0.44928733  -3.68560758  -0.11451401  74.9120461  113.82154394
+   0.63352789   1.15801653   4.28860074  24.02754208]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-30.0Lmax-28.0.fits
+y_pred_full: [1.90502966 1.92802745 1.82597178 ... 1.64163214 1.69632405 1.68375678]
 0
-RMSE: 0.7400380849050695
+RMSE: 0.7091618763439443
 Making selection function map
 setting the output map dtype to [dtype('float64')]
 Number of clean healpixels: 479 (Total: 49152)
 Using parent catalog to determine zero-probability pixels
 (If i_keep also passed, will be ignored!)
-min: 0.0, max: 7.469897381539249
-map_prob: [0.93282055 0.93639616 0.85623201 ... 0.75380421 0.78109572 0.7763525 ]
-Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-28.0.fits!
-Time: 0.4901454448699951 s (0.008169090747833252 min)
+min: 0.0, max: 2.173272703826957
+map_prob: [0.88064418 0.89127544 0.84409784 ... 0.75888256 0.78416516 0.77835565]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-30.0Lmax-28.0.fits!
+Time: 6823.252821683884 s (113.72088036139806 min)

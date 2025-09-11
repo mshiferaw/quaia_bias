@@ -23,11 +23,21 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 #     done
 # done
 
-for G in '20.0' '20.5'
+for G in '20.5' '20.0'
 do 
-
-    python selection_function_map.py ../data/quaia_G${G}_Lmin-24.0Lmax-20.0.fits ../data/maps/selection_function_NSIDE64_G${G}_Lmin-24.0Lmax-20.0.fits -p ../data/quaia_G${G}.fits
-
-    python selection_function_map.py ../data/quaia_G${G}_Lmin-32.0Lmax-28.0.fits ../data/maps/selection_function_NSIDE64_G${G}_Lmin-32.0Lmax-28.0.fits -p ../data/quaia_G${G}.fits
-
+    
+    for Lmin in '-32.0' '-30.0'
+    do
+        Lmax=$(bc <<< "$Lmin + 2.0")
+        python selection_function_map.py ../data/quaia_G${G}_Lmin${Lmin}Lmax${Lmax}.fits ../data/maps/selection_function_NSIDE64_G${G}_Lmin${Lmin}Lmax${Lmax}.fits -p ../data/quaia_G${G}.fits
+    done
 done
+
+# for G in '20.0' '20.5'
+# do 
+
+#     python selection_function_map.py ../data/quaia_G${G}_Lmin-24.0Lmax-20.0.fits ../data/maps/selection_function_NSIDE64_G${G}_Lmin-24.0Lmax-20.0.fits -p ../data/quaia_G${G}.fits
+
+#     python selection_function_map.py ../data/quaia_G${G}_Lmin-32.0Lmax-28.0.fits ../data/maps/selection_function_NSIDE64_G${G}_Lmin-32.0Lmax-28.0.fits -p ../data/quaia_G${G}.fits
+
+# done
