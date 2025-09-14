@@ -1,0 +1,52 @@
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+Leaving tab_gcat_catalog unbinned
+_G20.5
+DD: 15.067388
+DR: 785.942357
+RR: 10073.238285
+20.5 1102599
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_all_25x.py", line 31, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_all_25x.py", line 23, in main
+    np.save('../results/wtheta_G{:.1f}_25x'.format(G, zbin), wtheta_datahi_zbin0)
+NameError: name 'zbin' is not defined. Did you mean: 'nbins'?
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+Leaving tab_gcat_catalog unbinned
+_G20.0
+DD: 4.216443
+DR: 241.617165
+RR: 3022.356398
+20.0 624375
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_all_25x.py", line 31, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_all_25x.py", line 23, in main
+    np.save('../results/wtheta_G{:.1f}_25x'.format(G, zbin), wtheta_datahi_zbin0)
+NameError: name 'zbin' is not defined. Did you mean: 'nbins'?
+/var/spool/slurmd/job5652852/slurm_script: line 22: syntax error near unexpected token `done'
+/var/spool/slurmd/job5652852/slurm_script: line 22: `done'

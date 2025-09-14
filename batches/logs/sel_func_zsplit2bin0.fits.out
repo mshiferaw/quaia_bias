@@ -1,0 +1,127 @@
+Starting batch job
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.5_zsplit2bin0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zsplit2bin0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zsplit2bin0.fits
+y_pred_full: [ 9.34517023 10.57036944 12.97926898 ... 13.50647577 13.32696043
+ 13.26912564]
+0
+RMSE: 4.09599821905422
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.802751781955829
+map_prob: [0.31615373 0.35760309 0.43909787 ... 0.45693365 0.45086052 0.44890392]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zsplit2bin0.fits!
+Time: 1.2976891994476318 s (0.021628153324127198 min)
+Running selection function with fn_catalog=../data/quaia_G20.0_zsplit2bin0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zsplit2bin0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zsplit2bin0.fits
+y_pred_full: [4.79002705 5.46522171 7.37080544 ... 7.82180977 7.78416007 7.58480147]
+0
+RMSE: 3.109749110000014
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.7238492387835441
+map_prob: [0.25269095 0.28830986 0.38883618 ... 0.41262826 0.4106421  0.40012523]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_zsplit2bin0.fits!
+Time: 0.6881492137908936 s (0.01146915356318156 min)
+allsky 
+Loading data
+Number of data sources: 647744
+Estimating reduction factor
+Sel func min and max: 0.0 0.802751781955829
+Subsampling by 0.576 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.802751781955829
+Subsampling by 0.576 for probability map
+Number of final random sources: 16194592
+Wrote random to ../data/randoms/random_G20.5_zsplit2bin0_25x.fits!
+allsky 
+Loading data
+Number of data sources: 377925
+Estimating reduction factor
+Sel func min and max: 0.0 0.7238492387835441
+Subsampling by 0.595 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.7238492387835441
+Subsampling by 0.595 for probability map
+Number of final random sources: 9443130
+Wrote random to ../data/randoms/random_G20.0_zsplit2bin0_25x.fits!
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+_G20.0_zsplit2bin0
+DD: 0.930933
+DR: 55.803474
+RR: 726.093378
+20.0 291542
+_G20.5_zsplit2bin0
+DD: 4.034835
+DR: 208.838997
+RR: 2569.11787
+20.5 540770

@@ -21,14 +21,14 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 #     done
 # done
 
-for G in '20.5' '20.0'
-do
-    for zmin in '0.0' '1.0' '2.0' '3.0'
-    do 
-        zmax=$(bc <<< "$zmin + 1.0")
-        python generate_random.py ${G} 25 _zmin${zmin}zmax${zmax} '_allsky'
-    done
-done
+# for G in '20.5' '20.0'
+# do
+#     for zmin in '0.0' '1.0' '2.0' '3.0'
+#     do 
+#         zmax=$(bc <<< "$zmin + 1.0")
+#         python generate_random.py ${G} 25 _zmin${zmin}zmax${zmax} '_allsky'
+#     done
+# done
 
 # for G in '20.0' '20.5'
 # do
@@ -50,6 +50,15 @@ done
 #     done
 # done
 
+# for G in '20.5' '20.0'
+# do
+#     for Lmin in '-32.0' '-30.0' 
+#     do
+#         Lmax=$(bc <<< "$Lmin + 2.0")
+#         python generate_random.py ${G} 25 _Lmin${Lmin}Lmax${Lmax}
+#     done
+# done
+
 # for G in '20.0' '20.5'
 # do
 #     # python generate_random.py ${G} 25 _Lmin-32.0Lmax-31.0
@@ -64,3 +73,11 @@ done
 #         python generate_random.py ${G} 25 _Lsplit4bin${Lbin}
 #     done
 # done
+
+for G in '20.5' '20.0'
+do
+    for Lbin in '0' '1' '2'
+    do
+        python generate_random.py ${G} 25 _Lsplit3bin${Lbin}
+    done
+done

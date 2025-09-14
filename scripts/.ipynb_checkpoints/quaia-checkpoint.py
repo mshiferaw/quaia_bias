@@ -361,8 +361,8 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     else:
         print('Leaving tab_gcat_catalog unbinned')
         fname = '_G{:.1f}'.format(G)
-        if prebinned == True:
-            raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = False. To use prebinned catalogs, select either the \'split\' or \'minmax\' method.')
+        if prebinned == False:
+            raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = True.')
     print(fname)
     
     # for prebinned catalogs (only data)
@@ -376,6 +376,10 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     elif prebinned == False:
         
         if tab_gcat_type == 'mocks':
+            if i is None:
+                raise Exception('Select which mock to run.')
+            if G==20.0:
+                G=20 # for mock file naming convention
             fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
             tab_gcat = Table.read(fn_datahi)
         elif tab_gcat_type == 'data':

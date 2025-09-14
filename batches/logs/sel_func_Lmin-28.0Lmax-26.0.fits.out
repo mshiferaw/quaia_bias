@@ -1,0 +1,190 @@
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.0_Lmin-28.0Lmax-26.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_Lmin-28.0Lmax-26.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 5.0
+Training fitter
+X_train: (41541, 7) y_train: (41541,)
+y_train min: 1.0 y_train: 25.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.89185561 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.4011973816621555
+yerr: [3.60555128 3.46410162 3.60555128 ... 3.74165739 3.87298335 3.16227766] [0.2773501  0.28867513 0.2773501  ... 0.26726124 0.25819889 0.31622777]
+p compute: [ 0.         -2.89185561 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -12086.088353790532
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 12019.512236366878
+        x: [ 1.821e+00 -2.600e+00 -6.424e-01  1.414e+00 -1.845e+00
+             4.728e+00  9.563e-01 -4.244e-01  2.576e+01]
+      nit: 35
+      jac: [-4.716e-06 -6.083e-06  3.464e-07 -9.723e-07 -1.389e-08
+            -3.257e-07  2.622e-07 -8.572e-07 -3.908e-08]
+ hess_inv: [[ 2.868e-02 -9.557e-03 ... -1.038e-02 -2.791e+01]
+            [-9.557e-03  3.316e-02 ...  1.122e-02 -8.218e+01]
+            ...
+            [-1.038e-02  1.122e-02 ...  5.570e-02 -3.293e+01]
+            [-2.791e+01 -8.218e+01 ... -3.293e+01  8.420e+06]]
+     nfev: 39
+     njev: 39
+p post op: [ 1.82087395 -2.59960224 -0.64238848  1.41376521 -1.84481632  4.72834109
+  0.95625111 -0.42438888 25.75916134]
+lnlike final: -12019.512236366878
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.82087395 -2.59960224 -0.64238848  1.41376521 -1.84481632  4.72834109
+  0.95625111 -0.42438888 25.75916134]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-28.0Lmax-26.0.fits
+y_pred_full: [ 9.01974989 10.18343584 11.29303425 ... 10.66058764 10.66947136
+ 10.77506032]
+0
+RMSE: 3.4015023459567164
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 1.2197169651160467
+map_prob: [0.42949176 0.48490278 0.53773832 ... 0.50762323 0.50804624 0.51307405]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-28.0Lmax-26.0.fits!
+Time: 27806.26549601555 s (463.4377582669258 min)
+allsky 
+Loading data
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 170, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 78, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 116, in run
+    tab_catalog = utils.load_table(fn_catalog)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
+    return Table.read(fn_fits, format=format)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
+    out = self.registry.read(cls, *args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
+    data = reader(*args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
+    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
+    return HDUList.fromfile(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
+    return cls._readfrom(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
+    fileobj = _File(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
+    self._file = open(self.name, IO_FITS_MODES[mode])
+FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.5_Lmin-28.0Lmax-26.0.fits.fits'
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.94455101 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.2188758248682006
+yerr: [2.82842712 2.23606798 3.         ... 3.16227766 3.46410162 2.23606798] [0.35355339 0.4472136  0.33333333 ... 0.31622777 0.28867513 0.4472136 ]
+p compute: [ 0.         -2.94455101 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -16946.30901876106
+Minimizing
+  message: Desired error not necessarily achieved due to precision loss.
+  success: False
+   status: 2
+      fun: 16900.859098509118
+        x: [ 1.459e+00 -2.363e+00 -3.696e-01  1.634e+00  2.420e+00
+             5.894e+00  7.222e-01  3.311e+00  1.173e+01]
+      nit: 30
+      jac: [-6.551e-06  1.310e-06 -2.549e-06  1.143e-05  1.674e-06
+            -1.881e-06  2.432e-06 -3.376e-06 -9.557e-07]
+ hess_inv: [[ 1.007e-01 -1.624e-02 ... -2.801e-02  1.198e-02]
+            [-1.624e-02  1.622e-01 ...  1.167e-01 -4.329e-02]
+            ...
+            [-2.801e-02  1.167e-01 ...  3.489e-01  1.559e-02]
+            [ 1.198e-02 -4.329e-02 ...  1.559e-02  1.709e+02]]
+     nfev: 72
+     njev: 60
+p post op: [ 1.45924902 -2.36334501 -0.36955167  1.6342733   2.41951492  5.89423293
+  0.72221185  3.31130058 11.72897443]
+lnlike final: -16900.859098509118
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.45924902 -2.36334501 -0.36955167  1.6342733   2.41951492  5.89423293
+  0.72221185  3.31130058 11.72897443]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_Lmin-28.0Lmax-26.0.fits
+y_pred_full: [4.90539484 5.84003453 7.9568264  ... 7.47797083 7.64094967 7.41293868]
+0
+RMSE: 2.894405854718782
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.6711839247820969
+map_prob: [0.30493562 0.36303592 0.49462273 ... 0.46485547 0.47498678 0.46081286]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_Lmin-28.0Lmax-26.0.fits!
+Time: 36612.71429562569 s (610.2119049270948 min)
+allsky 
+Loading data
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 170, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 78, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 116, in run
+    tab_catalog = utils.load_table(fn_catalog)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
+    return Table.read(fn_fits, format=format)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
+    out = self.registry.read(cls, *args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
+    data = reader(*args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
+    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
+    return HDUList.fromfile(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
+    return cls._readfrom(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
+    fileobj = _File(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
+    self._file = open(self.name, IO_FITS_MODES[mode])
+FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.0_Lmin-28.0Lmax-26.0.fits.fits'

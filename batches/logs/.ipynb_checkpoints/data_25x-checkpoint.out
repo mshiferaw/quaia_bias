@@ -1,0 +1,23 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+sbatch: fatal: sel_func_zsplit2bin0.sh: line 3: Unmatched `"` in [--job-name=sel_func_zsplit2bin0.fits"]
+sbatch: fatal: sel_func_zsplit2bin1.sh: line 3: Unmatched `"` in [--job-name=sel_func_zsplit2bin1.fits"]
+sbatch: fatal: sel_func_zsplit2bin0.sh: line 3: Unmatched `"` in [--job-name=sel_func_zsplit2bin0.fits"]
+sbatch: fatal: sel_func_zsplit2bin1.sh: line 3: Unmatched `"` in [--job-name=sel_func_zsplit2bin1.fits"]

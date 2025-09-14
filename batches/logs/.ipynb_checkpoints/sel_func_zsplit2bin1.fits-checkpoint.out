@@ -1,0 +1,236 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Starting batch job
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Running selection function with fn_catalog=../data/quaia_G20.5_zsplit2bin1.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zsplit2bin1.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zsplit2bin1.fits
+y_pred_full: [ 7.36934895  9.09781269 12.43244139 ... 12.29739143 12.50284807
+ 12.18726629]
+0
+RMSE: 4.142989909939913
+Making selection function map
+Running selection function with fn_catalog=../data/quaia_G20.0_zsplit2bin1.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zsplit2bin1.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 5.385164807134504
+Training fitter
+X_train: (40790, 7) y_train: (40790,)
+y_train min: 1.0 y_train: 29.0
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.9153266637256053
+map_prob: [0.2262167  0.27927531 0.38163832 ... 0.37749269 0.38379959 0.37411218]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zsplit2bin1.fits!
+Time: 1.143080234527588 s (0.019051337242126466 min)
+allsky 
+Loading data
+Number of data sources: 647758
+Estimating reduction factor
+Sel func min and max: 0.0 0.9153266637256053
+Subsampling by 0.460 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.9153266637256053
+Subsampling by 0.459 for probability map
+Number of final random sources: 16186924
+Wrote random to ../data/randoms/random_G20.5_zsplit2bin1_25x.fits!
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_25x.py", line 34, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_25x.py", line 23, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _ = quaia.make_bins(G, zbin, True, method = 'split', n_bins = 2, tab_gcat_type = 'data', z = True, fac_rand = 25)
+TypeError: make_bins() missing 1 required positional argument: 'cut'
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.78566127 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.3672958299864737
+yerr: [2.23606798 2.44948974 2.82842712 ... 3.16227766 3.74165739 2.64575131] [0.4472136  0.40824829 0.35355339 ... 0.31622777 0.26726124 0.37796447]
+p compute: [ 0.         -2.78566127 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -14790.441427853122
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 14735.333796444997
+        x: [ 1.337e+00 -2.107e+00 -6.761e-01  2.013e+00 -1.492e+00
+             6.248e+00  1.636e+00  3.528e+00  9.407e+00]
+      nit: 24
+      jac: [-3.611e-06 -1.712e-06 -5.818e-07  2.103e-06 -1.209e-06
+            -1.901e-08  7.297e-07  9.364e-07 -1.530e-07]
+ hess_inv: [[ 7.570e-02 -5.882e-03 ... -1.314e-02 -4.271e-02]
+            [-5.882e-03  1.418e-01 ...  1.078e-01  1.108e-01]
+            ...
+            [-1.314e-02  1.078e-01 ...  4.962e-01  1.608e-01]
+            [-4.271e-02  1.108e-01 ...  1.608e-01  4.679e+00]]
+     nfev: 27
+     njev: 27
+p post op: [ 1.33728545 -2.10718039 -0.6760621   2.01349618 -1.49157206  6.2477323
+  1.63635632  3.52809723  9.40708198]
+lnlike final: -14735.333796444997
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.33728545 -2.10718039 -0.6760621   2.01349618 -1.49157206  6.2477323
+  1.63635632  3.52809723  9.40708198]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zsplit2bin1.fits
+y_pred_full: [4.09064486 4.98068114 7.32830773 ... 7.12746973 7.40673528 6.98274242]
+0
+RMSE: 3.1313671740384996
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.6898251851983876
+map_prob: [0.2076425  0.25282104 0.37198735 ... 0.36179275 0.37596836 0.35444634]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_zsplit2bin1.fits!
+Time: 12139.199733018875 s (202.3199955503146 min)
+allsky 
+Loading data
+Number of data sources: 377925
+Estimating reduction factor
+Sel func min and max: 0.0 0.6898251851983876
+Subsampling by 0.602 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.6898251851983876
+Subsampling by 0.602 for probability map
+Number of final random sources: 9447641
+Wrote random to ../data/randoms/random_G20.0_zsplit2bin1_25x.fits!
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_25x.py", line 34, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_25x.py", line 23, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _ = quaia.make_bins(G, zbin, True, method = 'split', n_bins = 2, tab_gcat_type = 'data', z = True, fac_rand = 25)
+TypeError: make_bins() missing 1 required positional argument: 'cut'
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.78566127 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.3672958299864737
+yerr: [2.23606798 2.44948974 2.82842712 ... 3.16227766 3.74165739 2.64575131] [0.4472136  0.40824829 0.35355339 ... 0.31622777 0.26726124 0.37796447]
+p compute: [ 0.         -2.78566127 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -14790.441427853122
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 14735.333796444997
+        x: [ 1.337e+00 -2.107e+00 -6.761e-01  2.013e+00 -1.492e+00
+             6.248e+00  1.636e+00  3.528e+00  9.407e+00]
+      nit: 24
+      jac: [-3.611e-06 -1.712e-06 -5.818e-07  2.103e-06 -1.209e-06
+            -1.901e-08  7.297e-07  9.364e-07 -1.530e-07]
+ hess_inv: [[ 7.570e-02 -5.882e-03 ... -1.314e-02 -4.271e-02]
+            [-5.882e-03  1.418e-01 ...  1.078e-01  1.108e-01]
+            ...
+            [-1.314e-02  1.078e-01 ...  4.962e-01  1.608e-01]
+            [-4.271e-02  1.108e-01 ...  1.608e-01  4.679e+00]]
+     nfev: 27
+     njev: 27
+p post op: [ 1.33728545 -2.10718039 -0.6760621   2.01349618 -1.49157206  6.2477323
+  1.63635632  3.52809723  9.40708198]
+lnlike final: -14735.333796444997
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.33728545 -2.10718039 -0.6760621   2.01349618 -1.49157206  6.2477323
+  1.63635632  3.52809723  9.40708198]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zsplit2bin1.fits
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
+    parse_args()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
+    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 215, in run
+    hp.write_map(fn_ypred, y_pred_full, overwrite=overwrite_ypred)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/healpy/fitsfunc.py", line 296, in write_map
+    tbhdu.writeto(str(filename), overwrite=overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/base.py", line 1599, in writeto
+    hdulist.writeto(name, output_verify, overwrite=overwrite, checksum=checksum)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1010, in writeto
+    fileobj = _File(fileobj, mode=mode, overwrite=overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 615, in _open_filename
+    self._overwrite_existing(overwrite, None, True)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 498, in _overwrite_existing
+    raise OSError(NOT_OVERWRITING_MSG.format(self.name))
+OSError: File ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zsplit2bin1.fits already exists. If you mean to replace it then use the argument "overwrite=True".
+allsky 
+Loading data
+Number of data sources: 377925
+Estimating reduction factor
+Sel func min and max: 0.0 0.6898251851983876
+Subsampling by 0.602 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.6898251851983876
+Subsampling by 0.602 for probability map
+Number of final random sources: 9447641
+Wrote random to ../data/randoms/random_G20.0_zsplit2bin1_25x.fits!
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_25x.py", line 34, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_25x.py", line 23, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _ = quaia.make_bins(G, zbin, True, method = 'split', n_bins = 2, tab_gcat_type = 'data', z = True, fac_rand = 25)
+TypeError: make_bins() missing 1 required positional argument: 'cut'

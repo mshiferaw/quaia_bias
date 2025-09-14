@@ -1,0 +1,27 @@
+import numpy as np
+import quaia
+import sys
+
+def main():
+    
+    nthreads = 20
+    z_array = [0,1]
+    thetabins = np.logspace(np.log10(0.1), np.log10(35), 15) #(np.log10(0.15), np.log10(35), 15)
+
+    # Create the bins array
+    rmin = 0.15 # 0.5 # 0.1 # start higher
+    rmax = 240 # 120 #85 # 60.0 # 20.0 
+    nbins = 20 
+    rbins = np.logspace(np.log10(rmin), np.log10(rmax), nbins + 1) # Mpc/h https://github.com/manodeep/Corrfunc/issues/202
+    pimax = 80 # 40 # 5000.0 # 40.0
+    
+    G = float(sys.argv[1])
+    zbin = int(sys.argv[2])
+    i = int(sys.argv[3])
+
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _ = quaia.make_bins(G, zbin, False, 'z', tab_gcat_type = 'mocks', method = 'split', n_bins = 2, fac_rand = 25, i = i+1)
+    wtheta_datahi_zbin0 = quaia.w_theta(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, nthreads = nthreads, thetabins = thetabins)
+    np.save('../results/wtheta_G{:.1f}_zsplit2bin{}_mock{}_25x'.format(G, zbin, i+1), wtheta_datahi_zbin0)
+                
+if __name__=='__main__':
+    main()
