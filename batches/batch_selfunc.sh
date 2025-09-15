@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=selfunc_G20.5_zsplit2
+#SBATCH --job-name=selfunc_G20.5_Lsplit4bin0
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48
@@ -25,7 +25,9 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 #     done
 # done
 
-for zbin in '0' '1'
-do 
-    python selection_function_map.py ../data/quaia_G20.5_zsplit2bin${zbin}.fits ../data/maps/selection_function_NSIDE64_G20.5_zsplit2bin${zbin}.fits -p ../data/quaia_G20.5.fits
-done
+# for zbin in '0' '1'
+# do 
+#     python selection_function_map.py ../data/quaia_G20.5_zsplit2bin${zbin}.fits ../data/maps/selection_function_NSIDE64_G20.5_zsplit2bin${zbin}.fits -p ../data/quaia_G20.5.fits
+# done
+
+python selection_function_map.py ../data/quaia_G20.5_Lsplit4bin0.fits ../data/maps/selection_function_NSIDE64_G20.5_Lsplit4bin0.fits -p ../data/quaia_G20.5.fits

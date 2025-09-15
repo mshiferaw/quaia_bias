@@ -18,20 +18,9 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-_G20.0_zsplit2bin1
 Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop.py", line 27, in <module>
-    main()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop.py", line 22, in main
-    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _ = quaia.make_bins(G, zbin, False, 'z', tab_gcat_type = 'mocks', method = 'split', n_bins = 2, fac_rand = 25, i = i+1)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 382, in make_bins
-    tab_gcat = Table.read(fn_datahi)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 202, in read
-    fileobj = ctx.__enter__()
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/contextlib.py", line 135, in __enter__
-    return next(self.gen)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/utils/data.py", line 351, in get_readable_fileobj
-    fileobj = io.FileIO(name_or_obj, "r")
-FileNotFoundError: [Errno 2] No such file or directory: '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G20.0/with_selection_function/mock_catalog_quaia_G20.0_mock41.fits'
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop.py", line 2, in <module>
+    import quaia
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 2, in <module>
+    from Corrfunc import mocks
+ModuleNotFoundError: No module named 'Corrfunc'
