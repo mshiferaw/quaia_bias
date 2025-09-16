@@ -18,9 +18,15 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop.py", line 2, in <module>
-    import quaia
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 2, in <module>
-    from Corrfunc import mocks
-ModuleNotFoundError: No module named 'Corrfunc'
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+_G20.0_zsplit2bin1
+[  0.  50. 100.]
+bins: [0.0738121  1.44732563 4.52641558]
+n_bins: 2
+min: 1.4473274658282553
+max: 4.51641558380414
+DD: 0.8719239999999999
+DR: 54.105473
+RR: 764.303683

@@ -13,7 +13,9 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate quaia-env
 
 # generate selfunc
-python selection_function_map.py ../data/quaia_G20.0_LminLmax.fits ../data/maps/selection_function_NSIDE64_G20.0_LminLmax.fits -p ../data/quaia_G20.0.fits
+# python selection_function_map.py ../data/quaia_G20.0_LminLmax.fits ../data/maps/selection_function_NSIDE64_G20.0_LminLmax.fits -p ../data/quaia_G20.0.fits
 
-# generate randoms
-python generate_random.py 20.0 25 _LminLmax.fits"
+# # generate randoms
+# python generate_random.py 20.0 25 _LminLmax.fits"
+
+python selection_function_map.py ../data/quaia_G20.5_Lsplit4bin0.fits ../data/maps/selection_function_NSIDE64_G20.5_Lsplit4bin0.fits -p ../data/quaia_G20.5.fits

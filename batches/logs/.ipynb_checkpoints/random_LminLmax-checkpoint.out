@@ -1,0 +1,41 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+allsky 
+Loading data
+Number of data sources: 652409
+Estimating reduction factor
+Sel func min and max: 0.0 0.7857903266799469
+Subsampling by 0.577 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.7857903266799469
+Subsampling by 0.576 for probability map
+Number of final random sources: 16298008
+Wrote random to ../data/randoms/random_G20.0_Lmin-28.0Lmax-24.0_25x.fits!
+allsky 
+Loading data
+Number of data sources: 1105234
+Estimating reduction factor
+Sel func min and max: 0.0 0.9734862197671118
+Subsampling by 0.490 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.9734862197671118
+Subsampling by 0.490 for probability map
+Number of final random sources: 27638965
+Wrote random to ../data/randoms/random_G20.5_Lmin-28.0Lmax-24.0_25x.fits!

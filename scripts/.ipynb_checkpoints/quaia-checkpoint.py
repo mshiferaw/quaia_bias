@@ -425,6 +425,7 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     
     # record N in each bin
     N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
+    print('Fraction of sources excluded: {:.2f}'.format(1-N_datahi_mask_bin0/len(tab_datahi_bin0)))
     
     # random catalog
     fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)

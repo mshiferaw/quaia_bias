@@ -1,7 +1,4 @@
 Starting batch job
-Starting batch job
-Starting batch job
-Starting batch job
 
 CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
 To initialize your shell, run
@@ -21,278 +18,69 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-Running selection function with fn_catalog=../data/quaia_G20.0_LminLmax.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_LminLmax.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Running selection function with fn_catalog=../data/quaia_G20.5_Lsplit4bin0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_Lsplit4bin0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
 Loading data
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 109, in run
-    tab_gaia = utils.load_table(fn_gaia)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.0_LminLmax.fits'
-/var/spool/slurmd/job5641558/slurm_script: line 19: unexpected EOF while looking for matching `"'
-/var/spool/slurmd/job5641558/slurm_script: line 20: syntax error: unexpected end of file
-
-CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.
-
-IMPORTANT: You may need to close and restart your shell after running 'conda init'.
-
-
-CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.
-
-IMPORTANT: You may need to close and restart your shell after running 'conda init'.
-
-
-CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.
-
-IMPORTANT: You may need to close and restart your shell after running 'conda init'.
-
-
-CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.
-
-IMPORTANT: You may need to close and restart your shell after running 'conda init'.
-
-
-
-
-
-
-CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
-To initialize your shell, run
-
-    $ conda init <SHELL_NAME>
-
-Currently supported shells are:
-  - bash
-  - fish
-  - tcsh
-  - xonsh
-  - zsh
-  - powershell
-
-See 'conda init --help' for more information and options.
-
-IMPORTANT: You may need to close and restart your shell after running 'conda init'.
-
-
-Running selection function with fn_catalog=../data/quaia_G20.0_LminLmax.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_LminLmax.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
-Loading data
-Running selection function with fn_catalog=../data/quaia_G20.0_LminLmax.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_LminLmax.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
-Loading data
-Traceback (most recent call last):
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-    parse_args()
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 109, in run
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 109, in run
-    tab_gaia = utils.load_table(fn_gaia)
-    tab_gaia = utils.load_table(fn_gaia)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    self._open_filename(fileobj, mode, overwrite)
-    self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.0_LminLmax.fits'
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.0_LminLmax.fits'
-/var/spool/slurmd/job5641560/slurm_script: line 19: unexpected EOF while looking for matching `"'
-/var/spool/slurmd/job5641560/slurm_script: line 20: syntax error: unexpected end of file
-/var/spool/slurmd/job5641559/slurm_script: line 19: unexpected EOF while looking for matching `"'
-/var/spool/slurmd/job5641559/slurm_script: line 20: syntax error: unexpected end of file
-Running selection function with fn_catalog=../data/quaia_G20.5_LminLmax.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_LminLmax.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
-Loading data
-Running selection function with fn_catalog=../data/quaia_G20.0_LminLmax.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_LminLmax.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
-Loading data
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 109, in run
-    tab_gaia = utils.load_table(fn_gaia)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 109, in run
-    tab_gaia = utils.load_table(fn_gaia)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    self._open_filename(fileobj, mode, overwrite)
-    self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.5_LminLmax.fits'
-FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.0_LminLmax.fits'
-/var/spool/slurmd/job5641556/slurm_script: line 19: unexpected EOF while looking for matching `"'
-/var/spool/slurmd/job5641556/slurm_script: line 20: syntax error: unexpected end of file
-/var/spool/slurmd/job5641557/slurm_script: line 19: unexpected EOF while looking for matching `"'
-/var/spool/slurmd/job5641557/slurm_script: line 20: syntax error: unexpected end of file
-Running selection function with fn_catalog=../data/quaia_G20.5_LminLmax.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_LminLmax.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
-Loading data
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 597, in <module>
-    parse_args()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
-    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 109, in run
-    tab_gaia = utils.load_table(fn_gaia)
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py", line 139, in load_table
-    return Table.read(fn_fits, format=format)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/connect.py", line 62, in __call__
-    out = self.registry.read(cls, *args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/registry/core.py", line 218, in read
-    data = reader(*args, **kwargs)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/connect.py", line 243, in read_table_fits
-    hdulist = fits_open(input, character_as_bytes=character_as_bytes, memmap=memmap)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
-    return HDUList.fromfile(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
-    return cls._readfrom(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
-    fileobj = _File(
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
-    self._open_filename(fileobj, mode, overwrite)
-  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
-    self._file = open(self.name, IO_FITS_MODES[mode])
-FileNotFoundError: [Errno 2] No such file or directory: '../data/quaia_G20.5_LminLmax.fits'
-/var/spool/slurmd/job5641555/slurm_script: line 19: unexpected EOF while looking for matching `"'
-/var/spool/slurmd/job5641555/slurm_script: line 20: syntax error: unexpected end of file
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 5.5677643628300215
+Training fitter
+X_train: (42097, 7) y_train: (42097,)
+y_train min: 1.0 y_train: 31.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -3.03666793 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.4339872044851463
+yerr: [3.31662479 3.46410162 3.16227766 ... 3.         3.46410162 3.16227766] [0.30151134 0.28867513 0.31622777 ... 0.33333333 0.28867513 0.31622777]
+p compute: [ 0.         -3.03666793 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -18631.526428204503
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 18551.27550384859
+        x: [ 1.640e+00 -2.713e+00 -6.685e-01  1.398e+00 -1.195e+00
+             4.110e+00  4.773e-01 -6.431e-01  9.399e+00]
+      nit: 21
+      jac: [-9.706e-06 -5.347e-06  2.388e-06 -2.827e-06 -1.444e-07
+            -7.247e-07  8.994e-08 -1.219e-06  4.379e-07]
+ hess_inv: [[ 2.296e-02 -8.953e-03 ... -7.472e-03 -1.098e-02]
+            [-8.953e-03  4.358e-02 ...  1.578e-02  4.053e-02]
+            ...
+            [-7.472e-03  1.578e-02 ...  6.290e-02  2.752e-02]
+            [-1.098e-02  4.053e-02 ...  2.752e-02  8.762e+00]]
+     nfev: 61
+     njev: 56
+p post op: [ 1.63998212 -2.71250012 -0.66846266  1.39774528 -1.19526396  4.11043663
+  0.4773464  -0.6431165   9.39874002]
+lnlike final: -18551.27550384859
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.63998212 -2.71250012 -0.66846266  1.39774528 -1.19526396  4.11043663
+  0.4773464  -0.6431165   9.39874002]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lsplit4bin0.fits
+y_pred_full: [8.34035831 8.93783978 9.21620035 ... 8.29285084 8.16468014 8.45419454]
+0
+RMSE: 2.856877408793286
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 1.9047773745988075
+map_prob: [0.55938273 0.59945545 0.61812492 ... 0.55619643 0.5476001  0.56701766]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lsplit4bin0.fits!
+Time: 27511.95475411415 s (458.53257923523586 min)

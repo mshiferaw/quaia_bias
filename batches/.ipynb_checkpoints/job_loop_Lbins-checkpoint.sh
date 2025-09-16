@@ -30,7 +30,7 @@
 
 #SBATCH --output=logs/%x.out
 L_bins=(-32.0 -29.0 -26.0 -23.0 -20.0)
-G_max="20.0"
+G_max="20.5"
 save_tag=""
 
 for ((bb=0; bb<$((${#L_bins[@]}-1)); bb++)); do
