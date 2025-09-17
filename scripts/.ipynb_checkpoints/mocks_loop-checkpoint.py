@@ -19,9 +19,17 @@ def main():
     zbin = int(sys.argv[2])
     i = int(sys.argv[3])
 
-    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _ = quaia.make_bins(G, zbin, False, 'z', tab_gcat_type = 'mocks', method = 'split', n_bins = 2, fac_rand = 25, i = i+1)
-    wtheta_datahi_zbin0 = quaia.w_theta(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, nthreads = nthreads, thetabins = thetabins)
-    np.save('../results/wtheta_G{:.1f}_zsplit2bin{}_mock{}_25x'.format(G, zbin, i+1), wtheta_datahi_zbin0)
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _ = quaia.make_bins(G, zbin, False, 'z', tab_gcat_type = 'mocks', method = 'split', n_bins = 2, fac_rand = 25, i = i+1)
+    # wtheta_datahi_zbin0 = quaia.w_theta(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, nthreads = nthreads, thetabins = thetabins)
+    # np.save('../results/wtheta_G{:.1f}_zsplit2bin{}_mock{}_25x'.format(G, zbin, i+1), wtheta_datahi_zbin0)
+    
+    wp_datahi_zbin0, rpavg_datahi_zbin0 = quaia.wp_rp(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, rbins = rbins,
+                                                                   nbins = nbins, pimax = pimax)
+    np.save('../results/wp_G{:.1f}_mock{}_25x'.format(G, i+1), wp_datahi_zbin0)
+    np.save('../results/rpavg_G{:.1f}_mock{}_25x'.format(G, i+1), rpavg_datahi_zbin0)
+    
+    cf_datahi_zbin0 = quaia.xi_s(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, rbins = rbins)
+    np.save('../results/xi_G{:.1f}_mock{}_25x'.format(G, i+1), cf_datahi_zbin0)
                 
 if __name__=='__main__':
     main()

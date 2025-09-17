@@ -363,7 +363,7 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
         fname = '_G{:.1f}'.format(G)
         if prebinned == False:
             raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = True.')
-    print(fname)
+    # print(fname)
     
     # for prebinned catalogs (only data)
     if prebinned == True:
@@ -425,7 +425,7 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     
     # record N in each bin
     N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
-    print('Fraction of sources excluded: {:.2f}'.format(1-N_datahi_mask_bin0/len(tab_datahi_bin0)))
+    print('{}: {:.2f}              {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0))
     
     # random catalog
     fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
@@ -447,7 +447,7 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     else:
         key_bin0 = None
     
-    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0]
+    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], 1-N_datahi_mask_bin0/len(tab_datahi_bin0)
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 

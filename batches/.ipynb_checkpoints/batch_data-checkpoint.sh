@@ -42,7 +42,7 @@ do
         cat > sel_func_zsplit2bin${zbin}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac
-#SBATCH --job-name=sel_func_zsplit2bin${zbin}
+#SBATCH --job-name=sel_func_G${G}_zsplit2bin${zbin}
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48
@@ -54,11 +54,11 @@ echo "Starting batch job"
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate quaia-env
 
-# generate selfunc
-python selection_function_map.py $fn_gcat_zbin $fn_selfunc -p ../data/quaia_G${G}.fits
+# # generate selfunc
+# python selection_function_map.py $fn_gcat_zbin $fn_selfunc -p ../data/quaia_G${G}.fits
 
-# generate randoms
-python generate_random.py ${G} 25 _zsplit2bin${zbin}
+# # generate randoms
+# python generate_random.py ${G} 25 _zsplit2bin${zbin}
 
 # compute clustering
 python data_25x.py ${G} ${zbin}
