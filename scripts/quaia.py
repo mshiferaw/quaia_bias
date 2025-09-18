@@ -397,18 +397,18 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
                     
         if method == 'split':
                 z_percentiles = np.linspace(0.0, 100.0, n_bins+1)
-                print(z_percentiles)
+                # print(z_percentiles)
                 bins = np.percentile(list(tab_gcat[key]), z_percentiles)
                 bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
                 bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
 
-                print("bins:", bins)
-                print("n_bins:", n_bins)
+                # print("bins:", bins)
+                # print("n_bins:", n_bins)
 
         i_bin = (tab_gcat[key] >= bins[bb]) & (tab_gcat[key] < bins[bb+1])
         tab_datahi_bin0 = tab_gcat[i_bin]
-        print("min:", np.min(tab_datahi_bin0[key]))
-        print("max:", np.max(tab_datahi_bin0[key]))
+        # print("min:", np.min(tab_datahi_bin0[key]))
+        # print("max:", np.max(tab_datahi_bin0[key]))
     else:
         raise Exception('prebinned bust be a boolean')
             

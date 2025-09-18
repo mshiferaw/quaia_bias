@@ -10,17 +10,17 @@
 #conda init 
 conda activate quaia-env
 
-#for G in '20' '20.5'
-#do
-for zbin in '0' '1'
+for G in '20.5' '20'
 do
-    for ((i=0;i<=99;i++))
+    for zbin in '0' '1'
     do
-        # cat > wtheta_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
-        cat > wp_G20.5_zsplit2bin${zbin}_mock${i}.sh << EOF
+        for ((i=0;i<=99;i++))
+        do
+            # cat > wtheta_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
+            cat > wp_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac
-#SBATCH --job-name=wp_G20.5_zsplit2bin${zbin}_mock${i}
+#SBATCH --job-name=wp_G${G}_zsplit2bin${zbin}_mock${i}
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48
@@ -32,11 +32,12 @@ echo "Starting batch job"
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate quaia-env
 
-python mocks_loop.py 20.5 ${zbin} ${i}
+python mocks_loop.py ${G} ${zbin} ${i}
 EOF
 
         # sbatch wtheta_G${G}_zsplit2bin${zbin}_mock${i}.sh
-        sbatch wp_G20.5_zsplit2bin${zbin}_mock${i}.sh
+            sbatch wp_G${G}_zsplit2bin${zbin}_mock${i}.sh
+        done
     done
 done
 #done

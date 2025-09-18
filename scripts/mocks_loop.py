@@ -25,11 +25,11 @@ def main():
     
     wp_datahi_zbin0, rpavg_datahi_zbin0 = quaia.wp_rp(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, rbins = rbins,
                                                                    nbins = nbins, pimax = pimax)
-    np.save('../results/wp_G{:.1f}_mock{}_25x'.format(G, i+1), wp_datahi_zbin0)
-    np.save('../results/rpavg_G{:.1f}_mock{}_25x'.format(G, i+1), rpavg_datahi_zbin0)
+    np.save('../results/wp_G{:.1f}_zsplit2bin{}_mock{}_25x'.format(G, zbin, i+1), wp_datahi_zbin0)
+    np.save('../results/rpavg_G{:.1f}_zsplit2bin{}_mock{}_25x'.format(G, zbin, i+1), rpavg_datahi_zbin0)
     
     cf_datahi_zbin0 = quaia.xi_s(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, rbins = rbins)
-    np.save('../results/xi_G{:.1f}_mock{}_25x'.format(G, i+1), cf_datahi_zbin0)
+    np.save('../results/xi_G{:.1f}_zsplit2bin{}_mock{}_25x'.format(G, zbin, i+1), cf_datahi_zbin0)
                 
 if __name__=='__main__':
     main()
