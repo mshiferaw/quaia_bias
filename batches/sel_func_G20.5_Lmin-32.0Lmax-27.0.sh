@@ -13,7 +13,7 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate quaia-env
 
 # make catalogs
-python make_catalogs.py G20.5 --L_bins -32.0 -27.0
+python make_catalogs.py 20.5 --L_bins -32.0 -27.0
 
 # generate selfunc
 python selection_function_map.py ../data/quaia_G20.5_Lmin-32.0Lmax-27.0.fits ../data/maps/selection_function_NSIDE64_G20.5_Lmin-32.0Lmax-27.0.fits -p ../data/quaia_G20.5.fits

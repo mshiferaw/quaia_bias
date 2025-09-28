@@ -1,0 +1,148 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.0_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 1.4142135623730951
+Training fitter
+X_train: (210, 7) y_train: (210,)
+y_train min: 1.0 y_train: 2.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.        -8.0308168 -0.5        1.5       -1.         5.
+  0.8        0.        10.       ]
+y minmax 0.0 0.6931471805599453
+yerr: [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.41421356 1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ] [1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         0.70710678 1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.
+ 1.         1.         1.         1.         1.         1.        ]
+p compute: [ 0.        -8.0308168 -0.5        1.5       -1.         5.
+  0.8        0.        10.       ]
+lnlike compute: -193.3165563875522
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 193.10641751146616
+        x: [ 6.570e-03 -2.218e+01 -4.992e-01  1.595e+00 -9.144e-01
+             5.000e+00  8.419e-01  2.095e-01  1.000e+01]
+      nit: 22
+      jac: [-3.478e-06  1.717e-07  1.027e-13  9.456e-12  5.868e-11
+            -0.000e+00  6.018e-12  1.284e-11 -0.000e+00]
+ hess_inv: [[ 5.025e-03  3.837e-02 ... -5.917e-04  0.000e+00]
+            [ 3.837e-02  2.018e+06 ... -2.934e+04  0.000e+00]
+            ...
+            [-5.917e-04 -2.934e+04 ...  4.275e+02  0.000e+00]
+            [ 0.000e+00  0.000e+00 ...  0.000e+00  1.000e+00]]
+     nfev: 25
+     njev: 25
+p post op: [ 6.57009888e-03 -2.21814898e+01 -4.99195761e-01  1.59482757e+00
+ -9.14374409e-01  5.00000000e+00  8.41931673e-01  2.09469730e-01
+  1.00000000e+01]
+lnlike final: -193.10641751146616
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 6.57009888e-03 -2.21814898e+01 -4.99195761e-01  1.59482757e+00
+ -9.14374409e-01  5.00000000e+00  8.41931673e-01  2.09469730e-01
+  1.00000000e+01]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0.fits
+y_pred_full: [1.00659173 1.00659173 1.00659173 ... 1.00659173 1.00659173 1.00659173]
+0
+RMSE: 0.0688663726498675
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 2.0693664771917453
+map_prob: [2.06936648 2.06936648 2.06936648 ... 2.06936648 2.06936648 2.06936648]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0.fits!
+Time: 49.441460847854614 s (0.8240243474642436 min)
+allsky 
+Loading data
+Number of data sources: 211
+Estimating reduction factor
+Sel func min and max: 0.0 2.0693664771917453
+Subsampling by 0.863 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 2.0693664771917453
+Subsampling by 0.864 for probability map
+Number of final random sources: 5286
+Wrote random to ../data/randoms/random_G20.0_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0_25x.fits!

@@ -37,3 +37,51 @@ err min max: 0.0 5.656854249492381
 Training fitter
 X_train: (42325, 7) y_train: (42325,)
 y_train min: 1.0 y_train: 32.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.92067681 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.4657359027997265
+yerr: [3.74165739 4.         3.74165739 ... 3.74165739 3.87298335 3.46410162] [0.26726124 0.25       0.26726124 ... 0.26726124 0.25819889 0.28867513]
+p compute: [ 0.         -2.92067681 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -11250.871691399876
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 11163.875702228815
+        x: [ 1.937e+00 -2.684e+00 -6.457e-01  1.355e+00 -1.823e+00
+             4.411e+00  2.538e-01 -8.586e-01  2.749e+01]
+      nit: 40
+      jac: [ 4.780e-06  9.363e-06 -2.051e-06 -3.282e-07 -4.937e-08
+             1.234e-06 -2.685e-06 -6.444e-07 -3.889e-09]
+ hess_inv: [[ 2.515e-02 -8.777e-03 ... -6.064e-03  1.801e+01]
+            [-8.777e-03  2.625e-02 ...  8.069e-03  1.305e+02]
+            ...
+            [-6.064e-03  8.069e-03 ...  3.945e-02  2.544e+01]
+            [ 1.801e+01  1.305e+02 ...  2.544e+01  8.664e+07]]
+     nfev: 45
+     njev: 45
+p post op: [ 1.93676928 -2.68398971 -0.64572684  1.35530983 -1.82309619  4.41078177
+  0.25376113 -0.85860048 27.49236583]
+lnlike final: -11163.875702228815
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 1.93676928 -2.68398971 -0.64572684  1.35530983 -1.82309619  4.41078177
+  0.25376113 -0.85860048 27.49236583]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_Lmin-29.0Lmax-26.0.fits
+y_pred_full: [10.50899674 11.33158778 12.07590761 ... 11.51241038 11.43978638
+ 11.67456917]
+0
+RMSE: 3.5049600811325248
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 1.3138502558111187
+map_prob: [0.4827408  0.5205273  0.55471834 ... 0.52883356 0.52549751 0.53628248]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_Lmin-29.0Lmax-26.0.fits!
+Time: 225197.50219631195 s (3753.291703271866 min)

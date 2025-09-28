@@ -1,0 +1,82 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.0_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 1.0
+Training fitter
+X_train: (83, 7) y_train: (83,)
+y_train min: 1.0 y_train: 1.0
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/george/kernels.py:94: RuntimeWarning: divide by zero encountered in log
+  log_constant = np.log(float(b)/self.ndim)
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+y minmax 0.0 0.0
+yerr: [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.] [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+p compute: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+lnlike compute: -76.27189825603969
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 76.27189825603969
+        x: [ 0.000e+00       -inf -5.000e-01  1.500e+00 -1.000e+00
+             5.000e+00  8.000e-01  0.000e+00  1.000e+01]
+      nit: 0
+      jac: [-0.000e+00 -0.000e+00 -0.000e+00 -0.000e+00 -0.000e+00
+            -0.000e+00 -0.000e+00 -0.000e+00 -0.000e+00]
+ hess_inv: [[1 0 ... 0 0]
+            [0 1 ... 0 0]
+            ...
+            [0 0 ... 1 0]
+            [0 0 ... 0 1]]
+     nfev: 1
+     njev: 1
+p post op: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+lnlike final: -76.27189825603969
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 0.  -inf -0.5  1.5 -1.   5.   0.8  0.  10. ]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0.fits
+y_pred_full: [1. 1. 1. ... 1. 1. 1.]
+0
+RMSE: 0.0
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 2.5459834599827493
+map_prob: [2.54598346 2.54598346 2.54598346 ... 2.54598346 2.54598346 2.54598346]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0.fits!
+Time: 45.698787689208984 s (0.7616464614868164 min)
+allsky 
+Loading data
+Number of data sources: 83
+Estimating reduction factor
+Sel func min and max: 0.0 2.5459834599827493
+Subsampling by 0.863 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 2.5459834599827493
+Subsampling by 0.863 for probability map
+Number of final random sources: 2076
+Wrote random to ../data/randoms/random_G20.0_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0_25x.fits!

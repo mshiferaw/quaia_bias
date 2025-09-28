@@ -1,0 +1,80 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.6457513110645907
+Training fitter
+X_train: (19814, 7) y_train: (19814,)
+y_train min: 1.0 y_train: 7.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -3.73289252 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 1.9459101490553132
+yerr: [1.41421356 1.         1.         ... 1.41421356 1.         1.        ] [0.70710678 1.         1.         ... 0.70710678 1.         1.        ]
+p compute: [ 0.         -3.73289252 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -18591.676103940477
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 18568.02678718538
+        x: [ 3.218e-01 -5.623e+00 -1.178e+00  2.436e+00  3.450e+02
+             3.965e+00  8.623e-01  2.017e+02  1.630e+01]
+      nit: 33
+      jac: [ 5.117e-06  3.744e-06 -2.940e-07 -2.304e-06 -3.607e-150
+            -1.342e-06 -1.826e-08 -3.331e-88 -2.238e-06]
+ hess_inv: [[ 5.851e-03 -8.596e-03 ... -1.044e+00 -3.462e-02]
+            [-8.596e-03  3.371e-01 ...  7.056e+00  2.185e-01]
+            ...
+            [-1.044e+00  7.056e+00 ...  1.486e+08  4.798e+06]
+            [-3.462e-02  2.185e-01 ...  4.798e+06  1.549e+05]]
+     nfev: 36
+     njev: 36
+p post op: [ 3.21773869e-01 -5.62262885e+00 -1.17756539e+00  2.43586668e+00
+  3.45048808e+02  3.96473105e+00  8.62284165e-01  2.01696186e+02
+  1.63005850e+01]
+lnlike final: -18568.02678718538
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 3.21773869e-01 -5.62262885e+00 -1.17756539e+00  2.43586668e+00
+  3.45048808e+02  3.96473105e+00  8.62284165e-01  2.01696186e+02
+  1.63005850e+01]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0.fits
+y_pred_full: [1.16990711 1.22429047 1.43110164 ... 1.33914954 1.37428837 1.3522125 ]
+0
+RMSE: 0.7317983712402256
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.5954446152186976
+map_prob: [0.40544347 0.42429059 0.49596316 ... 0.4640962  0.47627393 0.46862331]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0.fits!
+Time: 2977.1984853744507 s (49.61997475624084 min)
+allsky 
+Loading data
+Number of data sources: 28856
+Estimating reduction factor
+Sel func min and max: 0.0 0.5954446152186976
+Subsampling by 0.777 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.5954446152186976
+Subsampling by 0.777 for probability map
+Number of final random sources: 721992
+Wrote random to ../data/randoms/random_G20.5_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0_25x.fits!

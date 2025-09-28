@@ -21,7 +21,7 @@ fac_stdev = 1.5 #1.45
 # read quaia data
 def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot = False, 
          name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', fac_stdev = fac_stdev, cmap_map = 'plasma', cbar_ticks = [5, 10, 20], 
-         cbar_ticks_selfunc = [5, 20, 50]):
+         cbar_ticks_selfunc = [5, 20, 50], inverse = False):
     
     r"""Read in a Quaia catalog (e.g., data, randoms, mocks) given a mask.
     
@@ -90,27 +90,31 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot
     selfunc_lo = hp.fitsfunc.read_map(fn_sello)
     if mask_type == 'selfunc':
         pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_gcatlo['ra'], tab_gcatlo['dec'], lonlat=True)
-        mask_gcatlo = selfunc_lo[pixel_indices_gcatlo]>=0.5
+        if inverse == False:
+            mask_gcatlo = selfunc_lo[pixel_indices_gcatlo]>=0.5
+        else:
+            mask_gcatlo = selfunc_lo[pixel_indices_gcatlo]<0.5
         pixel_indices_gcatlo = pixel_indices_gcatlo[mask_gcatlo]
     
     N_gcatlo_mask = len(tab_gcatlo[mask_gcatlo])
     
     if plot == True:
-        
         map_gcatlo = np.bincount(pixel_indices_gcatlo, minlength=NPIX)
+        print(np.mean(map_gcatlo)-fac_stdev*np.std(map_gcatlo), np.mean(map_gcatlo)+fac_stdev*np.std(map_gcatlo))
         title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
-        projview(map_gcatlo, title=title_gcatlo,
-                    unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
-                    min=np.median(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.median(map_gcatlo)+fac_stdev*np.std(map_gcatlo), 
+        projview(map_gcatlo*hp.pixelfunc.nside2pixarea(NSIDE, degrees = True), title=title_gcatlo,
+                    unit=r"number per healpixel", cmap=cmap_map, coord=['C', 'G'], 
+                    min=np.mean(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.mean(map_gcatlo)+10*fac_stdev*np.std(map_gcatlo), 
                     norm='log', graticule=True, cbar_ticks=cbar_ticks)
         
-        # remove the selection function
-        map_selfunc_lo = map_gcatlo/selfunc_lo
-        title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
-        projview(map_selfunc_lo, title=title_gcatlo,
-                    unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
-                    min=np.nanmedian(map_selfunc_lo)-fac_stdev*np.nanstd(map_selfunc_lo), max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
-                    norm='log', graticule=True, cbar_ticks=cbar_ticks_selfunc) 
+        if inverse == False:
+            # remove the selection function
+            map_selfunc_lo = map_gcatlo/selfunc_lo
+            title_gcatlo = rf"{name_catalog}, $G<{G_lo}$ (N={N_gcatlo_mask:,})"
+            projview(map_selfunc_lo, title=title_gcatlo,
+                        unit=r"number density per healpixel (deg$^{-2}$)", cmap=cmap_map, coord=['C', 'G'], 
+                        min=np.nanmedian(map_selfunc_lo)-fac_stdev*np.nanstd(map_selfunc_lo), max=np.nanmedian(map_selfunc_lo)+fac_stdev*np.nanstd(map_selfunc_lo), 
+                        norm='log', graticule=True, cbar_ticks=cbar_ticks_selfunc) 
         
     return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo_mask, mask_gcatlo
 
@@ -288,7 +292,7 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     else:
         return key
 
-def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc'):
+def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0):
     
     r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
     
@@ -354,16 +358,23 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     """
         
     # select binning method
-    if method == 'split':
-        fname = '_G{:.1f}_{}split{}bin{}'.format(G, cut, n_bins, bb)
-    elif method == 'minmax':
-        fname = '_G{:.1f}_{}min{}{}max{}'.format(G, cut, bins[bb], cut, bins[bb+1])
-    else:
-        print('Leaving tab_gcat_catalog unbinned')
-        fname = '_G{:.1f}'.format(G)
-        if prebinned == False:
-            raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = True.')
-    # print(fname)
+    fname='_G{:.1f}'.format(G)
+    if type(cuts) == str:
+        bins = [bins]
+        n_bins = [n_bins]
+        method = [method]
+        bb = [bb]
+    for cut, bins, n_bins, method, bb in zip(cuts, bins, n_bins, method, bb):
+        if method == 'split':
+            name = '_{}split{}bin{}'.format(cut, n_bins, bb)
+        elif method == 'minmax':
+            name = '_{}min{}{}max{}'.format(cut, bins[bb], cut, bins[bb+1])
+        else:
+            print('Leaving tab_gcat_catalog unbinned')
+            fname = '_G{:.1f}'.format(G)
+            if prebinned == False:
+                raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = True.')
+        fname+=name
     
     # for prebinned catalogs (only data)
     if prebinned == True:
@@ -374,6 +385,9 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
         
     # for catalogs that need to be binned
     elif prebinned == False:
+        
+        if len(cuts)==2:
+            raise Exception('Joint L-z bins must be prebinned using make_catalog.py')
         
         if tab_gcat_type == 'mocks':
             if i is None:
@@ -410,22 +424,32 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
         # print("min:", np.min(tab_datahi_bin0[key]))
         # print("max:", np.max(tab_datahi_bin0[key]))
     else:
-        raise Exception('prebinned bust be a boolean')
+        raise Exception('prebinned must be a boolean')
             
     # load selection function
+    # try:
     fn_selhi_bin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
     selfunc_hi_bin0 = hp.fitsfunc.read_map(fn_selhi_bin0)
+    # except:
+    #     return [None, None, None, None, None, None, None]
 
     # quasar data catalog
     pixel_indices_datahi_bin0 = hp.ang2pix(NSIDE, tab_datahi_bin0['ra'], tab_datahi_bin0['dec'], lonlat=True)
     
-    # impose bin and selfunc mask on data
-    mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=0.5 
+    # impose bin and selfunc mask on data        
+    if mask_type == 'selfunc':
+        mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=0.5 
+    else:
+        if tab_gcat_type == 'data':
+            mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b
+        else:
+            c = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+            mask_datahi_bin0 = np.abs(c.galactic.b.value)>=b
     tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
     
     # record N in each bin
     N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
-    print('{}: {:.2f}              {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0))
+    print('{}: {:.2f}              {} vs {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0, len(tab_datahi_bin0)))
     
     # random catalog
     fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
@@ -443,11 +467,12 @@ def make_bins(G, bb, prebinned, cut, method = None, tab_gcat = None, tab_gcat_ty
     if z == True:
         key_bin0 = z_dist(tab_datahi_mask_bin0, tab_randhi_mask_bin0, np.full(N_datahi_mask_bin0, True), 
                              np.full(N_randhi_mask_bin0, True), N_datahi_mask_bin0, N_randhi_mask_bin0, plot = plot, 
-                             mask_type = mask_type+'_bin0')
+                             mask_type = mask_type, b = b)
+                             # mask_type = mask_type+'_bin0', b = pb)
     else:
         key_bin0 = None
     
-    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], 1-N_datahi_mask_bin0/len(tab_datahi_bin0)
+    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), selfunc_hi_bin0
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 

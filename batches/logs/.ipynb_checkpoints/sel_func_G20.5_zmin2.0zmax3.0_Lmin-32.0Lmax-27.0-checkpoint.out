@@ -1,0 +1,51 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin2.0zmax3.0_Lmin-32.0Lmax-27.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin2.0zmax3.0_Lmin-32.0Lmax-27.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 5.0
+Training fitter
+X_train: (37082, 7) y_train: (37082,)
+y_train min: 1.0 y_train: 25.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -3.03851737 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 3.2188758248682006
+yerr: [2.         2.44948974 1.73205081 ... 2.44948974 2.         1.73205081] [0.5        0.40824829 0.57735027 ... 0.40824829 0.5        0.57735027]
+p compute: [ 0.         -3.03851737 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -31357.882173149657
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 31309.650122749525
+        x: [ 8.971e-01 -2.848e+00 -1.042e+00  7.265e+00  1.381e+00
+             1.307e+00  1.100e+00  2.768e+00  2.747e+01]
+      nit: 44
+      jac: [ 8.186e-06  6.304e-07  3.929e-06 -2.777e-07  6.076e-07
+             1.748e-06 -5.496e-07 -3.549e-07 -1.732e-09]
+ hess_inv: [[ 3.983e-02 -2.870e-02 ... -2.350e-02  2.749e+02]
+            [-2.870e-02  1.267e-01 ...  8.585e-02  2.742e+01]
+            ...
+            [-2.350e-02  8.585e-02 ...  2.636e-01 -7.704e+01]
+            [ 2.749e+02  2.742e+01 ... -7.704e+01  1.946e+08]]
+     nfev: 47
+     njev: 47
+p post op: [ 0.89707993 -2.84835086 -1.04218077  7.26500244  1.38081489  1.30676351
+  1.100499    2.76770896 27.46648309]
+lnlike final: -31309.650122749525
+Predicting
