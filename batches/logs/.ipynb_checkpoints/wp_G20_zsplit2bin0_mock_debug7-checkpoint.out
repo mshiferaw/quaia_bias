@@ -1,0 +1,14 @@
+Starting batch job
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+G20.0_zsplit2bin0: 0.15              322098 vs 377756
+Leaving tab_gcat_catalog unbinned
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop_debug.py", line 51, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop_debug.py", line 40, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, _ = quaia.make_bins(G, zbin, True, 'z', tab_gcat_type = 'mocks', z = True, fac_rand = fac_rand, mask_type = None, b = 20)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 383, in make_bins
+    raise Exception('Only data catalogs are prebinned currently')
+Exception: Only data catalogs are prebinned currently

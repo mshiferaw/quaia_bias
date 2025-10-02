@@ -374,11 +374,12 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             fname = '_G{:.1f}'.format(G)
             if prebinned == False:
                 raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = True.')
+            name=''
         fname+=name
     
     # for prebinned catalogs (only data)
     if prebinned == True:
-        if tab_gcat_type != 'data':
+        if tab_gcat_type != 'data' and (method == 'split' or method == 'minmax'):
             raise Exception('Only data catalogs are prebinned currently')
         fn_datahi_bin0 = '../data/quaia{}.fits'.format(fname)
         tab_datahi_bin0 = Table.read(fn_datahi_bin0)
@@ -436,20 +437,20 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
     # quasar data catalog
     pixel_indices_datahi_bin0 = hp.ang2pix(NSIDE, tab_datahi_bin0['ra'], tab_datahi_bin0['dec'], lonlat=True)
     
-    # impose bin and selfunc mask on data        
-    if mask_type == 'selfunc':
-        mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=0.5 
-    else:
-        if tab_gcat_type == 'data':
-            mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b
-        else:
-            c = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
-            mask_datahi_bin0 = np.abs(c.galactic.b.value)>=b
-    tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
+    # # impose bin and selfunc mask on data        
+    # if mask_type == 'selfunc':
+    #     mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=0.5 
+    # else:
+    #     if tab_gcat_type == 'data':
+    #         mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b
+    #     else:
+    #         c = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+    #         mask_datahi_bin0 = np.abs(c.galactic.b.value)>=b
+    # tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
     
-    # record N in each bin
-    N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
-    print('{}: {:.2f}              {} vs {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0, len(tab_datahi_bin0)))
+    # # record N in each bin
+    # N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
+    # print('{}: {:.2f}              {} vs {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0, len(tab_datahi_bin0)))
     
     # random catalog
     fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
@@ -458,9 +459,30 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
     # get the pixel indices for objects in each random bin
     pixel_indices_randhi_bin0 = hp.ang2pix(NSIDE, tab_randhi_bin0['ra'], tab_randhi_bin0['dec'], lonlat=True)
     
-    # select where the randoms in each bin pass the selfunc mask
-    mask_randhi_bin0 = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=0.5
+    # impose bin and selfunc mask on data        
+    if mask_type == 'selfunc':
+        mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=0.5 
+        mask_randhi_bin0 = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=0.5
+    else:
+        if tab_gcat_type == 'data':
+            mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b
+        else:
+            c = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+            mask_datahi_bin0 = np.abs(c.galactic.b.value)>=b
+            
+        c = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
+        mask_randhi_bin0 = np.abs(c.galactic.b.value)>=b
+        
+    tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
     tab_randhi_mask_bin0 = tab_randhi_bin0[mask_randhi_bin0]
+    
+    # record N in each bin
+    N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
+    print('{}: {:.2f}              {} vs {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0, len(tab_datahi_bin0)))
+    
+    # # select where the randoms in each bin pass the selfunc mask
+    # mask_randhi_bin0 = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=0.5
+    # tab_randhi_mask_bin0 = tab_randhi_bin0[mask_randhi_bin0]
 
     # assign redshifts to randoms in each bin, mimicking the distribution of data in each bin that pass the selfunc mask
     N_randhi_mask_bin0 = len(tab_randhi_mask_bin0)
