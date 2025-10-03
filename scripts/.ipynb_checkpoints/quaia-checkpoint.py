@@ -377,11 +377,23 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             name=''
         fname+=name
     
-    # for prebinned catalogs (only data)
+    # process mocks
+    if tab_gcat_type == 'mocks':
+        if i is None:
+            raise Exception('Select which mock to run.')
+        if G==20.0:
+            G=20 # for mock file naming convention
+        fn = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+                
+    # for prebinned catalogs 
     if prebinned == True:
-        if tab_gcat_type != 'data' and (method == 'split' or method == 'minmax'):
-            raise Exception('Only data catalogs are prebinned currently')
-        fn_datahi_bin0 = '../data/quaia{}.fits'.format(fname)
+        if tab_gcat_type != 'data':
+            if (method == 'split' or method == 'minmax'):
+                raise Exception('Only data catalogs are prebinned currently')
+            fn_datahi_bin0 = fn
+            print(fn_datahi_bin0)
+        else:
+            fn_datahi_bin0 = '../data/quaia{}.fits'.format(fname)
         tab_datahi_bin0 = Table.read(fn_datahi_bin0)
         
     # for catalogs that need to be binned
@@ -391,11 +403,12 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             raise Exception('Joint L-z bins must be prebinned using make_catalog.py')
         
         if tab_gcat_type == 'mocks':
-            if i is None:
-                raise Exception('Select which mock to run.')
-            if G==20.0:
-                G=20 # for mock file naming convention
-            fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+            # if i is None:
+            #     raise Exception('Select which mock to run.')
+            # if G==20.0:
+            #     G=20 # for mock file naming convention
+            # fn_datahi = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+            fn_datahi = fn
             tab_gcat = Table.read(fn_datahi)
         elif tab_gcat_type == 'data':
             fn_datahi = '../data/quaia_G{:.1f}.fits'.format(G)
