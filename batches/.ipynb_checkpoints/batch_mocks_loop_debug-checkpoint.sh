@@ -18,8 +18,11 @@ for zbin in '0' '1'
 do
     for ((i=0;i<=99;i++))
     do
-        # cat > wtheta_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
-        cat > wp_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
+        for b in '30' '40'
+        do
+        
+            # cat > wtheta_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
+            cat > wp_G${G}_zsplit2bin${zbin}_mock${i}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac
 #SBATCH --job-name=wp_G${G}_zsplit2bin${zbin}_mock_debug${i}
@@ -35,11 +38,12 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate quaia-env
 
-python mocks_loop_debug.py ${G} ${zbin} ${i}
+python mocks_loop_debug.py ${G} ${zbin} ${i} ${b}
 EOF
 
     # sbatch wtheta_G${G}_zsplit2bin${zbin}_mock${i}.sh
-        sbatch wp_G${G}_zsplit2bin${zbin}_mock${i}.sh
+            sbatch wp_G${G}_zsplit2bin${zbin}_mock${i}.sh
+        done
     done
 done
 # done

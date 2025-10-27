@@ -20,4 +20,5 @@ conda activate quaia-env
 # python generate_random.py 20 10 _zsplit2bin0
 
 # compute clustering
-python data_debug.py 20 0
+python data_debug.py 20 0 30
+python data_debug.py 20 0 40

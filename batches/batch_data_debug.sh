@@ -44,7 +44,8 @@ conda activate quaia-env
 # python generate_random.py ${G} 10 _zsplit2bin${zbin}
 
 # compute clustering
-python data_debug.py ${G} ${zbin}
+python data_debug.py ${G} ${zbin} 30
+python data_debug.py ${G} ${zbin} 40
 EOF
 
     sbatch sel_func_zsplit2bin${zbin}.sh

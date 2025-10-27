@@ -13,4 +13,4 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate quaia-env
 
-python mocks_loop_debug.py 20 1 29
+python mocks_loop_debug.py 20 1 29 40

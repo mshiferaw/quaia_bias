@@ -1,5 +1,21 @@
 Starting batch job
-[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
-/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
-  warnings.warn("One or more input array has non-native endianness!  A copy will"\
-G20.0_zsplit2bin1: 0.11              335083 vs 377925
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_debug.py", line 49, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_debug.py", line 13, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, _ = quaia.make_bins(G, zbin, True, 'z', method = 'split', n_bins = 2, tab_gcat_type = 'data', z = True, fac_rand = fac_rand, mask_type = None, b = b)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 487, in make_bins
+    mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/column.py", line 345, in _compare
+    result = getattr(super(Column, self), op)(other)
+numpy.core._exceptions._UFuncNoLoopError: ufunc 'greater_equal' did not contain a loop with signature matching types (<class 'numpy.dtypes.Float64DType'>, <class 'numpy.dtypes.StrDType'>) -> None
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_debug.py", line 49, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/data_debug.py", line 13, in main
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, _ = quaia.make_bins(G, zbin, True, 'z', method = 'split', n_bins = 2, tab_gcat_type = 'data', z = True, fac_rand = fac_rand, mask_type = None, b = b)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py", line 487, in make_bins
+    mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/table/column.py", line 345, in _compare
+    result = getattr(super(Column, self), op)(other)
+numpy.core._exceptions._UFuncNoLoopError: ufunc 'greater_equal' did not contain a loop with signature matching types (<class 'numpy.dtypes.Float64DType'>, <class 'numpy.dtypes.StrDType'>) -> None

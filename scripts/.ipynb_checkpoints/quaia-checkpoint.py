@@ -292,7 +292,7 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     else:
         return key
 
-def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0):
+def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None):
     
     r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
     
@@ -471,11 +471,38 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
         
     # get the pixel indices for objects in each random bin
     pixel_indices_randhi_bin0 = hp.ang2pix(NSIDE, tab_randhi_bin0['ra'], tab_randhi_bin0['dec'], lonlat=True)
-    
+
+    if scale == 'z-score':
+        selfunc_hi_bin0=(selfunc_hi_bin0 - np.mean(selfunc_hi_bin0))/np.std(selfunc_hi_bin0)
+        
+    if norm == 'minmax':
+        selfunc_hi_bin0/=np.max(selfunc_hi_bin0)
+        print(np.min(selfunc_hi_bin0), np.max(selfunc_hi_bin0))
+    elif norm == 'z-score':
+        # selfunc_hi_bin0=(selfunc_hi_bin0 - np.mean(selfunc_hi_bin0))/np.std(selfunc_hi_bin0)
+        selfunc_hi_bin0/=3
+        print(np.min(selfunc_hi_bin0), np.max(selfunc_hi_bin0))
+    # elif norm == 'percentile':
+    #     mask = np.percentile(selfunc_hi_bin0[pixel_indices_datahi_bin0], mask)
+    elif norm == 'median':
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0-=np.min(selfunc_hi_bin0)
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0/=(np.median(selfunc_hi_bin0)+2*np.std(selfunc_hi_bin0))
+    elif norm == 'percentile':
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0-=np.min(selfunc_hi_bin0)
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0/=(np.percentile(selfunc_hi_bin0, 95))
+            
+    if percentile == True:
+        # mask = np.percentile(selfunc_hi_bin0[pixel_indices_datahi_bin0], mask)
+        mask = np.percentile(selfunc_hi_bin0, mask)
+        
     # impose bin and selfunc mask on data        
     if mask_type == 'selfunc':
-        mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=0.5 
-        mask_randhi_bin0 = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=0.5
+        mask_datahi_bin0 = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=mask 
+        mask_randhi_bin0 = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=mask
     else:
         if tab_gcat_type == 'data':
             mask_datahi_bin0 = np.abs(tab_datahi_bin0['b'])>=b

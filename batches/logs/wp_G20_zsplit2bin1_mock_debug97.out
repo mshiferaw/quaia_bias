@@ -1,10 +1,10 @@
 Starting batch job
-[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
-/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
-  warnings.warn("One or more input array has non-native endianness!  A copy will"\
-/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
-  warnings.warn("One or more input array has non-native endianness!  A copy will"\
-G20.0_zsplit2bin1: 0.13              329866 vs 377756
-Leaving tab_gcat_catalog unbinned
-../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G20/with_selection_function/mock_catalog_quaia_G20_mock98.fits
-G20.0: 0.14              652206 vs 755512
+Starting batch job
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop_debug.py", line 21
+    b = int(sys.argv[4]
+           ^
+SyntaxError: '(' was never closed
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/mocks_loop_debug.py", line 21
+    b = int(sys.argv[4]
+           ^
+SyntaxError: '(' was never closed
