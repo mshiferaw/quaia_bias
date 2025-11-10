@@ -119,7 +119,7 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot
     return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo_mask, mask_gcatlo
 
 # convert z to comoving distance in Mpc/h
-def comoving_dist(z, h = 0.6844, units = 'Mpc/h'): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
+def comoving_dist(z, h = 0.6844, units = 'Mpc/h', Om0 = 0.302): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
 
     r"""Transforms redshift to comoving distance.
     
@@ -143,7 +143,7 @@ def comoving_dist(z, h = 0.6844, units = 'Mpc/h'): # col 2 in fig 7 of https://a
     H0 = h*100 * u.km/u.s/u.Mpc
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
-    cosmo = FlatLambdaCDM(H0=H0, Om0=0.302)
+    cosmo = FlatLambdaCDM(H0=H0, Om0=Om0)
     comoving_r = cosmo.comoving_distance(z)
 
     # convert from Mpc to Mpc/h
@@ -638,7 +638,7 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, weights1 = None, weights2
 
 # 3D projected clustering wp(rp)
 def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 
-          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, d = 1):
+          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, d = 1, Om0 = 0.302, h = 0.6844):
     
     r"""Computes the two-point projected 3D clustering of `tab_gcatlo`.
     
@@ -706,14 +706,14 @@ def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weigh
     # comoving distance 
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'],  # where hubble distance = c/H0 and H0 = 100 km/s/Mpc h
-                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1[::d],
+                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h), weights1 = weights1[::d],
                                          is_comoving_dist = True, weight_type=weight_type1, output_rpavg = True, c_api_timer = True) 
     
     DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
-                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1[::d],
+                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h), weights1 = weights1[::d],
                                          RA2 = tab_randlo['ra'][::d], DEC2 = tab_randlo['dec'][::d],
-                                         CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
+                                         CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d], Om0 = Om0, h = h), 
                                          weights2 = weights2[::d], weight_type=weight_type12,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
 
@@ -722,7 +722,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weigh
         
         RR_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_randlo['ra'][::d], DEC1 = tab_randlo['dec'][::d], 
-                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d]), 
+                                         CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key][::d], Om0 = Om0, h = h), 
                                          weights1 = weights2[::d], weight_type=weight_type2,
                                          is_comoving_dist = True, output_rpavg = True, c_api_timer = True)
 
@@ -749,7 +749,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weigh
 
 # 3d clustering xi(r) computed with 1 mu bin
 def xi_s(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21)):
+         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), Om0 = 0.302, h = 0.6844):
     
     r"""Computes the two-point  3D clustering of `tab_gcatlo`.
     
@@ -811,15 +811,15 @@ def xi_s(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weight
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.   
     DD_counts, api_time = mocks.DDsmu_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1, 
                                             RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
-                                            CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1, 
+                                            CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h), weights1 = weights1, 
                                             weight_type = weight_type1, output_savg = True, is_comoving_dist=True, c_api_timer = True)
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.   
     DR_counts, api_time = mocks.DDsmu_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1, 
                                             RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
-                                            CZ1 = comoving_dist(tab_gcatlo['redshift_quaia']), weights1 = weights1, 
+                                            CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h), weights1 = weights1, 
                                             RA2 = tab_randlo['ra'], DEC2 = tab_randlo['dec'], 
-                                            CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key]), weights2 = weights2, 
+                                            CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key], Om0 = Om0, h = h), weights2 = weights2, 
                                             weight_type = weight_type12, output_savg = True, is_comoving_dist = True, c_api_timer = True)
     
     # now measure clustering in random catalog
@@ -827,7 +827,7 @@ def xi_s(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weight
         
         RR_counts, api_time = mocks.DDsmu_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, binfile = rbins, mu_max = 1, nmu_bins = 1,
                                                 RA1 = tab_randlo['ra'], DEC1 = tab_randlo['dec'], 
-                                                CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key]), weights1 = weights2, 
+                                                CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key], Om0 = Om0, h = h), weights1 = weights2, 
                                                 weight_type = weight_type2, output_savg = True, is_comoving_dist=True, c_api_timer = True)
         if weight_type2 == 'pair_product':
             RR_counts['npairs'] = RR_counts['npairs']*RR_counts['weightavg']
