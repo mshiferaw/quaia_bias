@@ -441,11 +441,13 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
         raise Exception('prebinned must be a boolean')
             
     # load selection function
-    # try:
-    fn_selhi_bin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
-    selfunc_hi_bin0 = hp.fitsfunc.read_map(fn_selhi_bin0)
-    # except:
-    #     return [None, None, None, None, None, None, None]
+    try:
+        fn_selhi_bin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
+        selfunc_hi_bin0 = hp.fitsfunc.read_map(fn_selhi_bin0)
+    except:
+        selfunc_hi_bin0 = np.ones(hp.nside2npix(NSIDE))
+        if mask_type=='selfunc':
+            raise Exception('cannot apply a selection function-based mask before computing the selection function in this bin')
 
     # quasar data catalog
     pixel_indices_datahi_bin0 = hp.ang2pix(NSIDE, tab_datahi_bin0['ra'], tab_datahi_bin0['dec'], lonlat=True)
@@ -466,12 +468,16 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
     # print('{}: {:.2f}              {} vs {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0, len(tab_datahi_bin0)))
     
     # random catalog
-    fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
-    tab_randhi_bin0 = Table.read(fn_randhi_bin0)
-        
+    try:
+        fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
+        tab_randhi_bin0 = Table.read(fn_randhi_bin0)
+    except:
+        tab_randhi_bin0 = tab_datahi_bin0
+        print('Random catalog is not computed, do not use output')
+
     # get the pixel indices for objects in each random bin
     pixel_indices_randhi_bin0 = hp.ang2pix(NSIDE, tab_randhi_bin0['ra'], tab_randhi_bin0['dec'], lonlat=True)
-
+        
     if scale == 'z-score':
         selfunc_hi_bin0=(selfunc_hi_bin0 - np.mean(selfunc_hi_bin0))/np.std(selfunc_hi_bin0)
         
