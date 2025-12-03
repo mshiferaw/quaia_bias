@@ -644,7 +644,7 @@ def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, weights1 = None, weights2
 
 # 3D projected clustering wp(rp)
 def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 
-          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, d = 1, Om0 = 0.302, h = 0.6844):
+          rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, d = 1, Om0 = 0.302, h = 0.6844, error = False):
     
     r"""Computes the two-point projected 3D clustering of `tab_gcatlo`.
     
@@ -751,11 +751,14 @@ def wp_rp(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weigh
     rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i]) 
          for i in rbins[:-1]]
     
+    if error == True:
+        return (wp, rpavg, [np.sum(DD_counts['npairs'][DD_counts['rmin']==i]) for i in rbins[:-1]], 
+                [np.sum(DR_counts['npairs'][DR_counts['rmin']==i]) for i in rbins[:-1]])
     return wp, rpavg
 
 # 3d clustering xi(r) computed with 1 mu bin
 def xi_s(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 
-         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), Om0 = 0.302, h = 0.6844):
+         rbins = np.logspace(np.log10(0.1), np.log10(20.0), 21), Om0 = 0.302, h = 0.6844, error = False):
     
     r"""Computes the two-point  3D clustering of `tab_gcatlo`.
     
@@ -852,7 +855,10 @@ def xi_s(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weight
     # make it easier to plot
     ind = np.argsort(DD_counts['savg'])
     
-    return cf
+    if error == True:
+        return cf, DD_counts['npairs'], DR_counts['npairs']
+    else:
+        return cf
     
 # 3d clustering xi(r)
 def xi_r(tab_gcatlo, tab_randlo, key, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 
