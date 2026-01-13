@@ -39,17 +39,17 @@ These settings are: the factor relating the target number of
 random sources to the sources in the given catalog.
 """
 
-def parse_args():
-    parser=argparse.ArgumentParser(description="make selection function map for input catalog")
-    parser.add_argument("fn_selfunc", type=str)
-    parser.add_argument("NSIDE_map", type=int)
-    parser.add_argument("fn_rand", type=str)
-    parser.add_argument("fn_catalog", type=str, nargs='?', default=None)
-    args=parser.parse_args()
+# def parse_args():
+#     parser=argparse.ArgumentParser(description="make selection function map for input catalog")
+#     parser.add_argument("fn_selfunc", type=str)
+#     parser.add_argument("NSIDE_map", type=int)
+#     parser.add_argument("fn_rand", type=str)
+#     parser.add_argument("fn_catalog", type=str, nargs='?', default=None)
+#     args=parser.parse_args()
 
-    print(f"Generating random with fn_selfunc={args.fn_selfunc}, NSIDE_map={args.NSIDE_map}, " \
-         f"fn_rand={args.fn_rand}, fn_catalog={args.fn_catalog}")
-    run(args.fn_selfunc, args.NSIDE_map, args.fn_rand, fn_catalog=args.fn_catalog)
+#     print(f"Generating random with fn_selfunc={args.fn_selfunc}, NSIDE_map={args.NSIDE_map}, " \
+#          f"fn_rand={args.fn_rand}, fn_catalog={args.fn_catalog}")
+#     run(args.fn_selfunc, args.NSIDE_map, args.fn_rand, fn_catalog=args.fn_catalog)
 
 def main():
 
@@ -65,7 +65,7 @@ def main():
         allsky = ''
     print('allsky', allsky)
     # File names (fn_selfunc is selection function map)
-    fn_catalog = f'../data/quaia_G{G_max}{sys.argv[3]}.fits'
+    fn_catalog = f'../data/quaia_G{G_max}{fname}.fits'
     fn_selfunc =  f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{fname}.fits'
     # fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_{fac_rand}x.fits'
     # if allsky == 'True':
@@ -73,6 +73,7 @@ def main():
     # else:
     #     fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_{fac_rand}x.fits'
     fn_rand = f'../data/randoms/random_G{G_max}{fname}{allsky}_{fac_rand}x.fits'
+    print(fn_rand)
     overwrite = True
 
     run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
@@ -122,7 +123,7 @@ def run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=None, fac_rand=1,
     print("Estimating reduction factor")
     N_rand_try = 1000000
     ra_rand_try, dec_rand_try = utils.random_ra_dec_on_sphere(rng, N_rand_try)
-    ra_rand, _ = subsample_by_probmap(NSIDE_map, rng, ra_rand_try, dec_rand_try, fn_selfunc)
+    ra_rand, _ = subsample_by_probmap(NSIDE_map, rng, ra_rand_try, dec_rand_try, fn_selfunc, allsky)
     reduction_factor_estimate = len(ra_rand)/N_rand_try
 
     # Generate actual random, using estimated reduction factor to get correct number
@@ -135,7 +136,7 @@ def run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=None, fac_rand=1,
         ra_rand, dec_rand = ra_rand_init, dec_rand_init
     else:
         print(f"Generating random with {fac_rand} times N_data")
-        ra_rand, dec_rand = subsample_by_probmap(NSIDE_map, rng, ra_rand_init, dec_rand_init, fn_selfunc)
+        ra_rand, dec_rand = subsample_by_probmap(NSIDE_map, rng, ra_rand_init, dec_rand_init, fn_selfunc, allsky)
 
     print(f"Number of final random sources: {len(ra_rand)}")
 
@@ -153,7 +154,7 @@ def indices_for_downsample(rng, probability_accept):
     return idx_keep
 
 
-def subsample_by_probmap(NSIDE_map, rng, ra, dec, fn_selfunc,
+def subsample_by_probmap(NSIDE_map, rng, ra, dec, fn_selfunc, allsky,
                          normalize=True):
     map_p = hp.read_map(fn_selfunc)
     print('Sel func min and max:', np.min(map_p), np.max(map_p))

@@ -54,11 +54,9 @@ random sources to the sources in the given catalog.
 def main():
 
     G_max = sys.argv[1]
-    # fac_rand = 10
     fac_rand = int(sys.argv[2])
     NSIDE_map = 64
     fname = sys.argv[3]
-    # print('allsky', allsky)
     if len(sys.argv)>4:
         allsky = sys.argv[4]
     else:
@@ -66,42 +64,12 @@ def main():
     print('allsky', allsky)
     # File names (fn_selfunc is selection function map)
     fn_catalog = f'../data/quaia_G{G_max}{fname}.fits'
-    fn_selfunc =  f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{fname}.fits'
-    # fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_{fac_rand}x.fits'
-    # if allsky == 'True':
-    #     fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_allsky_{fac_rand}x.fits'
-    # else:
-    #     fn_rand = f'../data/randoms/random_G{G_max}{sys.argv[3]}_{fac_rand}x.fits'
+    fn_selfunc =  f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{fname}.fits''
     fn_rand = f'../data/randoms/random_G{G_max}{fname}{allsky}_{fac_rand}x.fits'
     print(fn_rand)
     overwrite = True
 
     run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
-
-# def main():
-
-#     G_max = 20.5
-#     #tag_cat = '_qeboss'
-#     tag_cat = ''
-#     tag_sel = '_allsky'
-
-#     fac_rand = 10
-#     NSIDE_map = 64
-
-#     # File names (fn_selfunc is selection function map)
-#     #fn_selfunc = f'../data/maps/selection_function_NSIDE{NSIDE_map}_G{G_max}{tag_cat}{tag_sel}.fits'
-#     fn_gaia = f'../data/quaia_G{G_max}{tag_cat}.fits'
-#     #fn_rand = f'../data/randoms/random_G{G_max}{tag_cat}{tag_sel}_{fac_rand}x_retry.fits'
-
-#     #fn_selfunc = f'../data/maps/selfunc_test.fits'
-#     fn_selfunc = f'../data/maps/selection_function_NSIDE64_ones.fits'
-#     #fn_rand = f'../data/randoms/random_test.fits'
-#     fn_rand = f'../data/randoms/random_G{G_max}{tag_cat}{tag_sel}_{fac_rand}x.fits'
-#     overwrite = True
-
-#     run(fn_selfunc, NSIDE_map, fn_rand, fn_catalog=fn_gaia,
-#         fac_rand=fac_rand, overwrite=overwrite)
-
 
 
 def run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=None, fac_rand=1,
@@ -130,8 +98,6 @@ def run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=None, fac_rand=1,
     N_rand_init = int(N_rand_target/reduction_factor_estimate)
     ra_rand_init, dec_rand_init = utils.random_ra_dec_on_sphere(rng, N_rand_init)
     if allsky == '_allsky':
-        # print(f"Making allsky randoms: {N_rand_target}")
-        # ra_rand, dec_rand = utils.random_ra_dec_on_sphere(rng, N_rand_target)
         print(f"Generating allksy random with {fac_rand} times N_data")
         ra_rand, dec_rand = ra_rand_init, dec_rand_init
     else:
@@ -153,15 +119,17 @@ def indices_for_downsample(rng, probability_accept):
     idx_keep = (probability_accept >= random_vals_rand)
     return idx_keep
 
-
 def subsample_by_probmap(NSIDE_map, rng, ra, dec, fn_selfunc, allsky,
                          normalize=True):
     map_p = hp.read_map(fn_selfunc)
     print('Sel func min and max:', np.min(map_p), np.max(map_p))
     _, pixel_indices_rand = maps.get_map(NSIDE_map, ra, dec)
     p_rand = map_p[pixel_indices_rand]
-    p_rand /= np.max(p_rand)
-    #assert np.all(p_rand>=0) and np.all(p_rand<=1), "Bad probability vals!" 
+    print(np.max(map_p), np.max(p_rand))
+    if allsky == '_map_p': # test if this makes a difference
+        p_rand /= np.max(map_p)
+    else:
+        p_rand /= np.max(p_rand)
     idx_keep = indices_for_downsample(rng, p_rand)
     print(f"Subsampling by {np.sum(idx_keep)/len(idx_keep):.3f} for probability map")
     return ra[idx_keep], dec[idx_keep]
