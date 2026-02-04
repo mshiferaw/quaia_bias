@@ -151,6 +151,8 @@ def comoving_dist(z, h = 0.6844, units = 'Mpc/h', Om0 = 0.302, Ob0 = None): # co
     if units == 'Mpc/h':
         # return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
         return comoving_r*h/cu.littleh # equivalent to comoving_d*h 
+    elif units == 'Mpc*h':
+        return comoving_r/cu.littleh/h # equivalent to comoving_d/h 
     elif units == 'Mpc':
         return comoving_r
     else:
@@ -306,7 +308,7 @@ def z_dist(tab_gcatlo, tab_randlo,
         
     return key
 
-def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None, name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', cmap_map = 'plasma', cbar_ticks = [5, 10, 20], fac_stdev = fac_stdev, bounds = [1, 16]):
+def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None, name_catalog = '$Gaia$-$unWISE$ Quasar Catalog', cmap_map = 'plasma', cbar_ticks = [5, 10, 20], fac_stdev = fac_stdev, bounds = [1, 16], map_gcatlo = None, map_randlo = None, pixel_indices_gcatlo = None, pixel_indices_randlo = None, selfunc = ''):
     
     r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
     
@@ -445,7 +447,8 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             
     # load selection function
     try:
-        fn_selhi_bin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
+        fn_selhi_bin0 = '../data/maps/selection_function_NSIDE64{}{}.fits'.format(fname, selfunc) 
+        print(fn_selhi_bin0)
         selfunc_hi_bin0 = hp.fitsfunc.read_map(fn_selhi_bin0)
     except:
         selfunc_hi_bin0 = np.ones(hp.nside2npix(NSIDE))
@@ -538,17 +541,31 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
                     norm='log', graticule=True) #, cbar_ticks=cbar_ticks)
         
         # make map of quasar number counts
-        pixel_indices_gcatlo = hp.ang2pix(NSIDE, tab_randhi_mask_bin0['ra'], tab_randhi_mask_bin0['dec'], lonlat=True)
+        pixel_indices_randlo = hp.ang2pix(NSIDE, tab_randhi_mask_bin0['ra'], tab_randhi_mask_bin0['dec'], lonlat=True)
         NPIX = hp.nside2npix(NSIDE)
-        map_randlo = np.bincount(pixel_indices_gcatlo, minlength=NPIX)
+        map_randlo = np.bincount(pixel_indices_randlo, minlength=NPIX)
         print(np.min(map_randlo*hp.pixelfunc.nside2pixarea(NSIDE, degrees = True))) #-fac_stdev*np.std(map_gcatlo), np.mean(map_gcatlo)+fac_stdev*np.std(map_gcatlo))
         title_gcatlo = rf"{name_catalog}, $G<{G}$ (N={N_randhi_mask_bin0:,}), ${bb}< z\leq{bb+1}$, Randoms"
         projview(map_randlo*hp.pixelfunc.nside2pixarea(NSIDE, degrees = True), title=title_gcatlo,
                     unit=r"number per healpixel", cmap=cmap_map, coord=['C', 'G'], min = bounds[0], #max = bounds[-1],
                     # min=np.mean(map_gcatlo)-fac_stdev*np.std(map_gcatlo), max=np.mean(map_gcatlo)+10*fac_stdev*np.std(map_gcatlo), 
                     norm='log', graticule=True)#, cbar_ticks=cbar_ticks)
+        
+#         # show where the selfunc is zero
+#         map_gcatlo[map_gcatlo==0]=-1
+#         map_gcatlo[map_gcatlo>0]=0
+#         title_gcatlo = rf"{name_catalog}, $G<{G}$ (N={N_datahi_mask_bin0:,}), ${bb}< z\leq{bb+1}$"
+#         projview(-map_gcatlo, title=title_gcatlo,
+#                     unit=r"number per healpixel", cmap=cmap_map, coord=['C', 'G'], min = 1, graticule=True) #, cbar_ticks=cbar_ticks)
+        
+#         # make map of quasar number counts
+#         map_randlo[map_randlo==0]=-1
+#         map_randlo[map_randlo>0]=0
+#         title_gcatlo = rf"{name_catalog}, $G<{G}$ (N={N_randhi_mask_bin0:,}), ${bb}< z\leq{bb+1}$, Randoms"
+#         projview(-map_randlo, title=title_gcatlo,
+#                     unit=r"number per healpixel", cmap=cmap_map, coord=['C', 'G'], min = 1, graticule=True)#, cbar_ticks=cbar_ticks)
     
-    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), selfunc_hi_bin0, map_gcatlo, map_randlo
+    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), selfunc_hi_bin0, map_gcatlo, map_randlo, pixel_indices_gcatlo, pixel_indices_randlo
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 
@@ -656,7 +673,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key,
           nthreads = 8, 
           rbins = np.logspace(np.log10(0.5), np.log10(60.0), 21), nbins = 20, pimax = 40.0, 
           # d = 1, 
-          Om0 = 0.302, h = 0.6844, error = False):
+          Om0 = 0.302, h = 0.6844, error = False, units = 'Mpc/h'):
     
     r"""Computes the two-point projected 3D clustering of `tab_gcatlo`.
     
@@ -724,7 +741,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key,
     # comoving distance 
     DD_counts, api_time = mocks.DDrppi_mocks(autocorr = 1, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                          RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'],  # where hubble distance = c/H0 and H0 = 100 km/s/Mpc h
-                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h), 
+                                         CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h, units = units), 
                                              # weights1 = weights1[::d],
                                          # CZ1 = tab_gcatlo['redshift_quaia'][::d]*const.c.to(u.km/u.s), 
                                              # weights1 = weights1[::d],
@@ -734,7 +751,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key,
     
     DR_counts, api_time = mocks.DDrppi_mocks(autocorr = 0, cosmology = 2, nthreads = nthreads, pimax = pimax, binfile = rbins, 
                                              RA1 = tab_gcatlo['ra'], DEC1 = tab_gcatlo['dec'], 
-                                             CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h), 
+                                             CZ1 = comoving_dist(tab_gcatlo['redshift_quaia'], Om0 = Om0, h = h, units = units), 
                                              # weights1 = weights1[::d],
                                              # CZ1 = tab_gcatlo['redshift_quaia'][::d]*const.c.to(u.km/u.s), 
                                              # weights1 = weights1[::d],
@@ -744,7 +761,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key,
                                              # [::d],
                                              CZ2 = comoving_dist(tab_randlo['redshift_quaia_'+key],
                                                                  # [::d],
-                                                                 Om0 = Om0, h = h), 
+                                                                 Om0 = Om0, h = h, units = units), 
                                              # CZ2 = tab_randlo['redshift_quaia_'+key][::d]*const.c.to(u.km/u.s), 
                                              # weights2 = weights2[::d], weight_type=weight_type12,
                                              is_comoving_dist = True, 
@@ -761,7 +778,7 @@ def wp_rp(tab_gcatlo, tab_randlo, key,
                                              # CZ1 = tab_randlo['redshift_quaia_'+key][::d]*const.c.to(u.km/u.s), 
                                              CZ1 = comoving_dist(tab_randlo['redshift_quaia_'+key],
                                                                  # [::d],
-                                                                 Om0 = Om0, h = h), 
+                                                                 Om0 = Om0, h = h, units = units), 
                                              # weights1 = weights2[::d], weight_type=weight_type2,
                                              is_comoving_dist = True, 
                                              output_rpavg = True, c_api_timer = True)
