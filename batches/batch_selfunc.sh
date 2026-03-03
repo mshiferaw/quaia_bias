@@ -32,4 +32,9 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 
 # python selection_function_map.py ../data/quaia_G20.5_Lsplit4bin0.fits ../data/maps/selection_function_NSIDE64_G20.5_Lsplit4bin0.fits -p ../data/quaia_G20.5.fits
 
-python selection_function_map.py ../data/quaia_G20.0_Lmin-29.0Lmax-26.0.fits ../data/maps/selection_function_NSIDE64_G20.0_Lmin-29.0Lmax-26.0.fits -p ../data/quaia_G20.0.fits
+# python selection_function_map.py ../data/quaia_G20.0_Lmin-29.0Lmax-26.0.fits ../data/maps/selection_function_NSIDE64_G20.0_Lmin-29.0Lmax-26.0.fits -p ../data/quaia_G20.0.fits
+# python selection_function_map.py ../data/quaia_G20.5_zmin3.0zmax4.6.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6.fits -p ../data/quaia_G20.5.fits
+
+python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin46.0.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.0.fits -p ../data/quaia_G20.5.fits
+
+python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits -p ../data/quaia_G20.5.fits

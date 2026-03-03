@@ -12,6 +12,7 @@ from Corrfunc import theory
 from astropy.coordinates import SkyCoord
 import scipy.interpolate as interp
 from matplotlib import pyplot as plt
+from astropy.cosmology import Planck18
 
 # global variables
 NSIDE = 64
@@ -153,7 +154,7 @@ def comoving_dist(z, h = 0.6844, units = 'Mpc/h', Om0 = 0.302): # col 2 in fig 7
         return comoving_r.to(u.pc)
 
 def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h = 0.6844, NSIDE = NSIDE, 
-             k = np.loadtxt('../data/maps/datafile4.txt')):
+             k = np.loadtxt('../data/maps/datafile4.txt'), Om0 = None):
     
     r"""Transforms apparent to absolute magnitude.
     
@@ -189,7 +190,11 @@ def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'),
     H0 = h*100 * u.km/u.s/u.Mpc
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
-    cosmo = FlatLambdaCDM(H0=H0, Om0=0.302)
+    # cosmo = FlatLambdaCDM(H0=H0, Om0=0.302)
+    if Om0 == None:
+        cosmo = Planck18
+    else:
+        cosmo = FlatLambdaCDM(H0=H0, Om0=Om0)
     d = cosmo.luminosity_distance(tab_datalo['redshift_quaia']).value
     
     pixel_indices_datalo = hp.ang2pix(NSIDE, tab_datalo['ra'], tab_datalo['dec'], lonlat=True)
@@ -199,6 +204,40 @@ def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'),
     K_i = k_z(tab_datalo['redshift_quaia'])
     
     tab_datalo['M_i']=m_i-25-5*np.log10(d)-A_i-K_i # d is in Mpc
+    
+    return d
+
+def L_bol(tab_datalo):
+    
+    r"""Transforms apparent to absolute magnitude.
+    
+    Returns bolometric luminosity. Uses Astropy units and cosmology.
+    
+    Parameters
+    ----------
+    tab_datalo : astropy table
+        The input catalog.
+        
+    Returns
+    -------
+    M : float
+        Bolometric luminosity.
+    """
+    
+    ZP = 24.7619
+    ZP_AB = 25.1161
+    I = 10**(-(tab_datalo['phot_rp_mean_mag'].value-ZP)/2.5) 
+    G_AB = (-2.5*np.log10(I)+ZP_AB)*u.ABmag
+    
+    v_G = 10**14.588*u.Hz # Hz
+    f_v = G_AB.to(u.erg/u.s/u.cm**2/u.Hz, u.spectral_density(v_G))
+    
+    d_L = Planck18.luminosity_distance(tab_datalo['redshift_quaia'])
+    v_G = 10**14.588*u.Hz # Hz
+    v_G_L_v = v_G*f_v*(4*np.pi*d_L**2)*(1+tab_datalo['redshift_quaia'])**(-0.657)
+    
+    bol_L = v_G_L_v*11.004
+    tab_datalo['L_bol'] = (bol_L/10**0.073).to(u.erg/u.s)
 
 def recenter(bins):
     
