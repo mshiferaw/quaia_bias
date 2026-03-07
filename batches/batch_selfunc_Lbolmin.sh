@@ -11,8 +11,8 @@
 conda activate quaia-env
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 
-python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin45.5.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin45.5.fits -p ../data/quaia_G20.5.fits
+# python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin45.5.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin45.5.fits -p ../data/quaia_G20.5.fits
 
-python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin45.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin45.fits -p ../data/quaia_G20.5.fits
-
-python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin44.5.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin44.5.fits -p ../data/quaia_G20.5.fits
+python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin45.0.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin45.0.fits -p ../data/quaia_G20.5.fits
+python generate_random.py 20.5 25 _zmin0.0zmax1.0_Lbolmin45.0
+# python selection_function_map.py ../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin44.5.fits ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin44.5.fits -p ../data/quaia_G20.5.fits

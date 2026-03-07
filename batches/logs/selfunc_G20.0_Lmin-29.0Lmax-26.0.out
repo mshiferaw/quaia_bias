@@ -28,51 +28,7 @@ MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
 unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
 unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
-Constructing X
-(7, 49152)
-(7, 49152)
-Getting indices to fit
-err min max: 0.0 2.6457513110645907
-Training fitter
-X_train: (18261, 7) y_train: (18261,)
-y_train min: 1.0 y_train: 7.0
-fit_mean = True
-n params: 7
-parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
-paramters init: [ 0.         -3.92834026 -0.5         1.5        -1.          5.
-  0.8         0.         10.        ]
-y minmax 0.0 1.9459101490553132
-yerr: [1.         1.         1.         ... 1.         1.41421356 1.        ] [1.         1.         1.         ... 1.         0.70710678 1.        ]
-p compute: [ 0.         -3.92834026 -0.5         1.5        -1.          5.
-  0.8         0.         10.        ]
-lnlike compute: -17214.771973301453
-Minimizing
-  message: Optimization terminated successfully.
-  success: True
-   status: 0
-      fun: 17182.996875837518
-        x: [ 2.676e-01 -4.974e+00 -4.382e-02  5.819e+00  4.657e+01
-             7.698e+01  6.251e+01  8.243e+01  2.682e+01]
-      nit: 48
-      jac: [ 8.312e-06  4.230e-06 -8.485e-07 -1.848e-06  8.182e-22
-            -2.169e-31 -1.898e-26 -1.362e-34 -7.915e-10]
- hess_inv: [[ 1.800e-02  2.016e-02 ...  1.940e+03  4.432e+02]
-            [ 2.016e-02  1.015e+00 ... -4.797e+03 -1.096e+03]
-            ...
-            [ 1.940e+03 -4.797e+03 ...  8.079e+09  1.845e+09]
-            [ 4.432e+02 -1.096e+03 ...  1.845e+09  4.214e+08]]
-     nfev: 51
-     njev: 51
-p post op: [ 2.67564600e-01 -4.97391789e+00 -4.38182296e-02  5.81934325e+00
-  4.65675803e+01  7.69795731e+01  6.25129547e+01  8.24259416e+01
-  2.68190135e+01]
-lnlike final: -17182.996875837518
-Predicting
-setting the output map dtype to [dtype('float64')]
-predict p: [ 2.67564600e-01 -4.97391789e+00 -4.38182296e-02  5.81934325e+00
-  4.65675803e+01  7.69795731e+01  6.25129547e+01  8.24259416e+01
-  2.68190135e+01]
-Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.0.fits
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.0.fits
 y_pred_full: [1.16734575 1.20040563 1.31855214 ... 1.35598457 1.35686157 1.34344311]
 0
 RMSE: 0.6425228826230645
@@ -84,7 +40,7 @@ Using parent catalog to determine zero-probability pixels
 min: 0.0, max: 0.6910513821786688
 map_prob: [0.50251093 0.51674232 0.56760121 ... 0.58371487 0.58409239 0.57831611]
 Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.0.fits!
-Time: 6666.517117977142 s (111.10861863295237 min)
+Time: 0.9797694683074951 s (0.016329491138458253 min)
 Running selection function with fn_catalog=../data/quaia_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
 Loading data
 Making QSO map
@@ -96,49 +52,7 @@ MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
 unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
 unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
 MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
-Constructing X
-(7, 49152)
-(7, 49152)
-Getting indices to fit
-err min max: 0.0 2.0
-Training fitter
-X_train: (2205, 7) y_train: (2205,)
-y_train min: 1.0 y_train: 4.0
-fit_mean = True
-n params: 7
-parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
-paramters init: [ 0.         -6.16931479 -0.5         1.5        -1.          5.
-  0.8         0.         10.        ]
-y minmax 0.0 1.3862943611198906
-yerr: [1. 1. 1. ... 1. 1. 1.] [1. 1. 1. ... 1. 1. 1.]
-p compute: [ 0.         -6.16931479 -0.5         1.5        -1.          5.
-  0.8         0.         10.        ]
-lnlike compute: -2044.3869475016313
-Minimizing
-  message: Optimization terminated successfully.
-  success: True
-   status: 0
-      fun: 2039.8318285779492
-        x: [ 4.182e-02 -2.280e+01 -5.030e-01  2.577e+00 -8.563e-01
-             4.993e+00  1.179e+00  7.153e-01  1.000e+01]
-      nit: 23
-      jac: [-7.432e-06  9.839e-07  5.403e-09  5.521e-10  1.268e-09
-             2.266e-10 -4.011e-11  2.973e-09  1.345e-12]
- hess_inv: [[ 3.632e-04  1.114e-03 ... -5.311e-04 -8.933e-07]
-            [ 1.114e-03  3.523e+05 ... -9.576e+03  5.047e+00]
-            ...
-            [-5.311e-04 -9.576e+03 ...  2.613e+02 -1.372e-01]
-            [-8.933e-07  5.047e+00 ... -1.372e-01  1.000e+00]]
-     nfev: 27
-     njev: 27
-p post op: [  0.04182065 -22.80017454  -0.50298186   2.57698456  -0.85630438
-   4.99344284   1.17892839   0.71527437   9.99991088]
-lnlike final: -2039.8318285779492
-Predicting
-setting the output map dtype to [dtype('float64')]
-predict p: [  0.04182065 -22.80017454  -0.50298186   2.57698456  -0.85630438
-   4.99344284   1.17892839   0.71527437   9.99991088]
-Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits
 y_pred_full: [1.04270745 1.04270745 1.04270746 ... 1.04270746 1.04270746 1.04270746]
 0
 RMSE: 0.18854301667586768
@@ -150,4 +64,4 @@ Using parent catalog to determine zero-probability pixels
 min: 0.0, max: 1.939840286767756
 map_prob: [1.93984028 1.93984028 1.93984028 ... 1.93984028 1.93984028 1.93984028]
 Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lbolmin46.5.fits!
-Time: 151.6599931716919 s (2.5276665528615316 min)
+Time: 0.45664525032043457 s (0.007610754172007243 min)

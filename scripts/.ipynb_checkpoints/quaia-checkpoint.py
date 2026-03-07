@@ -408,6 +408,8 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             name = '_{}split{}bin{}'.format(cut, n_bins, bb)
         elif method == 'minmax':
             name = '_{}min{}{}max{}'.format(cut, bins[bb], cut, bins[bb+1])
+        elif method == 'threshold':
+            name = '_Lbolmin{}'.format(bins[bb])
         else:
             print('Leaving tab_gcat_catalog unbinned')
             fname = '_G{:.1f}'.format(G)
@@ -458,6 +460,9 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             
         if cut == 'z':
             key = 'redshift_quaia'
+        elif cut == 'L_bol':
+            L_bol(tab_cat)
+            key = 'L_bol'
         else:
             absolute(tab_gcat, G)
             key = 'M_i'
