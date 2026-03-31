@@ -51,6 +51,7 @@ def main():
     parser.add_argument("--n_Lbins", help="number of L bins", type = int)
     parser.add_argument("--L_bins", help="L bins", type = float, nargs = '*')
     parser.add_argument("--L_bolmin", help="L_bol threshold", type = float)
+    parser.add_argument("--L_max", help="L threshold", type = float)
     args = parser.parse_args()
     # if args.n_zbins:
     #     fn_gcat_zbin = make_redshift_split_catalogs(args.G, n_zbins=int(args.n_zbins))
@@ -62,7 +63,7 @@ def main():
     # elif args.L_bins:
     #     make_luminosity_split_catalogs(args.G, L_bins=args.L_bins)
     # fn_gcat_zbin = None
-    if (args.n_zbins or args.z_bins) and not (args.n_Lbins or args.L_bins or args.L_bolmin):
+    if (args.n_zbins or args.z_bins) and not (args.n_Lbins or args.L_bins or args.L_bolmin or args.L_max):
         make_redshift_split_catalogs(args.G, n_zbins=args.n_zbins, z_bins=args.z_bins)
     elif not (args.n_zbins or args.z_bins) and (args.n_Lbins or args.L_bins):
     # if args.n_Lbins or args.L_bins:
@@ -74,6 +75,8 @@ def main():
         make_redshift_luminosity_split_catalogs(args.G, n_zbins=args.n_zbins, z_bins=args.z_bins, n_Lbins=args.n_Lbins, L_bins=args.L_bins)
     elif (args.n_zbins or args.z_bins) and (args.L_bolmin):
         make_redshift_luminosity_threshold_catalogs(args.G, n_zbins=args.n_zbins, z_bins=args.z_bins, L_bolmin=args.L_bolmin)    
+    elif (args.n_zbins or args.z_bins) and (args.L_max):
+        make_redshift_luminosity_threshold_catalogs(args.G, n_zbins=args.n_zbins, z_bins=args.z_bins, L_max = args.L_max)    
 
     # zbins = sys.argv[2]
     # print(zbins)
@@ -344,10 +347,10 @@ def make_redshift_luminosity_split_catalogs(G_max, n_zbins=None, z_bins=None, n_
                 pass
             print(f"Wrote table with {len(tab_gcat_Lbin)} objects to {fn_gcat_Lbin}")
             
-def make_redshift_luminosity_threshold_catalogs(G_max, n_zbins=None, z_bins=None, n_Lbins=None, L_bins=None, overwrite=True, save_tag='', z_split = True, L_split = True, Lbol_threshold = True, L_bolmin = None, key = 'M_i'):
+def make_redshift_luminosity_threshold_catalogs(G_max, n_zbins=None, z_bins=None, n_Lbins=None, L_bins=None, overwrite=True, save_tag='', z_split = True, L_split = True, Lbol_threshold = True, L_bolmin = None, key = 'M_i', L_max = None, precision = False):
     
     assert n_zbins is not None or z_bins is not None, "Either n_bins or z_bins must be passed!"
-    assert n_Lbins is not None or L_bins is not None or L_bolmin is not None, "Either n_Lbins or L_bins or L_bolmin must be passed!"
+    assert n_Lbins is not None or L_bins is not None or L_bolmin is not None or L_max is not None, "Either n_Lbins or L_bins or L_bolmin or L_max must be passed!"
 
     if z_bins is not None and n_zbins is not None:
         print("z_bins passed, ignoring n_zbins")
@@ -365,6 +368,11 @@ def make_redshift_luminosity_threshold_catalogs(G_max, n_zbins=None, z_bins=None
         n_Lbins = 1
         L_split = False
         L_bol_threshold = True
+    if L_max is not None:
+        n_Lbins = 1
+        L_split = False
+        L_bol_threshold = False
+        L_threshold = True
 
     fn_gcat = f'../data/quaia_G{G_max}.fits'
     tab_gcat = utils.load_table(fn_gcat)
@@ -383,43 +391,52 @@ def make_redshift_luminosity_threshold_catalogs(G_max, n_zbins=None, z_bins=None
     for bb in range(n_zbins):
         i_zbin = (tab_gcat['redshift_quaia'] >= z_bins[bb]) & (tab_gcat['redshift_quaia'] < z_bins[bb+1])
         tab_gcat_zbin = tab_gcat[i_zbin]
-        quaia.absolute(tab_gcat_zbin, G_max)
-        quaia.L_bol(tab_gcat_zbin)
-        if z_split == True:
-            fn_gcat_zbin = f'_zsplit{n_zbins}bin{bb}{save_tag}'
-        else:
-            fn_gcat_zbin = f'_zmin{z_bins[bb]}zmax{z_bins[bb+1]}{save_tag}' 
-        for bb in range(n_Lbins):
-            if L_bolmin is not None:
-                L_bins = [10**L_bolmin, np.inf]
-                key = 'L_bol'
-            elif L_bins is None:
-                n_Lbins = int(n_Lbins)
-                L_percentiles = np.linspace(0.0, 100.0, n_Lbins+1)
-                print(L_percentiles)
-                L_bins = np.percentile(list(tab_gcat['M_i']), L_percentiles)
-                L_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
-                L_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included 
-            print("Lbins:", L_bins)
-            print("n_Lbins:", n_Lbins)
-            print(key, tab_gcat_zbin[key])
-            i_Lbin = (tab_gcat_zbin[key] >= L_bins[bb]) & (tab_gcat_zbin[key] < L_bins[bb+1])
-            tab_gcat_Lbin = tab_gcat_zbin[i_Lbin]
-            if L_split == True:
-                fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lsplit{n_Lbins}bin{bb}{save_tag}.fits'
-            elif L_bol_threshold == True:
-                fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lbolmin{L_bolmin}{save_tag}.fits'
+        try:
+            quaia.absolute(tab_gcat_zbin, G_max)
+            quaia.L_bol(tab_gcat_zbin)
+            if z_split == True:
+                fn_gcat_zbin = f'_zsplit{n_zbins}bin{bb}{save_tag}'
+            elif precision == False:
+                fn_gcat_zbin = f'_zmin{z_bins[bb]}zmax{z_bins[bb+1]}{save_tag}' 
             else:
-                fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lmin{L_bins[bb]}Lmax{L_bins[bb+1]}{save_tag}.fits' 
-            tab_gcat_Lbin.write(fn_gcat_Lbin, overwrite=overwrite)
-            try:
+                fn_gcat_zbin = f'_zmin{z_bins[bb]:.4f}zmax{z_bins[bb+1]:.4f}{save_tag}' 
+            for bb in range(n_Lbins):
+                if L_bolmin is not None:
+                    L_bins = [10**L_bolmin, np.inf]
+                    key = 'L_bol'
+                elif L_max is not None:
+                    L_bins = [-np.inf, L_max]
+                elif L_bins is None:
+                    n_Lbins = int(n_Lbins)
+                    L_percentiles = np.linspace(0.0, 100.0, n_Lbins+1)
+                    print(L_percentiles)
+                    L_bins = np.percentile(list(tab_gcat['M_i']), L_percentiles)
+                    L_bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+                    L_bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included 
+                print("Lbins:", L_bins)
+                print("n_Lbins:", n_Lbins)
+                print(key, tab_gcat_zbin[key])
+                i_Lbin = (tab_gcat_zbin[key] >= L_bins[bb]) & (tab_gcat_zbin[key] < L_bins[bb+1])
+                tab_gcat_Lbin = tab_gcat_zbin[i_Lbin]
+                if L_split == True:
+                    fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lsplit{n_Lbins}bin{bb}{save_tag}.fits'
+                elif L_bol_threshold == True:
+                    fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lbolmin{L_bolmin}{save_tag}.fits'
+                elif L_threshold == True:
+                    fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lmax{L_max}{save_tag}.fits'
+                else:
+                    fn_gcat_Lbin = f'../data/quaia_G{G_max}{fn_gcat_zbin}_Lmin{L_bins[bb]}Lmax{L_bins[bb+1]}{save_tag}.fits' 
+                tab_gcat_Lbin.write(fn_gcat_Lbin, overwrite=overwrite)
+                # try:
                 print("zmin:", np.min(tab_gcat_Lbin['redshift_quaia']))
                 print("zmax:", np.max(tab_gcat_Lbin['redshift_quaia']))
                 print("Lmin:", np.min(tab_gcat_Lbin[key]))
                 print("Lmax:", np.max(tab_gcat_Lbin[key]))
-            except ValueError:  #raised if `y` is empty.
-                pass
-            print(f"Wrote table with {len(tab_gcat_Lbin)} objects to {fn_gcat_Lbin}")
+                # except ValueError:  #raised if `y` is empty.
+                #     pass
+                print(f"Wrote table with {len(tab_gcat_Lbin)} objects to {fn_gcat_Lbin}")
+        except:
+            print(f"{len(tab_gcat_zbin)} objects in redshift bin of {fn_gcat_Lbin}")
             
 #     # option 2
 # def make_redshift_luminosity_split_catalogs(G_max, n_zbins=None, z_bins=None, n_Lbins=None, L_bins=None, overwrite=True, save_tag='', z_split = True, L_split = True):

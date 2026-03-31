@@ -15,7 +15,7 @@ import masks
 import maps
 
 import sys
-
+import os
 
 """
 Generate a new random catalog the following command on the commandline: 
@@ -114,6 +114,8 @@ def run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=None, fac_rand=1,
     if fn_catalog is not None:
     # Load data; only used to figure out desired number
         print("Loading data")
+        if not os.path.exists(fn_catalog):
+            sys.exit(f"fn_catalog {fn_catalog} does not exist, so exiting")
         tab_catalog = utils.load_table(fn_catalog)
         N_data = len(tab_catalog)
         print(f"Number of data sources: {N_data}")

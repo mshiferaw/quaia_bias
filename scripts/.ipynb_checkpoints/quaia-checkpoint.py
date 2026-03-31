@@ -209,7 +209,7 @@ def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'),
 
 def L_bol(tab_datalo):
     
-    r"""Transforms apparent to absolute magnitude.
+    r"""Transforms apparent magnitude to bolometric luminosity.
     
     Returns bolometric luminosity. Uses Astropy units and cosmology.
     
@@ -224,18 +224,23 @@ def L_bol(tab_datalo):
         Bolometric luminosity.
     """
     
+    ### Try following [Gaia documentation](https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_calibr/ssec_cu5pho_calibr_extern.html)
     ZP = 24.7619
     ZP_AB = 25.1161
     I = 10**(-(tab_datalo['phot_rp_mean_mag'].value-ZP)/2.5) 
     G_AB = (-2.5*np.log10(I)+ZP_AB)*u.ABmag
     
+    ### Try following [astropy documentation](https://docs.astropy.org/en/latest/units/logarithmic_units.html)
     v_G = 10**14.588*u.Hz # Hz
     f_v = G_AB.to(u.erg/u.s/u.cm**2/u.Hz, u.spectral_density(v_G))
     
+    ## Now calculate the intrinsic luminosity: $v_{\mathrm{G}_{\mathrm{RP}}} L_{v_{\mathrm{G}_{\mathrm{RP}}}}=v_{\mathrm{G}_{\mathrm{RP}}} f_{v_{\mathrm{G}_{\mathrm{RP}}}}\left(4 \pi d_{\mathrm{lum}}^2\right)(1+z)^{-0.657}$
     d_L = Planck18.luminosity_distance(tab_datalo['redshift_quaia'])
     v_G = 10**14.588*u.Hz # Hz
     v_G_L_v = v_G*f_v*(4*np.pi*d_L**2)*(1+tab_datalo['redshift_quaia'])**(-0.657)
     
+    ## Apply frequency-dependent bolometric correction at $v_{\mathrm{G}_{\mathrm{RP}}}$
+    ## Correct according to bolometric luminosity estimates of Wu & Shen (2022)
     bol_L = v_G_L_v*11.004
     tab_datalo['L_bol'] = (bol_L/10**0.073).to(u.erg/u.s)
 
@@ -331,7 +336,7 @@ def z_dist(tab_gcatlo, tab_randlo, mask_gcatlo, mask_randlo, N_gcatlo_mask, N_ra
     else:
         return key
 
-def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None):
+def make_bins_raw(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None, precision = False):
     
     r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
     
@@ -406,10 +411,14 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
     for cut, bins, n_bins, method, bb in zip(cuts, bins, n_bins, method, bb):
         if method == 'split':
             name = '_{}split{}bin{}'.format(cut, n_bins, bb)
-        elif method == 'minmax':
+        elif (method == 'minmax') and (precision == False):
             name = '_{}min{}{}max{}'.format(cut, bins[bb], cut, bins[bb+1])
+        elif (method == 'minmax') and (precision == True):
+            name = '_{}min{:.4f}{}max{:.4f}'.format(cut, bins[bb], cut, bins[bb+1])
         elif method == 'threshold':
             name = '_Lbolmin{}'.format(bins[bb])
+        elif method == 'max':
+            name = '_Lmax{}'.format(bins[bb])
         else:
             print('Leaving tab_gcat_catalog unbinned')
             fname = '_G{:.1f}'.format(G)
@@ -565,10 +574,16 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
         
     tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
     tab_randhi_mask_bin0 = tab_randhi_bin0[mask_randhi_bin0]
-    
+        
     # record N in each bin
     N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
-    print('{}: {:.2f}              {} vs {}'.format(fname[1:], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), N_datahi_mask_bin0, len(tab_datahi_bin0)))
+    
+    try: 
+        frac = 1-N_datahi_mask_bin0/len(tab_datahi_bin0)
+    except:
+        frac = np.nan
+        
+    print('{}: {:.2f}              {} vs {}'.format(fname[1:], frac, N_datahi_mask_bin0, len(tab_datahi_bin0)))
     
     # # select where the randoms in each bin pass the selfunc mask
     # mask_randhi_bin0 = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=0.5
@@ -576,15 +591,297 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
 
     # assign redshifts to randoms in each bin, mimicking the distribution of data in each bin that pass the selfunc mask
     N_randhi_mask_bin0 = len(tab_randhi_mask_bin0)
-    if z == True:
+    if (z == True) and (len(tab_datahi_bin0)!=0):
         key_bin0 = z_dist(tab_datahi_mask_bin0, tab_randhi_mask_bin0, np.full(N_datahi_mask_bin0, True), 
                              np.full(N_randhi_mask_bin0, True), N_datahi_mask_bin0, N_randhi_mask_bin0, plot = plot, 
                              mask_type = mask_type, b = b)
                              # mask_type = mask_type+'_bin0', b = pb)
     else:
         key_bin0 = None
+     
+    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], frac, selfunc_hi_bin0, mask_datahi_bin0, pixel_indices_datahi_bin0
+
+def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None, precision = False):
     
-    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], 1-N_datahi_mask_bin0/len(tab_datahi_bin0), selfunc_hi_bin0
+    r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
+    
+    Based on the G threshold cut and the method of binning (Lsplit vs LminLmax), returns the catalog in a specific redshift bin.
+    
+    Parameters
+    ----------
+    G : {int, float}
+        Threshold cut of input catalog.
+    bb : int
+        Desired redshift bin.
+    prebinned : boolean
+        Whether or not the input catalog is prebinned, or if the bins must be computed from the whole input catalog.
+    cut : str
+        Which dimension to bin along. Options are "z" or "L".
+    method : str, optional
+        Which binning method to use. Options are "split" and "minmax". Set to None if `prebinned` is True.
+    tab_gcat_type : str, optional
+        The type of input catalog. Options are "data" and "mock". Default is None. Leave as None if providing a prebinned input catalog via `tab_gcat`.
+    n_bins : int, optional
+        The number of bins for the "split" bin method. Default is None. Leave as None if using "minmax" method.
+    bins : array_like, optional
+        The bins using the "minmax" method. Set `n_bins` = None to avoid the "split" method.
+    z : boolean, optional
+        Whether or not to assign redshifts to the random catalog. Default is True. Set to False if only intending to compute angular clustering via `quaia.w_theta`. Uses `quaia.z_dist`. 
+    fac_rand : int, optional
+        The factor by which the random catalog exceeds the input catalog. Default is 10. 
+        
+    Returns
+    -------
+    tab_datahi_mask_bin0 : array_like
+        The binned quasar catalog.
+    tab_randhi_mask_bin0 : array_like
+        The binned random catalog
+    key_bin0 : str
+        The suffix of the new key created for the random redshifts. Use as ``tab_randhi_mask_bin0['redshift_quaia_'+key_bin0].``
+    bins : array_like
+        The final bins used to compute `tab_datahi_mask_bin0` and `tab_randhi_mask_bin0`.
+    weights1 : array_like
+        Weights for the first set of points. Pass into `quaia.w_theta`, `quaia.wp_rp`, and `quaia.xi_s` to upweight data by the selection function.
+        
+    Other Parameters
+    ----------------
+    tab_gcat : array_like, optional
+        The input catalog. Default is None, as it will be loaded based on `G` and `n_bins`. Optional to pass in if another input catalog is desired.
+    i : int, optional
+        The index of the mock to use as the input catalog. Options are any integer from 1-100. Default is None. Set `prebinned` = False and `tab_gcat_type` = 'mock' if using `i`.
+    allsky : str, optional
+        Suffux for random catalog filename. Default is "". Set to "_allsky" if using allsky random catalog. 
+    NSIDE : int, optional
+        The healpix nside parameter, must be a power of 2, less than 2**30. Default is 64.
+    plot : boolean, optional
+        Whether or not to display a histogram of the redshift distributions for the data and random catalogs. Default is False.
+    mask_type : {None, 'selfunc'}, optional
+        Choose either a galactic latitude-based mask or a selection function-based mask. Default is None if galactic latitude-based mask is desired. Pass in ``'selfunc'`` if using a selection function-based mask.
+
+    See Also
+    --------
+    quaia.z_dist
+    quaia.w_theta
+    quaia.wp_rp
+    quaia.xi_s
+    """
+        
+    # select binning method
+    fname='_G{:.1f}'.format(G)
+    if type(cuts) == str:
+        bins = [bins]
+        n_bins = [n_bins]
+        method = [method]
+        bb = [bb]
+    for cut, bins, n_bins, method, bb in zip(cuts, bins, n_bins, method, bb):
+        if method == 'split':
+            name = '_{}split{}bin{}'.format(cut, n_bins, bb)
+        elif (method == 'minmax') and (precision == False):
+            name = '_{}min{}{}max{}'.format(cut, bins[bb], cut, bins[bb+1])
+        elif (method == 'minmax') and (precision == True):
+            name = '_{}min{:.4f}{}max{:.4f}'.format(cut, bins[bb], cut, bins[bb+1])
+        elif method == 'threshold':
+            name = '_Lbolmin{}'.format(bins[bb])
+        elif method == 'max':
+            name = '_Lmax{}'.format(bins[bb])
+        else:
+            print('Leaving tab_gcat_catalog unbinned')
+            fname = '_G{:.1f}'.format(G)
+            if prebinned == False:
+                raise Exception('To leave tab_gcat_catalog unbinned, set prebinned = True.')
+            name=''
+        fname+=name
+    
+    # process mocks
+    if tab_gcat_type == 'mocks':
+        if i is None:
+            raise Exception('Select which mock to run.')
+        if G==20.0:
+            G=20 # for mock file naming convention
+        fn = '../Quaia_mock_catalogs-20250211T213139Z-001/Quaia_mock_catalogs/G{}/with_selection_function/mock_catalog_quaia_G{}_mock{}.fits'.format(G, G, i)
+                
+    # for prebinned catalogs 
+    if prebinned == True:
+        if tab_gcat_type != 'data':
+            if (method == 'split' or method == 'minmax'):
+                raise Exception('Only data catalogs are prebinned currently')
+            fn_datahi_bin0 = fn
+            print(fn_datahi_bin0)
+        else:
+            fn_datahi_bin0 = '../data/quaia{}.fits'.format(fname)
+        tab_datahi_bin0 = Table.read(fn_datahi_bin0)
+        
+    # for catalogs that need to be binned
+    elif prebinned == False:
+        
+        if len(cuts)==2:
+            raise Exception('Joint L-z bins must be prebinned using make_catalog.py')
+        
+        if tab_gcat_type == 'mocks':
+            fn_datahi = fn
+            tab_gcat = Table.read(fn_datahi)
+        elif tab_gcat_type == 'data':
+            fn_datahi = '../data/quaia_G{:.1f}.fits'.format(G)
+            tab_gcat = Table.read(fn_datahi)
+        else:
+            if tab_gcat is None:
+                raise Exception('Must provide unbinned tab_gcat catalog if binned == False and tab_gcat_type != mocks or data')
+            
+        if cut == 'z':
+            key = 'redshift_quaia'
+        elif cut == 'L_bol':
+            L_bol(tab_cat)
+            key = 'L_bol'
+        else:
+            absolute(tab_gcat, G)
+            key = 'M_i'
+                    
+        if method == 'split':
+                z_percentiles = np.linspace(0.0, 100.0, n_bins+1)
+                bins = np.percentile(list(tab_gcat[key]), z_percentiles)
+                bins[-1] += 0.01 # add a bit to maximum bin to make sure the highest-z source gets included
+                bins[0] -= 0.01 # add a bit to minimum bin to make sure the lowest-z source gets included
+
+        i_bin = (tab_gcat[key] >= bins[bb]) & (tab_gcat[key] < bins[bb+1])
+        tab_datahi_bin0 = tab_gcat[i_bin]
+    else:
+        raise Exception('prebinned must be a boolean')
+            
+    # load selection function
+    try:
+        fn_selhi_bin0 = '../data/maps/selection_function_NSIDE64{}.fits'.format(fname) 
+        selfunc_hi_bin0_raw = hp.fitsfunc.read_map(fn_selhi_bin0)
+    except:
+        selfunc_hi_bin0_raw = np.ones(hp.nside2npix(NSIDE))
+        if mask_type=='selfunc':
+            raise Exception('cannot apply a selection function-based mask before computing the selection function in this bin')
+    
+    # quasar data catalog
+    pixel_indices_datahi_bin0 = hp.ang2pix(NSIDE, tab_datahi_bin0['ra'], tab_datahi_bin0['dec'], lonlat=True)
+    
+    # normalize the selection function
+    LMC = SkyCoord(['05 23 34.6 -69 45 22'], unit=(u.hourangle, u.deg)) #https://simbad.u-strasbg.fr/simbad/sim-id?Ident=Large+Magellanic+Cloud
+    SMC = SkyCoord(['00 52 38.0 -72 48 01'], unit=(u.hourangle, u.deg)) # https://simbad.u-strasbg.fr/simbad/sim-id?Ident=small+Magellanic+Cloud
+    LMC_radius = 9*u.deg
+    SMC_radius = 5*u.deg
+    
+    c_data = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+    LMC_idx_data, _, _, _ = SkyCoord.search_around_sky(LMC, c_data, LMC_radius)
+    SMC_idx_data, _, _, _ = SkyCoord.search_around_sky(SMC, c_data, SMC_radius)
+    MC_idx_data = np.append(LMC_idx_data,SMC_idx_data)
+    
+    MC_mask = np.full_like(selfunc_hi_bin0_raw, True, dtype = bool)
+    MC_mask[pixel_indices_datahi_bin0[MC_idx_data]] = False
+    
+    selfunc_hi_bin0 = selfunc_hi_bin0_raw/np.max(selfunc_hi_bin0_raw[MC_mask])
+    # selfunc_hi_bin0[pixel_indices_datahi_bin0[MC_idx_data]] = 0
+    # theta, phi = hp.pix2ang(NSIDE, range(len(selfunc_hi_bin0)), lonlat=True)
+    # c = SkyCoord(ra=theta*u.degree, dec=phi*u.degree)
+    # LMC_idx, _, _, _ = SkyCoord.search_around_sky(LMC, c, LMC_radius)
+    # SMC_idx, _, _, _ = SkyCoord.search_around_sky(SMC, c, SMC_radius)
+    # MC_idx = np.append(LMC_idx,SMC_idx)
+    # MC_mask = np.full_like(range(len(selfunc_hi_bin0)), True, dtype = bool)
+    # MC_mask[MC_idx] = False
+    # selfunc_hi_bin0[~MC_mask]=0
+    
+    # random catalog
+    try:
+        fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
+        tab_randhi_bin0 = Table.read(fn_randhi_bin0)
+    except:
+        tab_randhi_bin0 = tab_datahi_bin0
+        print('Random catalog is not computed, do not use output')
+
+    # get the pixel indices for objects in each random bin
+    pixel_indices_randhi_bin0 = hp.ang2pix(NSIDE, tab_randhi_bin0['ra'], tab_randhi_bin0['dec'], lonlat=True)
+    
+    # c_rand = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+    # LMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(LMC, c_rand, LMC_radius)
+    # SMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(SMC, c_rand, SMC_radius)
+    # MC_idx_rand = np.append(LMC_idx_rand,SMC_idx_rand)
+    # selfunc_hi_bin0[pixel_indices_randhi_bin0[MC_idx_rand]] = 0
+
+    if scale == 'z-score':
+        selfunc_hi_bin0=(selfunc_hi_bin0 - np.mean(selfunc_hi_bin0))/np.std(selfunc_hi_bin0)
+        
+    if norm == 'minmax':
+        selfunc_hi_bin0/=np.max(selfunc_hi_bin0)
+        print(np.min(selfunc_hi_bin0), np.max(selfunc_hi_bin0))
+    elif norm == 'z-score':
+        selfunc_hi_bin0/=3
+        print(np.min(selfunc_hi_bin0), np.max(selfunc_hi_bin0))
+    elif norm == 'median':
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0-=np.min(selfunc_hi_bin0)
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0/=(np.median(selfunc_hi_bin0)+2*np.std(selfunc_hi_bin0))
+    elif norm == 'percentile':
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0-=np.min(selfunc_hi_bin0)
+        print(np.max(selfunc_hi_bin0))
+        selfunc_hi_bin0/=(np.percentile(selfunc_hi_bin0, 95))
+            
+    if percentile == True:
+        # mask = np.percentile(selfunc_hi_bin0[pixel_indices_datahi_bin0], mask)
+        mask = np.percentile(selfunc_hi_bin0, mask)
+        
+    # impose bin and selfunc mask on data        
+    if mask_type == 'selfunc':
+        mask_datahi_bin0_selfunc = selfunc_hi_bin0[pixel_indices_datahi_bin0]>=mask 
+        mask_randhi_bin0_selfunc = selfunc_hi_bin0[pixel_indices_randhi_bin0]>=mask
+    else:
+        if tab_gcat_type == 'data':
+            mask_datahi_bin0_selfunc = np.abs(tab_datahi_bin0['b'])>=b
+        else:
+            # c = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+            mask_datahi_bin0_selfunc = np.abs(c_data.galactic.b.value)>=b
+            
+        # c = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
+        mask_randhi_bin0_selfunc = np.abs(c_rand.galactic.b.value)>=b
+        
+    # mask out LMC and SMC
+    mask_datahi_bin0_MC = np.full_like(pixel_indices_datahi_bin0, True, dtype = bool)
+    mask_datahi_bin0_MC[MC_idx_data] = False
+    
+    c_rand = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
+    LMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(LMC, c_rand, LMC_radius)
+    SMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(SMC, c_rand, SMC_radius)
+    MC_idx_rand = np.append(LMC_idx_rand,SMC_idx_rand)
+    
+    mask_randhi_bin0_MC = np.full_like(pixel_indices_randhi_bin0, True, dtype = bool)
+    mask_randhi_bin0_MC[MC_idx_rand] = False
+    
+    # mask_datahi_bin0 = np.logical_and(mask_datahi_bin0_selfunc, mask_datahi_bin0_MC)
+    # mask_randhi_bin0 = np.logical_and(mask_randhi_bin0_selfunc, mask_randhi_bin0_MC)
+    mask_datahi_bin0 = mask_datahi_bin0_selfunc & mask_datahi_bin0_MC
+    mask_randhi_bin0 = mask_randhi_bin0_selfunc & mask_randhi_bin0_MC
+
+    extra_masked = np.sum(mask_datahi_bin0_selfunc & ~mask_datahi_bin0_MC)
+    print(f"Pixels masked by MC but not already by selfunc: {extra_masked}")
+
+    tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
+    tab_randhi_mask_bin0 = tab_randhi_bin0[mask_randhi_bin0]
+        
+    # record N in each bin
+    N_datahi_mask_bin0 = len(tab_datahi_mask_bin0)
+    
+    try: 
+        frac = 1-N_datahi_mask_bin0/len(tab_datahi_bin0)
+    except:
+        frac = np.nan
+        
+    print('{}: {:.2f}              {} vs {}'.format(fname[1:], frac, N_datahi_mask_bin0, len(tab_datahi_bin0)))
+
+    # assign redshifts to randoms in each bin, mimicking the distribution of data in each bin that pass the selfunc mask
+    N_randhi_mask_bin0 = len(tab_randhi_mask_bin0)
+    if (z == True) and (len(tab_datahi_bin0)!=0):
+        key_bin0 = z_dist(tab_datahi_mask_bin0, tab_randhi_mask_bin0, np.full(N_datahi_mask_bin0, True), 
+                             np.full(N_randhi_mask_bin0, True), N_datahi_mask_bin0, N_randhi_mask_bin0, plot = plot, 
+                             mask_type = mask_type, b = b)
+    else:
+        key_bin0 = None
+     
+    return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], frac, selfunc_hi_bin0, mask_datahi_bin0, pixel_indices_datahi_bin0
 
 # 2D angular clustering w(theta)
 def w_theta(tab_gcatlo, tab_randlo, selfunc_lo = None, weights1 = None, weights2 = None, RR_counts = None, nthreads = 8, 

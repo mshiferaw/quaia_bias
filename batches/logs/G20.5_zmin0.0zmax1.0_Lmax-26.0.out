@@ -1,0 +1,79 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin0.0zmax1.0_Lmax-26.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lmax-26.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.6457513110645907
+Training fitter
+X_train: (10655, 7) y_train: (10655,)
+y_train min: 1.0 y_train: 7.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -4.49399688 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 1.9459101490553132
+yerr: [1.         1.         1.         ... 1.41421356 1.         1.        ] [1.         1.         1.         ... 0.70710678 1.         1.        ]
+p compute: [ 0.         -4.49399688 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -10004.174282954256
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 9973.330567561328
+        x: [ 5.582e-01 -3.271e+00  8.453e-01  1.700e+02  1.073e+02
+             4.260e+00  2.027e+00  6.277e+00  2.502e+01]
+      nit: 51
+      jac: [ 7.697e-06  2.114e-06 -7.891e-07 -5.090e-72 -4.144e-46
+            -5.299e-07  1.315e-06  3.638e-07 -9.751e-10]
+ hess_inv: [[ 4.069e-02 -6.408e-03 ... -1.110e-01  4.200e+02]
+            [-6.408e-03  2.554e-01 ...  2.528e-01  1.108e+03]
+            ...
+            [-1.110e-01  2.528e-01 ...  1.131e+01  6.180e+03]
+            [ 4.200e+02  1.108e+03 ...  6.180e+03  3.406e+08]]
+     nfev: 53
+     njev: 53
+p post op: [  0.55815671  -3.27141798   0.84534748 169.96514119 107.2579297
+   4.26028631   2.02664223   6.27687272  25.02237443]
+lnlike final: -9973.330567561328
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [  0.55815671  -3.27141798   0.84534748 169.96514119 107.2579297
+   4.26028631   2.02664223   6.27687272  25.02237443]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lmax-26.0.fits
+y_pred_full: [1.41496466 1.39412326 1.30184922 ... 1.24098479 1.25008173 1.25292381]
+0
+RMSE: 0.4427338739384526
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 4.083106578143975
+map_prob: [1.32733081 1.3077802  1.22122102 ... 1.16412615 1.17265967 1.17532573]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lmax-26.0.fits!
+Time: 1200.0116646289825 s (20.000194410483044 min)
+allsky 
+../data/randoms/random_G20.5_zmin0.0zmax1.0_Lmax-26.0_25x.fits
+Loading data
+Number of data sources: 12557
+Estimating reduction factor
+Sel func min and max: 0.0 4.083106578143975
+Subsampling by 0.243 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 4.083106578143975
+Subsampling by 0.243 for probability map
+Number of final random sources: 313869
+Wrote random to ../data/randoms/random_G20.5_zmin0.0zmax1.0_Lmax-26.0_25x.fits!

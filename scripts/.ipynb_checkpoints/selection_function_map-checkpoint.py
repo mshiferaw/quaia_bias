@@ -99,9 +99,11 @@ def run(fn_gaia, fn_selfunc, NSIDE=64,
     fn_ypred = f'{os.path.dirname(fn_selfunc)}/y_pred_{os.path.basename(fn_selfunc)}'
     if os.path.exists(fn_selfunc) and not overwrite_selfunc and os.path.exists(fn_ypred) and not overwrite_ypred:
         sys.exit(f"y_pred {fn_ypred} exists and overwrite_ypred is {overwrite_ypred}, and selection function {fn_selfunc} exists and overwrite is {overwrite_selfunc}, so exiting")
-
+        
     print("Loading data", flush=True)
     null_val = 0
+    if not os.path.exists(fn_gaia):
+        sys.exit(f"fn_catalog {fn_gaia} does not exist, so exiting")
     if inputs_are_maps:
         map_nqso_data = hp.read_map(fn_gaia)
         #map_nqso_data[i_nan] = null_val

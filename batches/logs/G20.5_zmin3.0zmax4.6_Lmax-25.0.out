@@ -1,0 +1,79 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin3.0zmax4.6_Lmax-25.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmax-25.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 2.8284271247461903
+Training fitter
+X_train: (22461, 7) y_train: (22461,)
+y_train min: 1.0 y_train: 8.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.       -3.502009 -0.5       1.5      -1.        5.        0.8
+  0.       10.      ]
+y minmax 0.0 2.0794415416798357
+yerr: [1.41421356 1.         1.         ... 1.41421356 1.         1.        ] [0.70710678 1.         1.         ... 0.70710678 1.         1.        ]
+p compute: [ 0.       -3.502009 -0.5       1.5      -1.        5.        0.8
+  0.       10.      ]
+lnlike compute: -20923.838479926217
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 20901.86633206245
+        x: [ 3.700e-01 -4.696e+00 -7.823e-01  2.798e+00  2.755e+00
+             4.502e+00  1.421e+00  2.581e+00  2.701e+01]
+      nit: 45
+      jac: [ 2.493e-06 -3.640e-07  1.181e-07  8.061e-08  7.262e-08
+            -6.959e-09 -5.851e-08 -3.411e-07 -1.547e-10]
+ hess_inv: [[ 1.447e-02 -3.051e-03 ...  9.499e-03  5.879e+02]
+            [-3.051e-03  3.615e-01 ...  1.632e-01 -2.040e+03]
+            ...
+            [ 9.499e-03  1.632e-01 ...  9.874e-01 -5.710e+03]
+            [ 5.879e+02 -2.040e+03 ... -5.710e+03  2.159e+09]]
+     nfev: 48
+     njev: 48
+p post op: [ 0.37003888 -4.69560767 -0.78226074  2.79805296  2.75483516  4.50197549
+  1.42071886  2.58085115 27.00781263]
+lnlike final: -20901.86633206245
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 0.37003888 -4.69560767 -0.78226074  2.79805296  2.75483516  4.50197549
+  1.42071886  2.58085115 27.00781263]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmax-25.0.fits
+y_pred_full: [1.14594073 1.19300891 1.40746995 ... 1.3412932  1.38349369 1.34805564]
+0
+RMSE: 0.8739234043465
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.5716010205776029
+map_prob: [0.29781215 0.31004444 0.36577953 ... 0.34858122 0.35954847 0.35033867]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmax-25.0.fits!
+Time: 6603.427789449692 s (110.05712982416154 min)
+allsky 
+../data/randoms/random_G20.5_zmin3.0zmax4.6_Lmax-25.0_25x.fits
+Loading data
+Number of data sources: 36458
+Estimating reduction factor
+Sel func min and max: 0.0 0.5716010205776029
+Subsampling by 0.667 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.5716010205776029
+Subsampling by 0.667 for probability map
+Number of final random sources: 911404
+Wrote random to ../data/randoms/random_G20.5_zmin3.0zmax4.6_Lmax-25.0_25x.fits!
