@@ -1,0 +1,10 @@
+Starting batch job
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py", line 171, in <module>
+    def loglike(x, a, cf_matter, log_det_C, cf, n_q, nbins, solve, penalty, HOD, cosmo = cosmo_planck18, error = 0.05, M_max = M_max, hartlap = hartlap, N = N_jk, bins_m = bins):
+                                                                                                                                                                            ^^^^
+NameError: name 'bins' is not defined. Did you mean: 'nbins'?
+Exception ignored in: <function Cosmology.__del__ at 0x7f69aba91760>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable

@@ -1,0 +1,189 @@
+Starting batch job
+0.6894778799840835
+Pixels masked by MC but not already by selfunc: 1911
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.31              224099 vs 324336
+0.6998052036780241
+Pixels masked by MC but not already by selfunc: 3700
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.28              464321 vs 648196
+0.7010382664550974
+Pixels masked by MC but not already by selfunc: 3094
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.25              214535 vs 286508
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.22              28576 vs 36458
+0.5740493621004301
+Pixels masked by MC but not already by selfunc: 472
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.39              33897 vs 55261
+0.7764060682819681
+Pixels masked by MC but not already by selfunc: 2269
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.32              340084 vs 502242
+0.7010382664550974
+Pixels masked by MC but not already by selfunc: 3094
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.25              214535 vs 286508
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.22              28576 vs 36458
+0.5825077490602688
+Pixels masked by MC but not already by selfunc: 111
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.35              8224 vs 12557
+0.55461329930188
+Pixels masked by MC but not already by selfunc: 1706
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.36              118050 vs 185134
+0.7886798806904957
+Pixels masked by MC but not already by selfunc: 2911
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.27              189280 vs 259755
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.22              28576 vs 36458
+0.5671669970826603
+Pixels masked by MC but not already by selfunc: 46
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.35              1257 vs 1922
+0.46940038509642223
+Pixels masked by MC but not already by selfunc: 379
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.36              24686 vs 38757
+0.7825058063308259
+Pixels masked by MC but not already by selfunc: 1036
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.35              66760 vs 103123
+0.9260170066053528
+Pixels masked by MC but not already by selfunc: 278
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.26              21578 vs 28981
+0.3845560074010384
+0.40216201729709466
+0.4302131627497236
+0.4406662053921837
+0.31096824806504797
+0.4049576138142198
+0.4302131627497236
+0.4406662053921837
+0.3098587590591395
+0.3022008153620502
+0.45298802071631816
+0.4406662053921837
+0.2894547230728833
+0.26262852718040436
+0.4104175043181531
+0.4891580906001524
+0.6894778799840835
+Pixels masked by MC but not already by selfunc: 1911
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.31              224099 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.6998052036780241
+Pixels masked by MC but not already by selfunc: 3700
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.28              464321 vs 648196
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7010382664550974
+Pixels masked by MC but not already by selfunc: 3094
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.25              214535 vs 286508
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.22              28576 vs 36458
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:334: RuntimeWarning: invalid value encountered in sqrt
+  b = np.sqrt(cf/cf_matter)
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:58: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(xi_qq/xi_mm-4*f**2/45)-f/3
+0.5740493621004301
+Pixels masked by MC but not already by selfunc: 472
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.39              33897 vs 55261
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7764060682819681
+Pixels masked by MC but not already by selfunc: 2269
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.32              340084 vs 502242
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7010382664550974
+Pixels masked by MC but not already by selfunc: 3094
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.25              214535 vs 286508
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.22              28576 vs 36458
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:334: RuntimeWarning: invalid value encountered in sqrt
+  b = np.sqrt(cf/cf_matter)
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:58: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(xi_qq/xi_mm-4*f**2/45)-f/3
+0.5825077490602688
+Pixels masked by MC but not already by selfunc: 111
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.35              8224 vs 12557
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.55461329930188
+Pixels masked by MC but not already by selfunc: 1706
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.36              118050 vs 185134
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7886798806904957
+Pixels masked by MC but not already by selfunc: 2911
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.27              189280 vs 259755
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.22              28576 vs 36458
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:334: RuntimeWarning: invalid value encountered in sqrt
+  b = np.sqrt(cf/cf_matter)
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:58: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(xi_qq/xi_mm-4*f**2/45)-f/3
+0.5671669970826603
+Pixels masked by MC but not already by selfunc: 46
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.35              1257 vs 1922
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:334: RuntimeWarning: invalid value encountered in sqrt
+  b = np.sqrt(cf/cf_matter)
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:58: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(xi_qq/xi_mm-4*f**2/45)-f/3
+0.46940038509642223
+Pixels masked by MC but not already by selfunc: 379
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.36              24686 vs 38757
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.7825058063308259
+Pixels masked by MC but not already by selfunc: 1036
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.35              66760 vs 103123
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+0.9260170066053528
+Pixels masked by MC but not already by selfunc: 278
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.26              21578 vs 28981
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:334: RuntimeWarning: invalid value encountered in sqrt
+  b = np.sqrt(cf/cf_matter)
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py:58: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(xi_qq/xi_mm-4*f**2/45)-f/3
+M_i<=-20.0
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py", line 430, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/nested.py", line 356, in main
+    C = np.load('../results/cov_{}{}.npy'.format(args.corrfunc, file))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../results/cov_xi_G20.5_rmin30_rmax80_nbins10_Lmax-20.0_N50_Planck_MC_mask.npy'
+Exception ignored in: <function Cosmology.__del__ at 0x7f04f78e18a0>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable
+Exception ignored in: <function Pk2D.__del__ at 0x7f04f7a3a2a0>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
+TypeError: 'NoneType' object is not callable
+Exception ignored in: <function Pk2D.__del__ at 0x7f04f7a3a2a0>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
+TypeError: 'NoneType' object is not callable

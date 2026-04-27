@@ -770,18 +770,20 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
     SMC_idx_data, _, _, _ = SkyCoord.search_around_sky(SMC, c_data, SMC_radius)
     MC_idx_data = np.append(LMC_idx_data,SMC_idx_data)
     
-    MC_mask = np.full_like(selfunc_hi_bin0_raw, True, dtype = bool)
-    MC_mask[pixel_indices_datahi_bin0[MC_idx_data]] = False
+    # MC_mask = np.full_like(selfunc_hi_bin0_raw, True, dtype = bool)
+    # MC_mask[pixel_indices_datahi_bin0[MC_idx_data]] = False
+    
+    theta, phi = hp.pix2ang(NSIDE, range(len(selfunc_hi_bin0_raw)), lonlat=True)
+    c = SkyCoord(ra=theta*u.degree, dec=phi*u.degree)
+    LMC_idx, _, _, _ = SkyCoord.search_around_sky(LMC, c, LMC_radius)
+    SMC_idx, _, _, _ = SkyCoord.search_around_sky(SMC, c, SMC_radius)
+    MC_idx = np.append(LMC_idx,SMC_idx)
+    MC_mask = np.full_like(range(len(selfunc_hi_bin0_raw)), True, dtype = bool)
+    MC_mask[MC_idx] = False
     
     selfunc_hi_bin0 = selfunc_hi_bin0_raw/np.max(selfunc_hi_bin0_raw[MC_mask])
+
     # selfunc_hi_bin0[pixel_indices_datahi_bin0[MC_idx_data]] = 0
-    # theta, phi = hp.pix2ang(NSIDE, range(len(selfunc_hi_bin0)), lonlat=True)
-    # c = SkyCoord(ra=theta*u.degree, dec=phi*u.degree)
-    # LMC_idx, _, _, _ = SkyCoord.search_around_sky(LMC, c, LMC_radius)
-    # SMC_idx, _, _, _ = SkyCoord.search_around_sky(SMC, c, SMC_radius)
-    # MC_idx = np.append(LMC_idx,SMC_idx)
-    # MC_mask = np.full_like(range(len(selfunc_hi_bin0)), True, dtype = bool)
-    # MC_mask[MC_idx] = False
     # selfunc_hi_bin0[~MC_mask]=0
     
     # random catalog
@@ -823,7 +825,9 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             
     if percentile == True:
         # mask = np.percentile(selfunc_hi_bin0[pixel_indices_datahi_bin0], mask)
-        mask = np.percentile(selfunc_hi_bin0, mask)
+        # mask = np.percentile(selfunc_hi_bin0, mask)
+        mask = np.percentile(selfunc_hi_bin0[MC_mask], mask)
+        print(mask)
         
     # impose bin and selfunc mask on data        
     if mask_type == 'selfunc':

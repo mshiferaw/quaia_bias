@@ -1,0 +1,7 @@
+Starting batch job
+usage: nested.py [-h] corrfunc penalty HOD
+nested.py: error: the following arguments are required: HOD
+Exception ignored in: <function Cosmology.__del__ at 0x7f767c53d800>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable
