@@ -28,16 +28,7 @@ import pyccl as ccl
 def main():
 
     # Create the bins array
-    offset = 2.5
-    delta_max = 40
-    delta_min = np.min((np.floor((30-0.15)/offset), delta_max))
-    
-    rmin = 30-delta_min*offset # 0.1 # start higher # 1.4 # 30
-    rmax = 80+delta_max*offset # 200
-    nbins = 20 + int(delta_min+delta_max) #90 #20
     rbins = np.linspace(rmin, rmax, nbins + 1) # Mpc/h https://github.com/manodeep/Corrfunc/issues/202
-    scale = 'linear'
-    rbins, quaia.recenter(rbins), np.diff(quaia.recenter(rbins))
 
     cosmo_planck18 = ccl.Cosmology(Omega_c=0.265, Omega_b=Planck18.Ob0, h=Planck18.h, Neff = Planck18.Neff, T_CMB = Planck18.Tcmb0.value, m_nu = Planck18.m_nu, sigma8=0.8, n_s=0.95)
     cosmo = 'Planck' #'Planck'
