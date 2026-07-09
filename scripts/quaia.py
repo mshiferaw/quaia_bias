@@ -150,11 +150,13 @@ def comoving_dist(z, h = 0.6844, units = 'Mpc/h', Om0 = 0.302): # col 2 in fig 7
     # convert from Mpc to Mpc/h
     if units == 'Mpc/h':
         return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
+    elif units == 'Mpc':
+        return comoving_r
     else:
         return comoving_r.to(u.pc)
 
 def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h = 0.6844, NSIDE = NSIDE, 
-             k = np.loadtxt('../data/maps/datafile4.txt'), Om0 = None):
+             k = np.loadtxt('../data/maps/datafile4.txt'), Om0 = None, plot = False):
     
     r"""Transforms apparent to absolute magnitude.
     
@@ -200,8 +202,22 @@ def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'),
     pixel_indices_datalo = hp.ang2pix(NSIDE, tab_datalo['ra'], tab_datalo['dec'], lonlat=True)
     A_i = 1.698*dust[pixel_indices_datalo]
     
-    k_z = interp.interp1d(k[:,0], k[:,1])
+    k_z = interp.interp1d(k[:,0], k[:,1], bounds_error = False)
     K_i = k_z(tab_datalo['redshift_quaia'])
+
+    if plot == True:
+
+        ind = np.argsort(tab_datalo['redshift_quaia'])
+        K_i_hi = k_z(tab_datalo['redshift_quaia']+tab_datalo['redshift_quaia_err'])
+        K_i_lo = k_z(tab_datalo['redshift_quaia']-tab_datalo['redshift_quaia_err'])
+
+        plt.plot(tab_datalo['redshift_quaia'][ind], K_i[ind], label = 'Quaia', linewidth = 2.5)
+        plt.plot(k[:,0], k[:,1], label = 'Richards et al. 2006', linewidth = 2.5, linestyle = '--')
+        plt.fill_between(tab_datalo['redshift_quaia'][ind], K_i_hi[ind], K_i_lo[ind], alpha = 0.5)
+        plt.xlabel('$z$')
+        plt.ylabel('$K$-correction')
+        plt.legend()
+        plt.show()
     
     tab_datalo['M_i']=m_i-25-5*np.log10(d)-A_i-K_i # d is in Mpc
     
@@ -601,7 +617,7 @@ def make_bins_raw(G, bb, prebinned, cuts = None, method = None, tab_gcat = None,
      
     return tab_datahi_mask_bin0, tab_randhi_mask_bin0, key_bin0, bins, 1/selfunc_hi_bin0[pixel_indices_datahi_bin0][mask_datahi_bin0], frac, selfunc_hi_bin0, mask_datahi_bin0, pixel_indices_datahi_bin0
 
-def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None, precision = False):
+def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab_gcat_type = None, i = None, n_bins = None, bins = None, z = True, fac_rand = 10, allsky = "", NSIDE = NSIDE, plot = False, mask_type = 'selfunc', b = 0, mask = 0.5, norm = None, percentile = False, scale = None, precision = False, MC = '_MC_', verbose=True):
     
     r"""Computes catalogs binned in redshift or luminosity with a selection-function based mask.
     
@@ -684,6 +700,8 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             name = '_Lbolmin{}'.format(bins[bb])
         elif method == 'max':
             name = '_Lmax{}'.format(bins[bb])
+        elif method == 'maxsplit':
+            name = '_Lmaxsplit{}bin{}'.format(n_bins, bb)
         else:
             print('Leaving tab_gcat_catalog unbinned')
             fname = '_G{:.1f}'.format(G)
@@ -758,34 +776,35 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
     
     # quasar data catalog
     pixel_indices_datahi_bin0 = hp.ang2pix(NSIDE, tab_datahi_bin0['ra'], tab_datahi_bin0['dec'], lonlat=True)
-    
-    # normalize the selection function
-    LMC = SkyCoord(['05 23 34.6 -69 45 22'], unit=(u.hourangle, u.deg)) #https://simbad.u-strasbg.fr/simbad/sim-id?Ident=Large+Magellanic+Cloud
-    SMC = SkyCoord(['00 52 38.0 -72 48 01'], unit=(u.hourangle, u.deg)) # https://simbad.u-strasbg.fr/simbad/sim-id?Ident=small+Magellanic+Cloud
-    LMC_radius = 9*u.deg
-    SMC_radius = 5*u.deg
-    
-    c_data = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
-    LMC_idx_data, _, _, _ = SkyCoord.search_around_sky(LMC, c_data, LMC_radius)
-    SMC_idx_data, _, _, _ = SkyCoord.search_around_sky(SMC, c_data, SMC_radius)
-    MC_idx_data = np.append(LMC_idx_data,SMC_idx_data)
-    
-    # MC_mask = np.full_like(selfunc_hi_bin0_raw, True, dtype = bool)
-    # MC_mask[pixel_indices_datahi_bin0[MC_idx_data]] = False
-    
-    theta, phi = hp.pix2ang(NSIDE, range(len(selfunc_hi_bin0_raw)), lonlat=True)
-    c = SkyCoord(ra=theta*u.degree, dec=phi*u.degree)
-    LMC_idx, _, _, _ = SkyCoord.search_around_sky(LMC, c, LMC_radius)
-    SMC_idx, _, _, _ = SkyCoord.search_around_sky(SMC, c, SMC_radius)
-    MC_idx = np.append(LMC_idx,SMC_idx)
-    MC_mask = np.full_like(range(len(selfunc_hi_bin0_raw)), True, dtype = bool)
-    MC_mask[MC_idx] = False
-    
-    selfunc_hi_bin0 = selfunc_hi_bin0_raw/np.max(selfunc_hi_bin0_raw[MC_mask])
 
-    # selfunc_hi_bin0[pixel_indices_datahi_bin0[MC_idx_data]] = 0
-    # selfunc_hi_bin0[~MC_mask]=0
+    MC_mask = np.full_like(range(len(selfunc_hi_bin0_raw)), True, dtype = bool)
+
+    if MC == '_MC_':
     
+        # normalize the selection function
+        LMC = SkyCoord(['05 23 34.6 -69 45 22'], unit=(u.hourangle, u.deg)) #https://simbad.u-strasbg.fr/simbad/sim-id?Ident=Large+Magellanic+Cloud
+        SMC = SkyCoord(['00 52 38.0 -72 48 01'], unit=(u.hourangle, u.deg)) # https://simbad.u-strasbg.fr/simbad/sim-id?Ident=small+Magellanic+Cloud
+        LMC_radius = 9*u.deg
+        SMC_radius = 5*u.deg
+        
+        c_data = SkyCoord(ra=tab_datahi_bin0['ra'].value*u.degree, dec=tab_datahi_bin0['dec'].value*u.degree)
+        LMC_idx_data, _, _, _ = SkyCoord.search_around_sky(LMC, c_data, LMC_radius)
+        SMC_idx_data, _, _, _ = SkyCoord.search_around_sky(SMC, c_data, SMC_radius)
+        MC_idx_data = np.append(LMC_idx_data,SMC_idx_data)
+        
+        theta, phi = hp.pix2ang(NSIDE, range(len(selfunc_hi_bin0_raw)), lonlat=True)
+        c = SkyCoord(ra=theta*u.degree, dec=phi*u.degree)
+        LMC_idx, _, _, _ = SkyCoord.search_around_sky(LMC, c, LMC_radius)
+        SMC_idx, _, _, _ = SkyCoord.search_around_sky(SMC, c, SMC_radius)
+        MC_idx = np.append(LMC_idx,SMC_idx)
+        MC_mask[MC_idx] = False
+        
+        selfunc_hi_bin0 = selfunc_hi_bin0_raw/np.max(selfunc_hi_bin0_raw[MC_mask])
+
+    else:
+        
+        selfunc_hi_bin0 = selfunc_hi_bin0_raw
+
     # random catalog
     try:
         fn_randhi_bin0 = '../data/randoms/random{}{}_{}x.fits'.format(fname, allsky, fac_rand)
@@ -828,6 +847,8 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
         # mask = np.percentile(selfunc_hi_bin0, mask)
         mask = np.percentile(selfunc_hi_bin0[MC_mask], mask)
         print(mask)
+
+    c_rand = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
         
     # impose bin and selfunc mask on data        
     if mask_type == 'selfunc':
@@ -842,26 +863,31 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
             
         # c = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
         mask_randhi_bin0_selfunc = np.abs(c_rand.galactic.b.value)>=b
-        
+
     # mask out LMC and SMC
     mask_datahi_bin0_MC = np.full_like(pixel_indices_datahi_bin0, True, dtype = bool)
-    mask_datahi_bin0_MC[MC_idx_data] = False
     
-    c_rand = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
-    LMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(LMC, c_rand, LMC_radius)
-    SMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(SMC, c_rand, SMC_radius)
-    MC_idx_rand = np.append(LMC_idx_rand,SMC_idx_rand)
-    
+    if MC == '_MC_':
+        
+        mask_datahi_bin0_MC[MC_idx_data] = False
+        
+        # c_rand = SkyCoord(ra=tab_randhi_bin0['ra'].value*u.degree, dec=tab_randhi_bin0['dec'].value*u.degree)
+        LMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(LMC, c_rand, LMC_radius)
+        SMC_idx_rand, _, _, _ = SkyCoord.search_around_sky(SMC, c_rand, SMC_radius)
+        MC_idx_rand = np.append(LMC_idx_rand,SMC_idx_rand)
+
+    else:
+        MC_idx_rand = []
+        
     mask_randhi_bin0_MC = np.full_like(pixel_indices_randhi_bin0, True, dtype = bool)
-    mask_randhi_bin0_MC[MC_idx_rand] = False
-    
-    # mask_datahi_bin0 = np.logical_and(mask_datahi_bin0_selfunc, mask_datahi_bin0_MC)
-    # mask_randhi_bin0 = np.logical_and(mask_randhi_bin0_selfunc, mask_randhi_bin0_MC)
+    mask_randhi_bin0_MC[MC_idx_rand] = False  
+
     mask_datahi_bin0 = mask_datahi_bin0_selfunc & mask_datahi_bin0_MC
     mask_randhi_bin0 = mask_randhi_bin0_selfunc & mask_randhi_bin0_MC
 
     extra_masked = np.sum(mask_datahi_bin0_selfunc & ~mask_datahi_bin0_MC)
-    print(f"Pixels masked by MC but not already by selfunc: {extra_masked}")
+    if verbose==True:
+        print(f"Pixels masked by MC but not already by selfunc: {extra_masked}")
 
     tab_datahi_mask_bin0 = tab_datahi_bin0[mask_datahi_bin0]
     tab_randhi_mask_bin0 = tab_randhi_bin0[mask_randhi_bin0]
@@ -873,8 +899,9 @@ def make_bins(G, bb, prebinned, cuts = None, method = None, tab_gcat = None, tab
         frac = 1-N_datahi_mask_bin0/len(tab_datahi_bin0)
     except:
         frac = np.nan
-        
-    print('{}: {:.2f}              {} vs {}'.format(fname[1:], frac, N_datahi_mask_bin0, len(tab_datahi_bin0)))
+
+    if verbose==True:
+        print('{}: {:.2f}              {} vs {}'.format(fname[1:], frac, N_datahi_mask_bin0, len(tab_datahi_bin0)))
 
     # assign redshifts to randoms in each bin, mimicking the distribution of data in each bin that pass the selfunc mask
     N_randhi_mask_bin0 = len(tab_randhi_mask_bin0)

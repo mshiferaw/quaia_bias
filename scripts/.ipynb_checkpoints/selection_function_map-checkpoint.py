@@ -38,6 +38,7 @@ def parse_args():
     parser.add_argument('-m','--maps', nargs='*', help="list of maps, from: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']")
     parser.add_argument('--inputs_are_maps', action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument('--tiny_test', action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('-o','--overwrite_ypred', action=argparse.BooleanOptionalAction, default=False)
     # dust stars m10 mcs unwise unwisescan mcsunwise zodi1.25 zodi3.4 zodi4.6
     args=parser.parse_args()
 
@@ -45,7 +46,7 @@ def parse_args():
     run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
         map_names=args.maps,
         inputs_are_maps=args.inputs_are_maps,
-        tiny_test=args.tiny_test,
+        tiny_test=args.tiny_test, overwrite_ypred = args.overwrite_ypred
         )
 
 
