@@ -1,0 +1,86 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zsplit3bin1_Lsplit3bin1.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zsplit3bin1_Lsplit3bin1.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi1.25_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi3.4_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi4.6_NSIDE64.npy
+Constructing X
+(10, 49152)
+(10, 49152)
+Getting indices to fit
+err min max: 0.0 3.872983346207417
+Training fitter
+X_train: (36739, 10) y_train: (36739,)
+y_train min: 1.0 y_train: 15.0
+fit_mean = True
+n params: 10
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6', 'kernel:k2:metric:log_M_7_7', 'kernel:k2:metric:log_M_8_8', 'kernel:k2:metric:log_M_9_9')
+paramters init: [ 0.         -3.35147128 -0.5         1.5        -1.          5.
+  0.8         0.         10.          1.          1.          1.        ]
+y minmax 0.0 2.70805020110221
+yerr: [1.         1.         2.23606798 ... 2.         1.73205081 1.73205081] [1.         1.         0.4472136  ... 0.5        0.57735027 0.57735027]
+p compute: [ 0.         -3.35147128 -0.5         1.5        -1.          5.
+  0.8         0.         10.          1.          1.          1.        ]
+lnlike compute: -26431.788345715835
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 26388.2206461569
+        x: [ 6.859e-01 -3.539e+00 -1.594e+00  3.169e+00  1.093e-02
+             6.227e+00  1.050e+00  2.786e+00  1.891e+02  5.116e-01
+             1.523e+01  3.917e+02]
+      nit: 48
+      jac: [ 8.794e-06 -8.422e-07  6.329e-06  1.395e-06  5.744e-07
+             2.385e-07 -4.358e-07  1.045e-06 -6.612e-80  1.288e-08
+            -2.887e-09 -9.459e-171]
+ hess_inv: [[ 5.661e-02 -4.307e-02 ... -2.445e+02 -6.583e+03]
+            [-4.307e-02  2.017e-01 ... -1.414e+01 -3.810e+02]
+            ...
+            [-2.445e+02 -1.414e+01 ...  1.171e+08  3.153e+09]
+            [-6.583e+03 -3.810e+02 ...  3.153e+09  8.489e+10]]
+     nfev: 51
+     njev: 51
+p post op: [ 6.85910665e-01 -3.53914555e+00 -1.59350143e+00  3.16943804e+00
+  1.09303459e-02  6.22670186e+00  1.05005254e+00  2.78561176e+00
+  1.89080093e+02  5.11577585e-01  1.52268047e+01  3.91668154e+02]
+lnlike final: -26388.2206461569
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 6.85910665e-01 -3.53914555e+00 -1.59350143e+00  3.16943804e+00
+  1.09303459e-02  6.22670186e+00  1.05005254e+00  2.78561176e+00
+  1.89080093e+02  5.11577585e-01  1.52268047e+01  3.91668154e+02]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zsplit3bin1_Lsplit3bin1.fits
+y_pred_full: [1.10209041 1.45129467 3.35994186 ... 3.85719346 4.00378025 3.7597243 ]
+0
+RMSE: 1.9705182007852176
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.6287317296630593
+map_prob: [0.13559534 0.17855958 0.41338937 ... 0.47456857 0.49260382 0.46257648]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zsplit3bin1_Lsplit3bin1.fits!
+Time: 27129.99626016617 s (452.1666043361028 min)
+allsky 
+../data/randoms/random_G20.5_zsplit3bin1_Lsplit3bin1_25x.fits
+Loading data
+Number of data sources: 143968
+Estimating reduction factor
+Sel func min and max: 0.0 0.6287317296630593
+Subsampling by 0.684 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.6287317296630593
+Subsampling by 0.684 for probability map
+Number of final random sources: 3598646
+Wrote random to ../data/randoms/random_G20.5_zsplit3bin1_Lsplit3bin1_25x.fits!

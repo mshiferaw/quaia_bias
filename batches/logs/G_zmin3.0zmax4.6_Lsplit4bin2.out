@@ -1,0 +1,109 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin3.0zmax4.6_Lsplit4bin2.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lsplit4bin2.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi1.25_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi3.4_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi4.6_NSIDE64.npy
+Constructing X
+(10, 49152)
+(10, 49152)
+Getting indices to fit
+err min max: 0.0 2.449489742783178
+Training fitter
+X_train: (7894, 10) y_train: (7894,)
+y_train min: 1.0 y_train: 6.0
+fit_mean = True
+n params: 10
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6', 'kernel:k2:metric:log_M_7_7', 'kernel:k2:metric:log_M_8_8', 'kernel:k2:metric:log_M_9_9')
+paramters init: [ 0.         -4.99794273 -0.5         1.5        -1.          5.
+  0.8         0.         10.          1.          1.          1.        ]
+y minmax 0.0 1.791759469228055
+yerr: [1. 1. 1. ... 1. 1. 1.] [1. 1. 1. ... 1. 1. 1.]
+p compute: [ 0.         -4.99794273 -0.5         1.5        -1.          5.
+  0.8         0.         10.          1.          1.          1.        ]
+lnlike compute: -7392.047602472391
+Minimizing
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 600, in <module>
+    parse_args()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 46, in parse_args
+    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 212, in run
+    fitter.train()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 547, in train
+    result = minimize(neg_ln_like, self.gp.get_parameter_vector(), jac=grad_neg_ln_like, 
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_minimize.py", line 705, in minimize
+    res = _minimize_bfgs(fun, x0, args, jac, callback, **options)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_optimize.py", line 1445, in _minimize_bfgs
+    _line_search_wolfe12(f, myfprime, xk, pk, gfk,
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_optimize.py", line 1215, in _line_search_wolfe12
+    ret = line_search_wolfe1(f, fprime, xk, pk, gfk,
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_linesearch.py", line 84, in line_search_wolfe1
+    stp, fval, old_fval = scalar_search_wolfe1(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_linesearch.py", line 160, in scalar_search_wolfe1
+    phi1 = phi(stp)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_linesearch.py", line 75, in phi
+    return f(xk + s*pk, *args)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 267, in fun
+    self._update_fun()
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 251, in _update_fun
+    self._update_fun_impl()
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py", line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 538, in neg_ln_like
+    return -self.gp.log_likelihood(self.y_train_scaled)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/george/gp.py", line 385, in log_likelihood
+    if not self.recompute(quiet=quiet):
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/george/gp.py", line 355, in recompute
+    self.compute(self._x, np.sqrt(self._yerr2), **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/george/gp.py", line 331, in compute
+    self.solver.compute(self._x, yerr, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/george/solvers/basic.py", line 68, in compute
+    self._factor = (cholesky(K, overwrite_a=True, lower=False), False)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/linalg/_decomp_cholesky.py", line 89, in cholesky
+    c, lower = _cholesky(a, lower=lower, overwrite_a=overwrite_a, clean=True,
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/scipy/linalg/_decomp_cholesky.py", line 17, in _cholesky
+    a1 = asarray_chkfinite(a) if check_finite else asarray(a)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/numpy/lib/function_base.py", line 630, in asarray_chkfinite
+    raise ValueError(
+ValueError: array must not contain infs or NaNs
+allsky 
+../data/randoms/random_G20.5_zmin3.0zmax4.6_Lsplit4bin2_25x.fits
+Loading data
+Number of data sources: 9114
+Estimating reduction factor
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 173, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 79, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 128, in run
+    ra_rand, _ = subsample_by_probmap(NSIDE_map, rng, ra_rand_try, dec_rand_try, fn_selfunc, allsky)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 161, in subsample_by_probmap
+    map_p = hp.read_map(fn_selfunc)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/utils/decorators.py", line 604, in wrapper
+    return function(*args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/healpy/fitsfunc.py", line 369, in read_map
+    filename = pf.open(filename, memmap=memmap)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
+    return HDUList.fromfile(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
+    return cls._readfrom(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
+    fileobj = _File(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
+    self._file = open(self.name, IO_FITS_MODES[mode])
+FileNotFoundError: [Errno 2] No such file or directory: '../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lsplit4bin2.fits'

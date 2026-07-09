@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --partition=kipac
+#SBATCH --job-name=G20.5_pimax600_jackknife
+#SBATCH --output=logs/%x.out
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=48
+#SBATCH --mem=360GB
+#SBATCH --time=72:00:00
+
+echo "Starting batch job"
+source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
+cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
+conda activate quaia-env
+
+python -u jackknife.py wp 20.5 30 180 30 linear --L minmax 50 --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 --pimax 600

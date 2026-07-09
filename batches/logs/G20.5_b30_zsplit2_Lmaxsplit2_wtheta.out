@@ -1,0 +1,38 @@
+Starting batch job
+
+G20.5: computing wtheta in 30 bins from 0.001 to 10.0 on a log scale...
+
+Pixels masked by MC but not already by selfunc: 2557
+G20.5_zsplit2bin0_Lmaxsplit2bin0: 0.37              203288 vs 323872
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.125572
+DR: 4.286104
+RR: 34.670561
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin0_Lmaxsplit2bin0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 4847
+G20.5_zsplit2bin0_Lmaxsplit2bin1: 0.32              442106 vs 647744
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.386911
+DR: 18.103076
+RR: 186.519477
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin0_Lmaxsplit2bin1_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 3063
+G20.5_zsplit2bin1_Lmaxsplit2bin0: 0.33              216868 vs 323879
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.118194
+DR: 4.98938
+RR: 39.016246
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin1_Lmaxsplit2bin0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 5477
+G20.5_zsplit2bin1_Lmaxsplit2bin1: 0.28              465136 vs 647758
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.394436
+DR: 20.141383
+RR: 213.519466
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin1_Lmaxsplit2bin1_Planck_MC_b30
+done!

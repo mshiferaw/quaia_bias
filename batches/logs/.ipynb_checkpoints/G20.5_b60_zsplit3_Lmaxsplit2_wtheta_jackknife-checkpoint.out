@@ -1,0 +1,60 @@
+Starting batch job
+
+G20.5: computing wtheta in 30 bins from 0.001 to 10.0 on a log scale for 50 jackknife regions...
+--L: maxsplit
+
+z: None split 3
+L: None maxsplit 2
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit3bin0_Lmaxsplit2bin0: 0.84              35383 vs 215881
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.034281
+DR: 0.5323530000000001
+RR: 3.2643459999999997
+'NoneType' object is not subscriptable
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit3bin0_Lmaxsplit2bin1: 0.81              84115 vs 431763
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.058491999999999995
+DR: 2.370767
+RR: 20.6772
+'NoneType' object is not subscriptable
+[Errno 2] No such file or directory: '../data/quaia_G20.5_zsplit3bin0_Lmaxsplit2bin2.fits'
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit3bin1_Lmaxsplit2bin0: 0.84              34858 vs 215952
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.034377
+DR: 0.49291199999999996
+RR: 3.186156
+'NoneType' object is not subscriptable
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit3bin1_Lmaxsplit2bin1: 0.80              87296 vs 431905
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.069553
+DR: 2.096847
+RR: 19.294623
+'NoneType' object is not subscriptable
+[Errno 2] No such file or directory: '../data/quaia_G20.5_zsplit3bin1_Lmaxsplit2bin2.fits'
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit3bin2_Lmaxsplit2bin0: 0.82              39725 vs 215917
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.01651
+DR: 0.548354
+RR: 3.561437
+'NoneType' object is not subscriptable
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit3bin2_Lmaxsplit2bin1: 0.78              93970 vs 431834
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.050016
+DR: 2.2633270000000003
+RR: 20.647995
+'NoneType' object is not subscriptable
+[Errno 2] No such file or directory: '../data/quaia_G20.5_zsplit3bin2_Lmaxsplit2bin2.fits'
+done!

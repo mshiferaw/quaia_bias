@@ -1,0 +1,344 @@
+Starting batch job
+
+G20.5: computing wp in 14 bins from 1.0 to 200.0 on a log scale for 24 jackknife regions...
+
+0.7841056549594693
+Pixels masked by MC but not already by selfunc: 1105
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.44              183223 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin0.0zmax1.0_Lmax-20.0_N24_Planck_MC_mask0.6
+0.5671629964786419
+Pixels masked by MC but not already by selfunc: 415
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.50              27857 vs 55261
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin0.0zmax1.0_Lmax-25.0_N24_Planck_MC_mask0.6
+0.5885549243892539
+Pixels masked by MC but not already by selfunc: 104
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.44              7029 vs 12557
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin0.0zmax1.0_Lmax-26.0_N24_Planck_MC_mask0.6
+0.567686870922675
+Pixels masked by MC but not already by selfunc: 45
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.42              1108 vs 1922
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin0.0zmax1.0_Lmax-27.0_N24_Planck_MC_mask0.6
+0.7568851708255935
+Pixels masked by MC but not already by selfunc: 2240
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.41              380840 vs 648196
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin1.0zmax2.0_Lmax-20.0_N24_Planck_MC_mask0.6
+0.7957322554165576
+Pixels masked by MC but not already by selfunc: 1498
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.45              274096 vs 502242
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin1.0zmax2.0_Lmax-25.0_N24_Planck_MC_mask0.6
+0.5646637070882451
+Pixels masked by MC but not already by selfunc: 1538
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.48              96297 vs 185134
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin1.0zmax2.0_Lmax-26.0_N24_Planck_MC_mask0.6
+0.48006837394177104
+Pixels masked by MC but not already by selfunc: 355
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.47              20587 vs 38757
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin1.0zmax2.0_Lmax-27.0_N24_Planck_MC_mask0.6
+0.7726409083643484
+Pixels masked by MC but not already by selfunc: 2694
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.38              177956 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin2.0zmax3.0_Lmax-20.0_N24_Planck_MC_mask0.6
+0.7726409083643484
+Pixels masked by MC but not already by selfunc: 2694
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.38              177956 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin2.0zmax3.0_Lmax-25.0_N24_Planck_MC_mask0.6
+0.8395853437983147
+Pixels masked by MC but not already by selfunc: 2462
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.40              155139 vs 259755
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin2.0zmax3.0_Lmax-26.0_N24_Planck_MC_mask0.6
+0.7941713380372656
+Pixels masked by MC but not already by selfunc: 969
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.48              53918 vs 103123
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin2.0zmax3.0_Lmax-27.0_N24_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin3.0zmax4.6_Lmax-20.0_N24_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin3.0zmax4.6_Lmax-25.0_N24_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin3.0zmax4.6_Lmax-26.0_N24_Planck_MC_mask0.6
+0.9617125494495146
+Pixels masked by MC but not already by selfunc: 54
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.39              17602 vs 28981
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin1.0_rmax200.0_nbins14_pimax80_zmin3.0zmax4.6_Lmax-27.0_N24_Planck_MC_mask0.6
+done!
+
+G20.5: computing wp in 20 bins from 0.15 to 240.0 on a log scale for 24 jackknife regions...
+
+0.7841056549594693
+Pixels masked by MC but not already by selfunc: 1105
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.44              183223 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-20.0_N24_Planck_MC_mask0.6
+0.5671629964786419
+Pixels masked by MC but not already by selfunc: 415
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.50              27857 vs 55261
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-25.0_N24_Planck_MC_mask0.6
+0.5885549243892539
+Pixels masked by MC but not already by selfunc: 104
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.44              7029 vs 12557
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-26.0_N24_Planck_MC_mask0.6
+0.567686870922675
+Pixels masked by MC but not already by selfunc: 45
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.42              1108 vs 1922
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-27.0_N24_Planck_MC_mask0.6
+0.7568851708255935
+Pixels masked by MC but not already by selfunc: 2240
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.41              380840 vs 648196
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-20.0_N24_Planck_MC_mask0.6
+0.7957322554165576
+Pixels masked by MC but not already by selfunc: 1498
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.45              274096 vs 502242
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-25.0_N24_Planck_MC_mask0.6
+0.5646637070882451
+Pixels masked by MC but not already by selfunc: 1538
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.48              96297 vs 185134
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-26.0_N24_Planck_MC_mask0.6
+0.48006837394177104
+Pixels masked by MC but not already by selfunc: 355
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.47              20587 vs 38757
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-27.0_N24_Planck_MC_mask0.6
+0.7726409083643484
+Pixels masked by MC but not already by selfunc: 2694
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.38              177956 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-20.0_N24_Planck_MC_mask0.6
+0.7726409083643484
+Pixels masked by MC but not already by selfunc: 2694
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.38              177956 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-25.0_N24_Planck_MC_mask0.6
+0.8395853437983147
+Pixels masked by MC but not already by selfunc: 2462
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.40              155139 vs 259755
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-26.0_N24_Planck_MC_mask0.6
+0.7941713380372656
+Pixels masked by MC but not already by selfunc: 969
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.48              53918 vs 103123
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-27.0_N24_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-20.0_N24_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-25.0_N24_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-26.0_N24_Planck_MC_mask0.6
+0.9617125494495146
+Pixels masked by MC but not already by selfunc: 54
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.39              17602 vs 28981
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:215: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-27.0_N24_Planck_MC_mask0.6
+done!
+
+G20.5: computing wp in 30 bins from 30.0 to 180.0 on a linear scale for 50 jackknife regions...
+
+0.7841056549594693
+Pixels masked by MC but not already by selfunc: 1105
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.44              183223 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin0.0zmax1.0_Lmax-20.0_N50_Planck_MC_mask0.6
+0.5671629964786419
+Pixels masked by MC but not already by selfunc: 415
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.50              27857 vs 55261
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin0.0zmax1.0_Lmax-25.0_N50_Planck_MC_mask0.6
+0.5885549243892539
+Pixels masked by MC but not already by selfunc: 104
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.44              7029 vs 12557
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin0.0zmax1.0_Lmax-26.0_N50_Planck_MC_mask0.6
+0.567686870922675
+Pixels masked by MC but not already by selfunc: 45
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.42              1108 vs 1922
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin0.0zmax1.0_Lmax-27.0_N50_Planck_MC_mask0.6
+0.7568851708255935
+Pixels masked by MC but not already by selfunc: 2240
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.41              380840 vs 648196
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin1.0zmax2.0_Lmax-20.0_N50_Planck_MC_mask0.6
+0.7957322554165576
+Pixels masked by MC but not already by selfunc: 1498
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.45              274096 vs 502242
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin1.0zmax2.0_Lmax-25.0_N50_Planck_MC_mask0.6
+0.5646637070882451
+Pixels masked by MC but not already by selfunc: 1538
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.48              96297 vs 185134
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin1.0zmax2.0_Lmax-26.0_N50_Planck_MC_mask0.6
+0.48006837394177104
+Pixels masked by MC but not already by selfunc: 355
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.47              20587 vs 38757
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin1.0zmax2.0_Lmax-27.0_N50_Planck_MC_mask0.6
+0.7726409083643484
+Pixels masked by MC but not already by selfunc: 2694
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.38              177956 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin2.0zmax3.0_Lmax-20.0_N50_Planck_MC_mask0.6
+0.7726409083643484
+Pixels masked by MC but not already by selfunc: 2694
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.38              177956 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin2.0zmax3.0_Lmax-25.0_N50_Planck_MC_mask0.6
+0.8395853437983147
+Pixels masked by MC but not already by selfunc: 2462
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.40              155139 vs 259755
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin2.0zmax3.0_Lmax-26.0_N50_Planck_MC_mask0.6
+0.7941713380372656
+Pixels masked by MC but not already by selfunc: 969
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.48              53918 vs 103123
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin2.0zmax3.0_Lmax-27.0_N50_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin3.0zmax4.6_Lmax-20.0_N50_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin3.0zmax4.6_Lmax-25.0_N50_Planck_MC_mask0.6
+0.8261063087263367
+Pixels masked by MC but not already by selfunc: 198
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.35              23873 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin3.0zmax4.6_Lmax-26.0_N50_Planck_MC_mask0.6
+0.9617125494495146
+Pixels masked by MC but not already by selfunc: 54
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.39              17602 vs 28981
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin30.0_rmax180.0_nbins30_pimax80_zmin3.0zmax4.6_Lmax-27.0_N50_Planck_MC_mask0.6
+done!

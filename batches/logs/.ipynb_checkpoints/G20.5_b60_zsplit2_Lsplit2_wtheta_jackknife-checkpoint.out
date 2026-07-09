@@ -1,0 +1,42 @@
+Starting batch job
+
+G20.5: computing wtheta in 30 bins from 0.001 to 10.0 on a log scale for 50 jackknife regions...
+--L: split
+
+z: None split 2
+L: None split 2
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin0_Lsplit2bin0: 0.83              54356 vs 323872
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.066056
+DR: 1.139216
+RR: 8.928169
+'NoneType' object is not subscriptable
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin0_Lsplit2bin1: 0.77              73113 vs 323872
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.041451999999999996
+DR: 1.761963
+RR: 15.831269
+'NoneType' object is not subscriptable
+[Errno 2] No such file or directory: '../data/quaia_G20.5_zsplit2bin0_Lsplit2bin2.fits'
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin1_Lsplit2bin0: 0.81              60588 vs 323879
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.030744999999999998
+DR: 1.258829
+RR: 10.673313
+'NoneType' object is not subscriptable
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin1_Lsplit2bin1: 0.76              77324 vs 323879
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.0447
+DR: 1.925655
+RR: 17.267335
+'NoneType' object is not subscriptable
+[Errno 2] No such file or directory: '../data/quaia_G20.5_zsplit2bin1_Lsplit2bin2.fits'
+done!

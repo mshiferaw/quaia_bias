@@ -1,0 +1,79 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.0_zmin0.0zmax1.0_Lmax-20.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin0.0zmax1.0_Lmax-20.0.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Constructing X
+(7, 49152)
+(7, 49152)
+Getting indices to fit
+err min max: 0.0 4.242640687119285
+Training fitter
+X_train: (41043, 7) y_train: (41043,)
+y_train min: 1.0 y_train: 18.0
+fit_mean = True
+n params: 7
+parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
+paramters init: [ 0.         -2.92059274 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+y minmax 0.0 2.8903717578961645
+yerr: [1.73205081 1.41421356 2.64575131 ... 2.44948974 2.44948974 1.41421356] [0.57735027 0.70710678 0.37796447 ... 0.40824829 0.40824829 0.70710678]
+p compute: [ 0.         -2.92059274 -0.5         1.5        -1.          5.
+  0.8         0.         10.        ]
+lnlike compute: -26242.992821166383
+Minimizing
+  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 26177.814369526644
+        x: [ 9.347e-01 -2.166e+00  1.218e+00  5.796e+00  2.667e+00
+             5.517e+00  1.435e+00  2.984e+00  2.829e+01]
+      nit: 43
+      jac: [-5.473e-06  6.892e-06 -1.003e-06 -2.468e-06  1.323e-07
+            -2.631e-06 -5.102e-07 -6.127e-06 -2.829e-09]
+ hess_inv: [[ 8.783e-02 -2.011e-02 ... -2.019e-02 -2.252e+02]
+            [-2.011e-02  2.118e-01 ...  8.191e-02 -4.685e+01]
+            ...
+            [-2.019e-02  8.191e-02 ...  2.481e-01 -3.509e+02]
+            [-2.252e+02 -4.685e+01 ... -3.509e+02  1.212e+08]]
+     nfev: 46
+     njev: 46
+p post op: [ 0.93473497 -2.16571576  1.21750879  5.79608411  2.66707091  5.51696031
+  1.4349094   2.98394458 28.28828823]
+lnlike final: -26177.814369526644
+Predicting
+setting the output map dtype to [dtype('float64')]
+predict p: [ 0.93473497 -2.16571576  1.21750879  5.79608411  2.66707091  5.51696031
+  1.4349094   2.98394458 28.28828823]
+Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin0.0zmax1.0_Lmax-20.0.fits
+y_pred_full: [2.86343338 3.14479426 4.10458585 ... 4.49396842 4.43493355 4.37400197]
+0
+RMSE: 2.258974829146927
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.6640735998730961
+map_prob: [0.25763397 0.28294907 0.36930516 ... 0.40433939 0.3990278  0.39354555]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.0_zmin0.0zmax1.0_Lmax-20.0.fits!
+Time: 28502.455406188965 s (475.04092343648273 min)
+allsky 
+../data/randoms/random_G20.0_zmin0.0zmax1.0_Lmax-20.0_25x.fits
+Loading data
+Number of data sources: 200785
+Estimating reduction factor
+Sel func min and max: 0.0 0.6640735998730961
+Subsampling by 0.622 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.6640735998730961
+Subsampling by 0.622 for probability map
+Number of final random sources: 5018981
+Wrote random to ../data/randoms/random_G20.0_zmin0.0zmax1.0_Lmax-20.0_25x.fits!

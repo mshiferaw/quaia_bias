@@ -1,0 +1,104 @@
+Starting batch job
+
+G20.5: computing wp in 20 bins from 0.15 to 240.0 on a log scale...
+
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.81              62596 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-20.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.86              7771 vs 55261
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-25.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.88              1494 vs 12557
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-26.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.91              181 vs 1922
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-27.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.80              131671 vs 648196
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-20.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.81              93083 vs 502242
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-25.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.85              28650 vs 185134
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-26.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.87              5151 vs 38757
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-27.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.78              62547 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-20.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.78              62547 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-25.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.79              53893 vs 259755
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-26.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.83              17114 vs 103123
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-27.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.77              8565 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-20.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.77              8565 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-25.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.77              8565 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-26.0_Quaia_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.79              6044 vs 28981
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-27.0_Quaia_MC_b60
+done!

@@ -1,0 +1,72 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 9, in <module>
+    import george
+ModuleNotFoundError: No module named 'george'
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py:548: SyntaxWarning: invalid escape sequence '\m'
+  'redshift_quaia': '$z_\mathrm{Quaia}$',
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py:559: SyntaxWarning: invalid escape sequence '\m'
+  'pm': '$\mu$',
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py:560: SyntaxWarning: invalid escape sequence '\m'
+  'pmra': '$\mu_{\\alpha*}$',
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py:561: SyntaxWarning: invalid escape sequence '\m'
+  'pmdec': '$\mu_{\delta}$',
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py:562: SyntaxWarning: invalid escape sequence '\s'
+  'pmra_error': '$\sigma_{\mu\\alpha*}$',
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/utils.py:563: SyntaxWarning: invalid escape sequence '\s'
+  'pmdec_error': '$\sigma_{\mu\delta}$',
+allsky 
+../data/randoms/random_G20.5_zsplit4bin2_Lmaxsplit4bin3_25x.fits
+Loading data
+Number of data sources: 323808
+Estimating reduction factor
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 173, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 79, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 128, in run
+    ra_rand, _ = subsample_by_probmap(NSIDE_map, rng, ra_rand_try, dec_rand_try, fn_selfunc, allsky)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 161, in subsample_by_probmap
+    map_p = hp.read_map(fn_selfunc)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/astropy/utils/decorators.py", line 620, in wrapper
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/healpy/fitsfunc.py", line 369, in read_map
+    filename = pf.open(filename, memmap=memmap)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/astropy/io/fits/hdu/hdulist.py", line 220, in fitsopen
+    return HDUList.fromfile(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/astropy/io/fits/hdu/hdulist.py", line 484, in fromfile
+    return cls._readfrom(
+           ^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/astropy/io/fits/hdu/hdulist.py", line 1186, in _readfrom
+    fileobj = _File(
+              ^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/astropy/io/fits/file.py", line 240, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/astropy/io/fits/file.py", line 701, in _open_filename
+    self._file = open(self.name, IO_FITS_MODES[mode])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../data/maps/selection_function_NSIDE64_G20.5_zsplit4bin2_Lmaxsplit4bin3.fits'

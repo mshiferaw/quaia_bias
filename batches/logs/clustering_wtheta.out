@@ -1,0 +1,87 @@
+Starting batch job
+
+G20.5: computing wtheta in 27 bins from 0.001 to 5.0 on a log scale...
+
+Pixels masked by MC but not already by selfunc: 2468
+G20.5_zmin0.0zmax1.0: 0.33              218365 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.118286
+DR: 2.797344
+RR: 14.094658
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin0.0zmax1.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 4785
+G20.5_zmin1.0zmax2.0: 0.30              453228 vs 648196
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.208055
+DR: 8.673186
+RR: 61.139278
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin1.0zmax2.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 2764
+G20.5_zmin2.0zmax3.0: 0.28              207602 vs 286508
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.079627
+DR: 2.602467
+RR: 12.404
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin2.0zmax3.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 307
+G20.5_zmin3.0zmax4.6: 0.23              28043 vs 36458
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.021263
+DR: 0.19622299999999998
+RR: 0.356033
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin3.0zmax4.6_Planck_MC_b30
+done!
+Exception ignored in: <function Cosmology.__del__ at 0x7f7af20f5760>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable
+
+G20.5: computing wtheta in 27 bins from 0.001 to 5.0 on a log scale...
+
+0.6894778799187598
+Pixels masked by MC but not already by selfunc: 1911
+G20.5_zmin0.0zmax1.0: 0.31              224099 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.155849
+DR: 2.828229
+RR: 13.612265
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin0.0zmax1.0_Planck_MC_mask0.5
+0.6998052038245415
+Pixels masked by MC but not already by selfunc: 3700
+G20.5_zmin1.0zmax2.0: 0.28              464321 vs 648196
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.21558300000000008
+DR: 8.501536
+RR: 59.429053
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin1.0zmax2.0_Planck_MC_mask0.5
+0.7010382664423291
+Pixels masked by MC but not already by selfunc: 3094
+G20.5_zmin2.0zmax3.0: 0.25              214535 vs 286508
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.09573899999999999
+DR: 2.903459
+RR: 13.164385
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin2.0zmax3.0_Planck_MC_mask0.5
+0.7686898940836221
+Pixels masked by MC but not already by selfunc: 352
+G20.5_zmin3.0zmax4.6: 0.22              28576 vs 36458
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.026369
+DR: 0.21881399999999998
+RR: 0.392567
+saved to _G20.5_rmin0.001_rmax5.0_nbins27_zmin3.0zmax4.6_Planck_MC_mask0.5
+done!
+Exception ignored in: <function Cosmology.__del__ at 0x7f009c2e1f80>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable

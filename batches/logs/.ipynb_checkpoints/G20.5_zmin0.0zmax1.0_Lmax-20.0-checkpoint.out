@@ -1,0 +1,40 @@
+Starting batch job
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin0.0zmax1.0_Lmax-20.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lmax-20.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']
+Loading data
+Making QSO map
+Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise', 'zodi1.25', 'zodi3.4', 'zodi4.6']
+Dustmap already exists, loading from ../data/maps/map_dust_NSIDE64.npy
+Star map already exists, loading from ../data/maps/map_stars_NSIDE64.npy
+M10 map already exists, loading from ../data/maps/map_m10_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcs_NSIDE64.npy
+unWISE map already exists, loading from ../data/maps/map_unwise_NSIDE64.npy
+unWISE scan map already exists, loading from ../data/maps/map_unwisescan_NSIDE64.npy
+MCs map already exists, loading from ../data/maps/map_mcsunwise_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi1.25_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi3.4_NSIDE64.npy
+Zodi map already exists, loading from ../data/maps/map_zodi4.6_NSIDE64.npy
+y_pred map exists and overwrite_ypred=False, reading in from ../data/maps/y_pred_selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lmax-20.0.fits
+y_pred_full: [4.75425492 5.38623716 7.11250212 ... 7.05853729 7.08635378 6.95643111]
+0
+RMSE: 2.902356555579959
+Making selection function map
+setting the output map dtype to [dtype('float64')]
+Number of clean healpixels: 479 (Total: 49152)
+Using parent catalog to determine zero-probability pixels
+(If i_keep also passed, will be ignored!)
+min: 0.0, max: 0.7735255788845177
+map_prob: [0.29051703 0.32913541 0.43462184 ... 0.43132422 0.433024   0.42508485]
+Saved map to ../data/maps/selection_function_NSIDE64_G20.5_zmin0.0zmax1.0_Lmax-20.0.fits!
+Time: 1.1034729480743408 s (0.018391215801239015 min)
+allsky 
+../data/randoms/random_G20.5_zmin0.0zmax1.0_Lmax-20.0_25x.fits
+Loading data
+Number of data sources: 324336
+Estimating reduction factor
+Sel func min and max: 0.0 0.7735255788845177
+Subsampling by 0.561 for probability map
+Generating random with 25 times N_data
+Sel func min and max: 0.0 0.7735255788845177
+Subsampling by 0.561 for probability map
+Number of final random sources: 8108122
+Wrote random to ../data/randoms/random_G20.5_zmin0.0zmax1.0_Lmax-20.0_25x.fits!

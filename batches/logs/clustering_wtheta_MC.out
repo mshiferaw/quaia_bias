@@ -1,0 +1,9 @@
+Starting batch job
+usage: clustering.py [-h] [--L L] [--mask MASK] [--b B]
+                     [--z_bins [Z_BINS ...]] [--pimax PIMAX]
+                     corrfunc G rmin rmax nbins scale MC cosmo
+clustering.py: error: the following arguments are required: cosmo
+Exception ignored in: <function Cosmology.__del__ at 0x7fc995d5d6c0>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable

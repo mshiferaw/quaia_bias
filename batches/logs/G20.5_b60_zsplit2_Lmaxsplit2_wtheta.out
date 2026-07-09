@@ -1,0 +1,38 @@
+Starting batch job
+
+G20.5: computing wtheta in 30 bins from 0.001 to 10.0 on a log scale...
+
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin0_Lmaxsplit2bin0: 0.83              54356 vs 323872
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.063437
+DR: 1.076678
+RR: 7.677133
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin0_Lmaxsplit2bin0_Planck_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin0_Lmaxsplit2bin1: 0.80              127469 vs 647744
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.119054
+DR: 4.886806
+RR: 47.671583
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin0_Lmaxsplit2bin1_Planck_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin1_Lmaxsplit2bin0: 0.81              60588 vs 323879
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.04938
+DR: 1.278514
+RR: 9.769956
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin1_Lmaxsplit2bin0_Planck_MC_b60
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zsplit2bin1_Lmaxsplit2bin1: 0.79              137912 vs 647758
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+DD: 0.10295299999999999
+DR: 5.611993
+RR: 55.618111999999996
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zsplit2bin1_Lmaxsplit2bin1_Planck_MC_b60
+done!

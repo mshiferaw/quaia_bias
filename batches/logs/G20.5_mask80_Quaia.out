@@ -1,0 +1,142 @@
+Starting batch job
+
+G20.5: computing wp in 20 bins from 0.15 to 240.0 on a log scale for 25 jackknife regions...
+
+0.8397869756635246
+Pixels masked by MC but not already by selfunc: 146
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.71              94610 vs 324336
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-20.0_N25_Quaia_MC_mask0.8
+0.5926960386346416
+Pixels masked by MC but not already by selfunc: 343
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.72              15412 vs 55261
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-25.0_N25_Quaia_MC_mask0.8
+0.609725287690307
+Pixels masked by MC but not already by selfunc: 87
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.65              4403 vs 12557
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-26.0_N25_Quaia_MC_mask0.8
+0.5687276050766583
+Pixels masked by MC but not already by selfunc: 45
+G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.56              843 vs 1922
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin0.0zmax1.0_Lmax-27.0_N25_Quaia_MC_mask0.8
+0.8278204225562842
+Pixels masked by MC but not already by selfunc: 436
+G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.70              197572 vs 648196
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-20.0_N25_Quaia_MC_mask0.8
+0.8143883509147604
+Pixels masked by MC but not already by selfunc: 978
+G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.72              138834 vs 502242
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-25.0_N25_Quaia_MC_mask0.8
+0.5947007197698028
+Pixels masked by MC but not already by selfunc: 1304
+G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.72              51879 vs 185134
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-26.0_N25_Quaia_MC_mask0.8
+0.5102214531295425
+Pixels masked by MC but not already by selfunc: 308
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.69              11884 vs 38757
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin1.0zmax2.0_Lmax-27.0_N25_Quaia_MC_mask0.8
+0.8817873730970004
+Pixels masked by MC but not already by selfunc: 1809
+G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.67              94098 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-20.0_N25_Quaia_MC_mask0.8
+0.8817873730970004
+Pixels masked by MC but not already by selfunc: 1809
+G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.67              94098 vs 286508
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-25.0_N25_Quaia_MC_mask0.8
+0.9124798963338164
+Pixels masked by MC but not already by selfunc: 1891
+G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.69              80179 vs 259755
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-26.0_N25_Quaia_MC_mask0.8
+0.8169135671477908
+Pixels masked by MC but not already by selfunc: 776
+G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.73              27807 vs 103123
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin2.0zmax3.0_Lmax-27.0_N25_Quaia_MC_mask0.8
+0.9052717785666216
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.65              12748 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-20.0_N25_Quaia_MC_mask0.8
+0.9052717785666216
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.65              12748 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-25.0_N25_Quaia_MC_mask0.8
+0.9052717785666216
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.65              12748 vs 36458
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-26.0_N25_Quaia_MC_mask0.8
+0.9893407725869455
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.69              8923 vs 28981
+/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
+  warnings.warn("One or more input array has non-native endianness!  A copy will"\
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/quaia.py:1103: RuntimeWarning: invalid value encountered in scalar divide
+  rpavg = [np.sum((DD_counts['rpavg']*DD_counts['npairs'])[DD_counts['rmin']==i])/np.sum(DD_counts['npairs'][DD_counts['rmin']==i])
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/jackknife.py:217: RuntimeWarning: Mean of empty slice
+  cf_mean = np.nanmean(cf_jackknife, axis = 0)  # is it ok to ignore nan values?
+saved to _G20.5_rmin0.15_rmax240.0_nbins20_pimax80_zmin3.0zmax4.6_Lmax-27.0_N25_Quaia_MC_mask0.8
+done!

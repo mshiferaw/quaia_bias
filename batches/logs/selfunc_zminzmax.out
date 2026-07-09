@@ -17,7 +17,7 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-Running selection function with fn_catalog=../data/quaia_G20.0_zmin3.0zmax4.6.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.0_zmin3.0zmax4.6.fits, fn_parentcat=../data/quaia_G20.0.fits, map_names=None
+Running selection function with fn_catalog=../data/quaia_G20.5_zmin3.0zmax4.6_Lmin-26.0Lmax-25.0.fits, fn_selfunc=../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmin-26.0Lmax-25.0.fits, fn_parentcat=../data/quaia_G20.5.fits, map_names=None
 Loading data
 Making QSO map
 Map templates: ['dust', 'stars', 'm10', 'mcs', 'unwise', 'unwisescan', 'mcsunwise']
@@ -32,66 +32,47 @@ Constructing X
 (7, 49152)
 (7, 49152)
 Getting indices to fit
-err min max: 0.0 2.449489742783178
+err min max: 0.0 0.0
 Training fitter
-X_train: (15433, 7) y_train: (15433,)
-y_train min: 1.0 y_train: 6.0
-fit_mean = True
-n params: 7
-parameter names: ('mean:value', 'kernel:k1:log_constant', 'kernel:k2:metric:log_M_0_0', 'kernel:k2:metric:log_M_1_1', 'kernel:k2:metric:log_M_2_2', 'kernel:k2:metric:log_M_3_3', 'kernel:k2:metric:log_M_4_4', 'kernel:k2:metric:log_M_5_5', 'kernel:k2:metric:log_M_6_6')
-paramters init: [ 0.         -3.99165763 -0.5         1.5        -1.          5.
-  0.8         0.         10.        ]
-y minmax 0.0 1.791759469228055
-yerr: [1.         1.         1.         ... 1.41421356 1.         1.        ] [1.         1.         1.         ... 0.70710678 1.         1.        ]
-p compute: [ 0.         -3.99165763 -0.5         1.5        -1.          5.
-  0.8         0.         10.        ]
-lnlike compute: -14520.73745907557
-Minimizing
-  message: Optimization terminated successfully.
-  success: True
-   status: 0
-      fun: 14500.527215817148
-        x: [ 2.860e-01 -4.543e+00 -5.383e-01  6.344e+00  2.574e+01
-             2.329e+01  2.815e+00  2.345e+01  3.327e+01]
-      nit: 45
-      jac: [-5.692e-06 -7.498e-06  2.352e-07  4.889e-06 -4.801e-11
-            -6.459e-08  6.117e-06 -2.941e-09 -3.490e-12]
- hess_inv: [[ 3.820e-02  7.918e-02 ...  3.235e+01  6.416e+01]
-            [ 7.918e-02  1.656e+00 ...  2.047e+02  3.969e+02]
-            ...
-            [ 3.235e+01  2.047e+02 ...  5.360e+06  1.066e+07]
-            [ 6.416e+01  3.969e+02 ...  1.066e+07  2.120e+07]]
-     nfev: 47
-     njev: 47
-p post op: [ 0.286008   -4.54274027 -0.53834042  6.34353282 25.74078162 23.28842832
-  2.81450053 23.44552066 33.26768061]
-lnlike final: -14500.527215817148
-Predicting
-setting the output map dtype to [dtype('float64')]
-predict p: [ 0.286008   -4.54274027 -0.53834042  6.34353282 25.74078162 23.28842832
-  2.81450053 23.44552066 33.26768061]
-Saving ypred map to ../data/maps/y_pred_selection_function_NSIDE64_G20.0_zmin3.0zmax4.6.fits
-y_pred_full: [1.0361963  1.05698935 1.15832334 ... 1.18593732 1.20415205 1.17569478]
-0
-RMSE: 0.6111193036065592
-Making selection function map
-setting the output map dtype to [dtype('float64')]
-Number of clean healpixels: 479 (Total: 49152)
-Using parent catalog to determine zero-probability pixels
-(If i_keep also passed, will be ignored!)
-min: 0.0, max: 0.6314735768863634
-map_prob: [0.40805567 0.41624401 0.45614948 ... 0.46702391 0.4741969  0.46299038]
-Saved map to ../data/maps/selection_function_NSIDE64_G20.0_zmin3.0zmax4.6.fits!
-Time: 3402.6488983631134 s (56.71081497271856 min)
+X_train: (0, 7) y_train: (0,)
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 599, in <module>
+    parse_args()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 45, in parse_args
+    run(args.fn_catalog, args.fn_selfunc, fn_parentcat=args.fn_parentcat,
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/selection_function_map.py", line 203, in run
+    print("y_train min:", np.min(y_train), "y_train:", np.max(y_train), flush=True)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/numpy/core/fromnumeric.py", line 2953, in min
+    return _wrapreduction(a, np.minimum, 'min', axis, None, out,
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/numpy/core/fromnumeric.py", line 88, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+ValueError: zero-size array to reduction operation minimum which has no identity
 allsky 
-../data/randoms/random_G20.0_zmin3.0zmax4.6_25x.fits
+../data/randoms/random_G20.5_zmin3.0zmax4.6_Lmin-26.0Lmax-25.0_25x.fits
 Loading data
-Number of data sources: 20451
+Number of data sources: 0
 Estimating reduction factor
-Sel func min and max: 0.0 0.6314735768863634
-Subsampling by 0.735 for probability map
-Generating random with 25 times N_data
-Sel func min and max: 0.0 0.6314735768863634
-Subsampling by 0.736 for probability map
-Number of final random sources: 511653
-Wrote random to ../data/randoms/random_G20.0_zmin3.0zmax4.6_25x.fits!
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 173, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 79, in main
+    run(fn_selfunc, NSIDE_map, fn_rand, allsky, fn_catalog=fn_catalog, fac_rand=fac_rand, overwrite=overwrite)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 128, in run
+    ra_rand, _ = subsample_by_probmap(NSIDE_map, rng, ra_rand_try, dec_rand_try, fn_selfunc, allsky)
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/generate_random.py", line 161, in subsample_by_probmap
+    map_p = hp.read_map(fn_selfunc)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/utils/decorators.py", line 604, in wrapper
+    return function(*args, **kwargs)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/healpy/fitsfunc.py", line 369, in read_map
+    filename = pf.open(filename, memmap=memmap)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 213, in fitsopen
+    return HDUList.fromfile(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 476, in fromfile
+    return cls._readfrom(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/hdu/hdulist.py", line 1146, in _readfrom
+    fileobj = _File(
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 217, in __init__
+    self._open_filename(fileobj, mode, overwrite)
+  File "/home/groups/tabel/mahlet/quaia-env/lib/python3.10/site-packages/astropy/io/fits/file.py", line 626, in _open_filename
+    self._file = open(self.name, IO_FITS_MODES[mode])
+FileNotFoundError: [Errno 2] No such file or directory: '../data/maps/selection_function_NSIDE64_G20.5_zmin3.0zmax4.6_Lmin-26.0Lmax-25.0.fits'
