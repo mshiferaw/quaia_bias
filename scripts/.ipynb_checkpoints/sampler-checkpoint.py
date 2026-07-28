@@ -33,25 +33,42 @@ import time
 ## Define parameters
 G_hi = 20.5
 nthreads = 18
-mask = 0.5
+# mask = 0.5
 Delta = 200
 delta_c = 1.686
 NSIDE = 64
-M_max = 15
-pimax = 80 # 40 # 5000.0 # 40.0\
-dpi = 0.01
+M_max = 16.8 #15
+method = 'pyccl' #'pyccl' #'manual'
+mass_def = '200c'
+b1_E_func_tinker10 = ccl.halos.hbias.tinker10.HaloBiasTinker10(mass_def=mass_def)
+# pimax = 80 # 40 # 5000.0 # 40.0\
+# dpi = 0.01
 cosmo = 'Planck'
 N_jk = 50 #40 #20 #65 #50 #30 #15 #80
-cosmo_planck18 = ccl.Cosmology(Omega_c=0.265, Omega_b=Planck18.Ob0, h=Planck18.h, Neff = Planck18.Neff, T_CMB = Planck18.Tcmb0.value, m_nu = Planck18.m_nu, sigma8=0.8, n_s=0.95)
-hmf = ccl.halos.MassFuncTinker10()
-rmin = 30 #-delta_min*offset # 0.1 # start higher # 1.4 # 30
-rmax = 80 #+delta_max*offset # 200
-nbins = 10 #20 + int(delta_min+delta_max) #90 #20
+# cosmo_planck18 = ccl.Cosmology(Omega_c=0.265, Omega_b=Planck18.Ob0, h=Planck18.h, Neff = Planck18.Neff, T_CMB = Planck18.Tcmb0.value, m_nu = Planck18.m_nu, sigma8=0.8, n_s=0.95)
+cosmo_planck18 = ccl.Cosmology(
+    Omega_c=Planck18.Odm0,
+    Omega_b=Planck18.Ob0,
+    h=Planck18.h,
+    Neff=Planck18.Neff,
+    T_CMB=Planck18.Tcmb0.value,
+    m_nu=Planck18.m_nu,
+    sigma8=0.8102,   # or pull from wherever your actual source specifies Planck18's sigma8
+    n_s=0.9665        # same
+)
+hmf = {mass_def: ccl.halos.MassFuncTinker10(mass_def = mass_def) 
+rmin = 0.001
+rmax = 10.0 #80 #+delta_max*offset # 200
+nbins = 30 #10 #20 + int(delta_min+delta_max) #90 #20
 hartlap = (N_jk-nbins-2)/(N_jk-1)
 fac_rand = 25
 nlive = 3000
 dlogz = 0.001
 bins = np.logspace(9, M_max, 79)
+b = 30
+k_log = np.logspace(-2.5, 3) #-4, 2)
+c_m = ccl.halos.concentration.diemer15.ConcentrationDiemer15()
+NFW_200c = ccl.halos.profiles.nfw.HaloProfileNFW(mass_def = '200c', concentration = c_m)
 
 ## Define functions
 def a_median(tab_datahi_mask_zbin0, key_zbin0 = ''):
@@ -74,45 +91,54 @@ def n_g_theory(bins, n_total, a = 1, cosmo = cosmo_planck18, hmf = hmf, recenter
     
     return n_g, nm
 
-def bias(bins, n_m, a = 1, cosmo = cosmo_planck18, mod = False, recenter = True):
+def bias(bins, n_m, a = 1, cosmo = cosmo_planck18, mod = False, recenter = True, method = method, hmf = hmf, 
+         b1_E_func_tinker10 = b1_E_func_tinker10, b1_E_tinker = None):
 
-    n_g, nm = n_g_theory(bins, n_m, a = a, cosmo = cosmo, recenter = recenter)
+    n_g, nm = n_g_theory(bins, n_m, a = a, cosmo = cosmo, recenter = recenter, hmf = hmf)
     if recenter == True:
         print('recentering')
         bins = quaia.recenter(bins)
     n_g = np.trapz(n_g, bins)
     dn_dm = nm/(bins*np.log(10))
 
-    b1_E_tinker = b1_E_func(nu(bins, a = a, cosmo = cosmo), mod = mod)
-
+    if b1_E_tinker is None:
+        
+        b1_E_tinker = b1_E_func(bins, a = a, cosmo = cosmo, mod = mod, method = method, b1_E_func_tinker10 = b1_E_func_tinker10)
+    
     n_m[~np.isfinite(n_m)]=0 
     integrand = dn_dm*n_m
     integrand[np.isnan(integrand)]=0
     
     return bias_function(n_g, integrand, b1_E_tinker, bins, recenter = recenter), n_g
 
-def b1_E_func(nu, Delta = Delta, delta_c = delta_c, mod = False):
+def b1_E_func(bins, a = 1, cosmo = cosmo_planck18, Delta = Delta, delta_c = delta_c, mod = False, method = method, b1_E_func_tinker10 = b1_E_func_tinker10): #nu
 
-    delta_c = 1.686
-    
-    if mod == False:
-        y = np.log10(Delta)
-        A =  1.0+0.24*y*np.exp(-(4/y)**4)
-        a = 0.44*y-0.88
-        B = 0.183
-        b =  1.5
-        C = 0.019+0.107*y+0.19*np.exp(-(4/y)**4)
-        c = 2.4
-        
+    if method == 'pyccl':
+
+        return b1_E_func_tinker10(cosmo, bins, a)
+
     else:
-        A =  1.0
-        a = 0.0906
-        B = -4.5002
-        b =  2.1419
-        C = 4.9148
-        c = 2.1419
+
+        Nu = nu(bins, a = a, cosmo = cosmo)
         
-    return 1-A*nu**a/(nu**a+delta_c**a)+B*nu**b+C*nu**c # Jose et al
+        if mod == False:
+            y = np.log10(Delta)
+            A =  1.0+0.24*y*np.exp(-(4/y)**4)
+            a = 0.44*y-0.88
+            B = 0.183
+            b =  1.5
+            C = 0.019+0.107*y+0.19*np.exp(-(4/y)**4)
+            c = 2.4
+            
+        else:
+            A =  1.0
+            a = 0.0906
+            B = -4.5002
+            b =  2.1419
+            C = 4.9148
+            c = 2.1419
+        
+        return 1-A*Nu**a/(Nu**a+delta_c**a)+B*Nu**b+C*Nu**c # Jose et al
     
 def bias_function(n_g, integrand, b, bins, recenter = True):
     
@@ -122,9 +148,10 @@ def bias_function(n_g, integrand, b, bins, recenter = True):
         
     return 1/n_g*np.trapz(integrand*b, bins)
 
-def cf_2h(bins, n_m, a, cosmo, cf_matter, recenter = True):
+def cf_2h(bins, n_m, a, cosmo, cf_matter, recenter = True, method = method, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10):
     
-    b_q, n_g = bias(bins, n_m, a, cosmo, recenter = recenter)
+    b_q, n_g = bias(bins, n_m, a, cosmo, recenter = recenter, method = method, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10)
+    
     return b_q**2*cf_matter, b_q
 
 def M(bins, n_m, a = 1, cosmo = cosmo_planck18, mod = False, recenter = True, hmf = hmf):
@@ -147,21 +174,21 @@ def M(bins, n_m, a = 1, cosmo = cosmo_planck18, mod = False, recenter = True, hm
     else:
         return bias_function(n_g, integrand, bins, bins, recenter = recenter), n_g
 
-def HOD(x, ndim, bins_m = bins):
+# def HOD(x, ndim, bins_m = bins):
 
-    # n_m=np.zeros(np.shape(quaia.recenter(bins)))
-    # n_m[quaia.recenter(bins)>=M_min]=fduty
-    if ndim == 2:
-        # bins_m, fduty = x
-        fduty, M_min = x
-        bins_m = np.logspace(M_min, M_max, 79)
-        n_m=np.ones(np.shape(bins_m))*10**fduty
-    else:
-        # fduty, M_min, M, sigma = x
-        fduty, M_min, sigma = x
-        n_m = 10**fduty/2*special.erfc(np.log(10**M_min/bins_m)/(np.sqrt(2)*np.log(10)*sigma))
+#     # n_m=np.zeros(np.shape(quaia.recenter(bins)))
+#     # n_m[quaia.recenter(bins)>=M_min]=fduty
+#     if ndim == 2:
+#         # bins_m, fduty = x
+#         fduty, M_min = x
+#         bins_m = np.logspace(M_min, M_max, 79)
+#         n_m=np.ones(np.shape(bins_m))*10**fduty
+#     else:
+#         # fduty, M_min, M, sigma = x
+#         fduty, M_min, sigma = x
+#         n_m = 10**fduty/2*special.erfc(np.log(10**M_min/bins_m)/(np.sqrt(2)*np.log(10)*sigma))
         
-    return n_m, bins_m
+#     return n_m, bins_m
     
 # def HOD_step(bins_m, fduty): #M_max = M_max):
 
@@ -169,6 +196,28 @@ def HOD(x, ndim, bins_m = bins):
 #     n_m=np.ones(np.shape(bins_m))*10**fduty
 #     return n_m
 
+def HOD_step(bins, fduty): #, M_min, recenter = False):
+
+    return np.ones(len(bins_m))*f_duty
+
+def HOD_scatter(bins, M_min, fduty, sigma):
+    
+    return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+
+def N_c(bins_m, M_min, f_duty, M_max = M_max, sigma = 0): #, recenter = False): #bins_m
+
+    n_m = HOD_scatter(bins_m, M_min, f_duty, sigma)
+    
+    if bins_m[0]==10**M_min: # for step function HOD
+
+        return HOD_step(bins_m, f_duty) # M_min, f_duty, recenter = recenter)
+        
+    elif np.any(bins_m==10**M_min) and (sigma==0): # for scatter HOD with point at Mmin
+    
+        n_m[bins_m==10**M_min]=f_duty/2
+        
+    return n_m
+    
 # def HOD_erfc(fduty, M_min, M, sigma):
     
 #     return 10**fduty/2*special.erfc(np.log(10**M_min/M)/(np.sqrt(2)*np.log(10)*sigma))
@@ -180,6 +229,146 @@ def HOD(x, ndim, bins_m = bins):
 #     dn_dm = nm/(bins*np.log(10))
     
 #     return np.trapz(dn_dm, bins)
+
+def n_DM(cosmo, a, M_min, hmf = hmf[mass_def], M_max = M_max, N = 79): #16.8
+    
+    bins = np.logspace(M_min, M_max, N)
+    nm = hmf(cosmo, bins, a)/cosmo['h']**3 #/u.Mpc**3 # convert to h/Mpc**3
+    dn_dm = nm/(bins*np.log(10))
+    
+    return np.trapz(dn_dm, bins)
+
+def N_s(bins_m, fduty, M0, M1, alpha, exp = False, step = True): #bins_m
+
+    if exp == False:
+
+        n_m = fduty*((bins_m-M0)/M1)**alpha
+        
+        if step == True:
+            n_m[bins_m<M0]=0
+            
+    else:
+        # n_m = (bins_m/M1)**alpha*np.exp(-M0/bins_m)
+        n_m = N_s_exp(bins_m, M1, alpha, M0, fduty)
+        
+    return n_m
+
+def N_s_exp(M, M1, alpha, Mcut, fduty):
+
+    return fduty*(M/M1)**alpha*np.exp(-Mcut/M)
+
+def NFW(bins_m, a, k = k_log, Delta = Delta, cosmo = cosmo_planck18, c_m = c_m, mass_def = '200c'):
+
+    c = c_m(cosmo, bins_m, a) # assumes 200c mass definition
+    f = 1/(np.log(1+c)-c/(1+c))
+
+    rho_bar = ccl.background.rho_x(cosmo, a, 'critical', is_comoving = True)  #'matter'  # Rvir = (3*bins_m*u.Msun/(4*np.pi*Delta*rho_bar))**(1/3) # Mpc
+    Rvir = (3*bins_m/(4*np.pi*Delta*rho_bar))**(1/3) # Mpc
+    kappa = k[:, None]*Rvir/c
+    Si, Ci = sici(kappa*(1+c))
+    Si_kappa, Ci_kappa = sici(kappa)
+    
+    u = f*(np.sin(kappa)*(Si-Si_kappa)+np.cos(kappa)*(Ci-Ci_kappa)-np.sin(kappa*c)/(kappa*(1+c)))
+    u[k==0]=1
+    
+    return u
+
+def HOD(bins, M_min, fduty, sigma, a, M1, alpha, method = method, NFW_200c = NFW_200c, k = k_log, cosmo = cosmo_planck18): #, recenter = False):
+    
+    if method == 'manual':
+        
+        nfw = NFW(bins, a, k = k)
+
+    else:
+
+        nfw = NFW_200c.fourier(cosmo, k, bins, a).T/bins
+
+    return N_c(bins, M_min, 10**fduty, sigma = sigma)+nfw*N_s(bins, 10**fduty, 10**M_min, 10**M1, alpha) #, recenter = recenter
+
+def P_1h(bins, a, n_c, n_s, k = k_log, cosmo = cosmo_planck18, recenter = False, method = method, hmf = hmf[mass_def], 
+         b1_E_func_tinker10 = b1_E_func_tinker10[mass_def], NFW_200c = NFW_200c):
+
+    if method == 'manual':
+        nfw = NFW(bins, a, k = k)*n_s
+
+    else:
+        
+        nfw = NFW_200c.fourier(cosmo, k, bins, a).T/bins*n_s
+                
+    n_m = 2*nfw*n_c*n_s+nfw**2*n_s*(n_s-1)
+    P_qq_1h, n_g = bias(bins, n_m, a, cosmo, recenter = recenter, method = method, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, 
+                           b1_E_tinker = np.ones(np.shape(bins)))
+
+    return P_qq_1h/n_g
+
+def wtheta_2h_optimized(bins, H0_c_dN_dz, params_n_m = None, params_HOD = None, # P_mm = P_mm, 
+                        # wp = False, 
+                        thetabins = thetabins, dz = dz, k = k_log, recenter = False, #n_m
+                        theta_mask = False, cosmo = cosmo_planck18, # rpbins = rpbins, np.full_like(quaia.recenter(thetabins), True, dtype = bool)
+                        hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = False, calc_bias = False, wtheta_mm = False, method = method, 
+                        hmf = hmf[mass_def], b1_E_func_tinker10 = b1_E_func_tinker10[mass_def], NFW_200c = NFW_200c, one_halo = False):
+
+    # compute for each z... for statement?
+    b_q, k_integral = [], []
+    for z in dz:
+        a = 1/(1+z)
+        P_mm = ccl.power.linear_matter_power(cosmo, k, a)
+        rpbins = (thetabins*u.deg).to(u.rad)*quaia.comoving_dist(z, units = 'Mpc')
+        
+        if params_n_m is not None:
+            
+            n_c, n_s = params_n_m
+
+            # print(np.shape(bins))
+            if method == 'manual':
+                n_m = n_c + NFW(bins, a, k = k)*n_s
+
+            else:
+                n_m = n_c + NFW_200c.fourier(cosmo, k, bins, a).T/bins*n_s
+        else:
+            
+            fduty, M_min, sigma, M1, alpha = params_HOD
+            n_m = HOD(bins, M_min, fduty, sigma, a, M1, alpha, method = method, cosmo = cosmo, k = k) #, recenter = recenter)
+        if wtheta_mm == True:
+            b_z = 1
+        else:
+            b_z, n_z = bias(bins, n_m, a, cosmo, recenter = recenter, method = method, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10)
+        # if wp: # need to implement real space version, do centrals only for now
+        #     wp_z, _ = wp_2h(bins, n_c, a, cosmo, False, rpbins, recenter = recenter_thetabins, method = method, hmf = hmf, 
+        #                     b1_E_func_tinker10 = b1_E_func_tinker10) #n_m #recenter
+        else:
+            
+            if one_halo == False:
+                
+                P_qq = b_z**2*P_mm
+                
+            else:
+                
+                P_qq_2h = b_z**2*P_mm
+                P_qq_1h = P_1h(bins, a, n_c, n_s, k = k, cosmo = cosmo, recenter = recenter, method = method, hmf = hmf, 
+                                    b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c)
+                P_qq = P_qq_2h + P_qq_1h
+                
+            rpbins_k, wp_k = hankel(P_qq/(2*np.pi))
+            if recenter_thetabins == True:
+                rp = quaia.recenter(rpbins.value)
+
+            else:
+                rp = rpbins.value
+            if isinstance(theta_mask, bool):
+                theta_mask = np.full_like(rp, True, dtype = bool)
+            wp_z = np.interp(rp[theta_mask], rpbins_k, wp_k)
+            
+        k_integral.append(wp_z) # as a function of rp
+        b_q.append(b_z)
+        
+    z_integrand = [H0_c_dN_dz[i]*k_integral[i] for i in range(len(dz))]
+    if calc_bias == False:
+    
+        return np.trapz(z_integrand, dz, axis = 0)#, np.trapz(b_q*dN_dz, z_array) #np.trapz(b_q*np.array(n_g)*dN_dz, z_array)/np.trapz(n_g*dN_dz, z_array)
+
+    else:
+        return np.trapz(z_integrand, dz, axis = 0), np.trapz(b_q*dN_dz, dz)
 
 def loglike(x, a, cf_matter, log_det_C, cf, n_q, nbins, solve, penalty, ndim, cosmo = cosmo_planck18, error = 0.05, M_max = M_max, hartlap = hartlap, N = N_jk):
     
@@ -298,21 +487,24 @@ def main():
     z_bins = np.array([0.0, 1.0, 2.0, 3.0, 4.6])
     z_array = range(len(z_bins)-1)
     L_bins = np.array([-32.0, -27.0, -26.0, -25.0, -20.0])[:0:-1]
-    pibins = np.arange(0, pimax+1, dpi)
+    # pibins = np.arange(0, pimax+1, dpi)
+
+    ### Translate mass definition
+    dz = np.linspace(0, 4.6)
     
     ## Calculate number density as $n_q \approx \int_0^{\infty} d M \frac{d n}{d M}\langle N(M)\rangle$
-    tab_datahi_mask_zbins, selfunc_hi_bins = {L: [] for L in L_bins}, {L: [] for L in L_bins}
+    # tab_datahi_mask_zbins, selfunc_hi_bins = {L: [] for L in L_bins}, {L: [] for L in L_bins}
 
-    for i in range(len(L_bins)):
+    # for i in range(len(L_bins)):
             
-        for j in z_array:
+    #     for j in z_array:
             
-            tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [j, i], True, ['z', 'L'], 
-                                                                                             bins = [z_bins, L_bins], tab_gcat_type = 'data', 
-                                                                                              method = ['minmax', 'max'], fac_rand = fac_rand, 
-                                                                                              mask = mask*100, percentile = True, n_bins = [None, None])
-            tab_datahi_mask_zbins[L_bins[i]].append(tab_datahi_mask_zbin0['redshift_quaia'])
-            selfunc_hi_bins[L_bins[i]].append(selfunc_hi_bin0)
+    #         tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [j, i], True, ['z', 'L'], 
+    #                                                                                          bins = [z_bins, L_bins], tab_gcat_type = 'data', 
+    #                                                                                           method = ['minmax', 'max'], fac_rand = fac_rand, 
+    #                                                                                           mask = mask*100, percentile = True, n_bins = [None, None])
+    #         tab_datahi_mask_zbins[L_bins[i]].append(tab_datahi_mask_zbin0['redshift_quaia'])
+    #         selfunc_hi_bins[L_bins[i]].append(selfunc_hi_bin0)
 
     LMC = SkyCoord(['05 23 34.6 -69 45 22'], unit=(u.hourangle, u.deg)) #https://simbad.u-strasbg.fr/simbad/sim-id?Ident=Large+Magellanic+Cloud
     LMC_radius = 9*u.deg
@@ -326,17 +518,26 @@ def main():
     SMC_idx, _, _, _ = SkyCoord.search_around_sky(SMC, c, SMC_radius)
     MC_idx = np.append(LMC_idx,SMC_idx)
     MC_mask = np.full_like(range(NPIX), True, dtype = bool)
+    MC_mask[MC_idx] = False
 
+    selfunc_mask = np.abs(c.galactic.b.value)>=b
+    
     n_q, n_q_err, V_eff, N_q = {L: [] for L in L_bins}, {L: [] for L in L_bins}, {L: [] for L in L_bins}, {L: [] for L in L_bins}
 
     for i in range(len(L_bins)):
             
         for j in z_array:   
+
+            tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [j, i], True, ['z', 'L'], 
+                                                                                             bins = [z_bins, L_bins], tab_gcat_type = 'data', 
+                                                                                              method = ['minmax', 'max'], fac_rand = fac_rand, b = b, 
+                                                                                                                      mask_type = 'b',
+                                                                                                                      n_bins = [None, None])
     
-            N = len(tab_datahi_mask_zbins[L_bins[i]][j])
-            cp = np.percentile(selfunc_hi_bins[L_bins[i]][j][MC_mask], mask*100)
-            selfunc_mask = selfunc_hi_bins[L_bins[i]][j]>=cp
-            f_sky = 1/(4*np.pi)*np.sum(selfunc_hi_bins[L_bins[i]][j][selfunc_mask & MC_mask]*hp.nside2pixarea(NSIDE))
+            N = len(tab_datahi_mask_zbin0)
+            # cp = np.percentile(selfunc_hi_bins[L_bins[i]][j][MC_mask], mask*100)
+            # selfunc_mask = selfunc_hi_bins[L_bins[i]][j]>=cp
+            f_sky = 1/(4*np.pi)*np.sum(selfunc_hi_bin0[selfunc_mask & MC_mask]*hp.nside2pixarea(NSIDE))
             print(f_sky) # f_sky)
             V = f_sky*(Planck18.comoving_volume(z_bins[j+1])-Planck18.comoving_volume(z_bins[j]))*Planck18.h**3/u.h**3
             N_q[L_bins[i]].append(N)
@@ -344,61 +545,72 @@ def main():
             n_q_err[L_bins[i]].append(np.sqrt(N)/V.value) # Poisson error
             V_eff[L_bins[i]].append(V)
             
-    MC_mask[MC_idx] = False
+    # MC_mask[MC_idx] = False
 
     ## Limit scales to $30\geq s \geq 80h^{-1}$ Mpc
     # Create the bins array
-    rbins_chi2 = np.linspace(rmin, rmax, nbins + 1) # Mpc/h https://github.com/manodeep/Corrfunc/issues/202
+    # rbins_chi2 = np.linspace(rmin, rmax, nbins + 1) # Mpc/h https://github.com/manodeep/Corrfunc/issues/202
+    thetabins = np.logspace(np.log10(rmin), np.log10(rmax), nbins+1)
 
-    cf_chi2, cf_matter_chi2 = {L: [] for L in L_bins}, {L: [] for L in L_bins}
-    yerr_cf_chi2 = {L: [] for L in L_bins}
+    # cf_chi2, cf_matter_chi2 = {L: [] for L in L_bins}, {L: [] for L in L_bins}
+    # yerr_cf_chi2 = {L: [] for L in L_bins}
     # , b_cf_chi2 = {L: [] for L in L_bins}, {L: [] for L in L_bins}
     # b_cf_q_chi2 = {L: [] for L in L_bins}
     a_zbin = {L: [] for L in L_bins}
-    rpavg_chi2 = {L: [] for L in L_bins}
-    H0 = Planck18.H0 # cosmo_planck18['H0'] * u.km/u.s/u.Mpc
+    # rpavg_chi2 = {L: [] for L in L_bins}
+    # H0 = Planck18.H0 # cosmo_planck18['H0'] * u.km/u.s/u.Mpc
+    wp_chi2 = {L: [] for L in L_bins}
         
     for i in range(len(L_bins)):
                 
         for j in z_array:
-            
-            tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [j, i], True, ['z', 'L'], 
-                                                                                             bins = [z_bins, L_bins], tab_gcat_type = 'data', 
-                                                                                              method = ['minmax', 'max'], fac_rand = fac_rand, 
-                                                                                              mask = mask*100, percentile = True, n_bins = [None, None])
+
+            wp_zbin_i = np.load('../results/wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_MC_b{}.npy'.format(G_hi, rmin, rmax, nbins, z_bins[j], 
+                                                                                                                       z_bins[j+1], L_bins[i], cosmo, b))
+            a = float(np.load('../results/a_G{}_zmin{}zmax{}_Lmax{}_{}_MC_b{}.npy'.format(G_hi, z_bins[j], z_bins[j+1], L_bins[i], cosmo, b)))
+          
+            wp_chi2[L_bins[i]].append(wp_zbin_i)
     
             # scale factor
-            a = a_median(tab_datahi_mask_zbin0)
             a_zbin[L_bins[i]].append(a)
             
-            # quasar correlation function
-            if args.corrfunc == 'xi':
-                
-                cf, qq, qr = quaia.xi_s(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, 
-                           rbins = rbins_chi2, Om0 = Planck18.Om0, h = Planck18.h, error = True)
-                cf_chi2[L_bins[i]].append(cf)
+            # tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [j, i], True, ['z', 'L'], 
+            #                                                                                  bins = [z_bins, L_bins], tab_gcat_type = 'data', 
+            #                                                                                   method = ['minmax', 'max'], fac_rand = fac_rand, 
+            #                                                                                   mask = mask*100, percentile = True, n_bins = [None, None])
     
-                # matter correlation function
-                rbins_Mpc = (quaia.recenter(rbins_chi2)*u.Mpc/cu.littleh).to(u.Mpc, cu.with_H0(H0))
-                cf_matter = ccl.correlations.correlation_3d(cosmo_planck18, r=rbins_Mpc, a=a)
-                pi = ''
-                
-            else:
-                # quasar correlation function
-                wp_zbin_i, rpavg_zbin_i = quaia.wp_rp(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, 
-                                                                              rbins = rbins_chi2, nbins = nbins, pimax = pimax, Om0 = Planck18.Om0, h = Planck18.h)
-                cf_chi2[L_bins[i]].append(wp_zbin_i)
-                rpavg_chi2[L_bins[i]].append(rpavg_zbin_i)
+            # # scale factor
+            # a = a_median(tab_datahi_mask_zbin0)
+            # a_zbin[L_bins[i]].append(a)
             
-                # matter correlation function   
-                s = np.sqrt(np.sum(np.meshgrid(np.array(rpavg_zbin_i)**2, quaia.recenter(pibins)**2), axis = 0))
-                s_Mpc = (s*u.Mpc/cu.littleh).to(u.Mpc, cu.with_H0(H0))
+            # # quasar correlation function
+            # if args.corrfunc == 'xi':
                 
-                xirppi_zbin_i = ccl.correlations.correlation_3d(cosmo_planck18, r=np.ravel(s_Mpc), a=a_median(tab_datahi_mask_zbin0))
-                cf_matter = 2*np.trapz(np.reshape(xirppi_zbin_i, np.shape(s_Mpc)), quaia.recenter(pibins), axis = 0)
-                pi = 'pimax{}_'.format(pimax)
+            #     cf, qq, qr = quaia.xi_s(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, 
+            #                rbins = rbins_chi2, Om0 = Planck18.Om0, h = Planck18.h, error = True)
+            #     cf_chi2[L_bins[i]].append(cf)
+    
+            #     # matter correlation function
+            #     rbins_Mpc = (quaia.recenter(rbins_chi2)*u.Mpc/cu.littleh).to(u.Mpc, cu.with_H0(H0))
+            #     cf_matter = ccl.correlations.correlation_3d(cosmo_planck18, r=rbins_Mpc, a=a)
+            #     pi = ''
+                
+            # else:
+            #     # quasar correlation function
+            #     wp_zbin_i, rpavg_zbin_i = quaia.wp_rp(tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, nthreads = nthreads, 
+            #                                                                   rbins = rbins_chi2, nbins = nbins, pimax = pimax, Om0 = Planck18.Om0, h = Planck18.h)
+            #     cf_chi2[L_bins[i]].append(wp_zbin_i)
+            #     rpavg_chi2[L_bins[i]].append(rpavg_zbin_i)
+            
+            #     # matter correlation function   
+            #     s = np.sqrt(np.sum(np.meshgrid(np.array(rpavg_zbin_i)**2, quaia.recenter(pibins)**2), axis = 0))
+            #     s_Mpc = (s*u.Mpc/cu.littleh).to(u.Mpc, cu.with_H0(H0))
+                
+            #     xirppi_zbin_i = ccl.correlations.correlation_3d(cosmo_planck18, r=np.ravel(s_Mpc), a=a_median(tab_datahi_mask_zbin0))
+            #     cf_matter = 2*np.trapz(np.reshape(xirppi_zbin_i, np.shape(s_Mpc)), quaia.recenter(pibins), axis = 0)
+            #     pi = 'pimax{}_'.format(pimax)
         
-            cf_matter_chi2[L_bins[i]].append(cf_matter)
+            # cf_matter_chi2[L_bins[i]].append(cf_matter)
         
             # # effective bias 
             # b = np.sqrt(cf/cf_matter)
@@ -415,6 +627,12 @@ def main():
     #     # ndim = 3
     #     ptform = lambda u: ptform_erfc(u)
 
+    log_thetamin = -1
+    theta_mask=(quaia.recenter(np.log10(thetabins))>=log_thetamin) & (quaia.recenter(np.log10(thetabins))<=0)
+
+    # Implement Limber approximation: $w(\theta)=\int d z \frac{H(z)}{c}\left(\frac{d N}{d z}\right)^2 \int \frac{d k k}{2 \pi} P_{q q} J_0[k \theta \chi(z)]=\int d z \frac{H(z)}{c}\left(\frac{d N}{d z}\right)^2 w_p(\theta \chi(z))$
+    rpbins = [(thetabins*u.deg).to(u.rad)*quaia.comoving_dist(z, units = 'Mpc') for z in dz]
+    
     ## Across all $z$
     f_duty, M_min, sigma = {L: [] for L in L_bins}, {L: [] for L in L_bins}, {L: [] for L in L_bins}
     labels = ['log10(f_duty)', 'log10(M_min)', 'sigma']

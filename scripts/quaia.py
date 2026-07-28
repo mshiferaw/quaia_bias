@@ -120,7 +120,7 @@ def read(fn_gcatlo, G_lo, fn_sello, NSIDE = NSIDE, b = 0, mask_type = None, plot
     return tab_gcatlo, pixel_indices_gcatlo, N_gcatlo_mask, mask_gcatlo
 
 # convert z to comoving distance in Mpc/h
-def comoving_dist(z, h = 0.6844, units = 'Mpc/h', Om0 = 0.302): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
+def comoving_dist(z, units = 'Mpc/h', cosmo = Planck18): #0.6844, units = 'Mpc/h', Om0 = 0.302): # col 2 in fig 7 of https://arxiv.org/pdf/1807.06209
 
     r"""Transforms redshift to comoving distance.
     
@@ -141,15 +141,15 @@ def comoving_dist(z, h = 0.6844, units = 'Mpc/h', Om0 = 0.302): # col 2 in fig 7
         Comoving distance at a given redshift `z` and cosmology.
     """
     
-    H0 = h*100 * u.km/u.s/u.Mpc
+    # H0 = h*100 * u.km/u.s/u.Mpc
 
     # obtain r: The comoving distance along the line-of-sight between two objects remains constant with time for objects in the Hubble flow.
-    cosmo = FlatLambdaCDM(H0=H0, Om0=Om0)
+    # cosmo = FlatLambdaCDM(H0=H0, Om0=Om0)
     comoving_r = cosmo.comoving_distance(z)
 
     # convert from Mpc to Mpc/h
     if units == 'Mpc/h':
-        return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(H0))/cu.littleh # equivalent to comoving_d*h 
+        return (comoving_r*cu.littleh).to(u.Mpc, cu.with_H0(cosmo.H0))/cu.littleh #H0))/cu.littleh # equivalent to comoving_d*h 
     elif units == 'Mpc':
         return comoving_r
     else:
