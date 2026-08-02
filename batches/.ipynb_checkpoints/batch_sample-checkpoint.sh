@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=sample_step
+#SBATCH --job-name=sample_bin
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48
@@ -13,4 +13,5 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
 # python -u sample.py
-python -u sample.py 2
+# python -u sample.py 2
+python -u sample.py 2 0 1 --plot
