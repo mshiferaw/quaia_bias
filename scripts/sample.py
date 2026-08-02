@@ -889,8 +889,8 @@ def main():
                 
                 if (np.round(N_q/1000)>1):
         
-                    C = np.load('../results/cov_wtheta{}.npy'.format(
-                        file))
+                    C = np.load('../results/cov_wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}.npy'.format(
+                    G_hi, rmin, rmax, nbins, z_bins[j], z_bins[j+1], L_bins[i], N_jk, cosmo, b))
                     if diag == True:
                         C*=np.identity(len(C))
             
