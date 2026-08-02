@@ -6,6 +6,7 @@ import astropy.units as u
 import site
 site.addsitedir('/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts') 
 import quaia
+import seaborn as sns
 import pyccl as ccl
 from astropy.cosmology import Planck18
 from dynesty import NestedSampler
@@ -289,67 +290,74 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("ndim", help="number of HOD parameters", type = int)
-    parser.add_argument("i", help="L_bins index", type = int)
-    parser.add_argument("j", help="z_array index", type = int)
-    parser.add_argument('--plot', action=argparse.BooleanOptionalAction)
+    # parser.add_argument("i", help="L_bins index", type = int)
+    # parser.add_argument("j", help="z_array index", type = int)
+    parser.add_argument("zmin", help="minimum redshift", type = float)
+    parser.add_argument("zmax", help="maximum redshift", type = float)
+    parser.add_argument("Lmax", help="luminosity threshold", type = float)
+    parser.add_argument('--plot', action=argparse.BooleanOptionalAction, default = True)
     args = parser.parse_args()
 
     ## Define parameters
     G_hi = 20.5
     nthreads = 18
-    z_bins = np.array([0.0, 1.0, 2.0, 3.0, 4.6])
-    z_array = range(len(z_bins)-1)
+    # z_bins = np.array([0.0, 1.0, 2.0, 3.0, 4.6])
+    # z_array = range(len(z_bins)-1)
     NSIDE = 64
 
     # Visualize the luminosity threshold cuts and redshift bins
     L_bins = np.array([-32.0, -27.0, -26.0, -25.0, -20.0])[:0:-1]
     b = 30
     fac_rand = 25
-    
+
+    ## Define the total occupation
+    cmap_theta = sns.color_palette("flare_r", n_colors = len(L_bins))
+
+    # Perform nested sampling with dynesty
     # Define the dimensionality of our problem.
-    # ndim = 3
     diag = False #True # False
     ix_grid = np.ix_(theta_mask, theta_mask)
-    
     nlive = 500
     dlogz = 0.01
     nbins_mask = np.sum(theta_mask)
     quantile = [0.16, 0.5, 0.84]
-    
-    thetamin, thetamax = 10**log_thetamin, 10**log_thetamax
-
-    # Perform nested sampling with dynesty
+    labels=[r'$\log_{10} M_\mathrm{min}$', r'$\alpha$', r'$\Sigma$'][:args.ndim]
     quantile_2d = 1.0 - np.exp(-0.5 * np.array([1, 2])**2)#, 3])**2)
-    contourf_kwargs = {'colors': make_contour_cmap('blue', len(quantile))}
+    contourf_kwargs = {'colors': make_contour_cmap(cmap_theta[list(L_bins).index(args.Lmax)], len(quantile))} #blue
     
     ## Across all $z$
-    err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma']
+    err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma'][:args.ndim]
+    thetamin, thetamax = 10**log_thetamin, 10**log_thetamax
+
+    print('$M_i\geq{}$'.format(args.Lmax)) #L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+    print('{:.1f}<z<={:.1f}'.format(args.zmin, args.zmax))#z_bins[args.j], z_bins[args.j+1]))    
+          
     err = {}#i: {L: [] for L in L_bins} for i in err_labels}
     sample = {}#err_label: {L: [] for L in L_bins} for err_label in err_labels}
-    median = {}#err_label: {L: [] for L in L_bins} for err_label in err_labels}
+    median = {}#err_label: {L: [] for L in L_bins} for err_label in err_labels} 
 
-    # for i in range(len(L_bins)):
-
-    print('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
-
-        # for j in z_array:   
-
-    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [args.j, args.i], True, ['z', 'L'], 
-                                                                                     bins = [z_bins, L_bins], tab_gcat_type = 'data', 
-                                                                                      method = ['minmax', 'max'], fac_rand = fac_rand, b = b, 
-                                                                                                              mask_type = 'b',
-                                                                                                              n_bins = [None, None])
+    tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [0, 0], True, ['z', 'L'], 
+                                                                                 bins = [[args.zmin, args.zmax], [args.Lmax]], tab_gcat_type = 'data', 
+                                                                                  method = ['minmax', 'max'], fac_rand = fac_rand, b = b, 
+                                                                                                          mask_type = 'b',
+                                                                                                          n_bins = [None, None])
+    # tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [args.j, args.i], True, ['z', 'L'], 
+    #                                                                                  bins = [z_bins, L_bins], tab_gcat_type = 'data', 
+    #                                                                                   method = ['minmax', 'max'], fac_rand = fac_rand, b = b, 
+    #                                                                                                           mask_type = 'b',
+    #                                                                                                           n_bins = [None, None])
 
     N_q = len(tab_datahi_mask_zbin0)
 
-    wp_zbin_i = np.load('../results/wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_MC_b{}.npy'.format(G_hi, rmin, rmax, nbins, z_bins[args.j], 
-                                                                                                               z_bins[args.j+1], L_bins[args.i], cosmo, b))
+    wp_zbin_i = np.load('../results/wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_MC_b{}.npy'.format(G_hi, rmin, rmax, nbins, args.zmin, args.zmax, args.Lmax, #z_bins[args.j], 
+                                                                                                               # z_bins[args.j+1], L_bins[args.i], 
+                                                                                                               cosmo, b))
     
     dN_dz = np.sum(stats.norm.pdf(dz[None, :], loc=tab_datahi_mask_zbin0['redshift_quaia'][:, None], scale=tab_datahi_mask_zbin0['redshift_quaia_err'][:, None]), axis = 0)
     dN_dz /= np.sum(stats.norm.cdf(dz[-1], loc=tab_datahi_mask_zbin0['redshift_quaia'], scale=tab_datahi_mask_zbin0['redshift_quaia_err']))
     H0_c_dN_dz_norm = ccl.background.h_over_h0(cosmo_planck18, da)*Planck18.H0.to(1/u.s)/constants.c.to(u.Mpc/u.s)*dN_dz**2
 
-    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins, z_bins[args.j], z_bins[args.j+1], L_bins[args.i], N_jk, cosmo, b)
+    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b) #z_bins[args.j], z_bins[args.j+1], L_bins[args.i],
     
     try:
 
@@ -379,7 +387,7 @@ def main():
             print('running new sampler')
             
             C = np.load('../results/cov_wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}.npy'.format(
-            G_hi, rmin, rmax, nbins, z_bins[args.j], z_bins[args.j+1], L_bins[args.i], N_jk, cosmo, b))
+            G_hi, rmin, rmax, nbins, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b))
             if diag == True:
                 C*=np.identity(len(C))
     
@@ -387,7 +395,7 @@ def main():
             
             # initialize our nested sampler
             sampler = NestedSampler(loglike, ptform, args.ndim, logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve, 
-                                                                      H0_c_dN_dz_norm.value, args.ndim], nlive = nlive, rstate=np.random.default_rng(4*args.i+args.j), ptform_args = [args.ndim])#np.random.default_rng(0)) #H0_c_dN_dz_norm[L_bins[i]][j]
+                                                                      H0_c_dN_dz_norm.value, args.ndim], nlive = nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), ptform_args = [args.ndim])#np.random.default_rng(0)) 4*args.i+args.j
             
             # run the sampler with checkpointing
             sampler.run_nested(dlogz = dlogz)
@@ -404,10 +412,10 @@ def main():
                 fig, axes = plt.subplots(args.ndim, args.ndim, figsize=(args.ndim*5, args.ndim*5))
                 
                 # plot initial run (res1; left)
-                fg, ax = dyplot.cornerplot(results, color='blue', truths=np.zeros(args.ndim), hist2d_kwargs = {'contourf_kwargs': contourf_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile,
-                                           truth_color='black', show_titles=True,
+                fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
+                                           show_titles=True, #truth_color='black'
                                            max_n_ticks=3, quantiles=quantile, labels=labels, fig=(fig, axes[:, :args.ndim]))
-                fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]), fontsize = 20, y = 1, x = 0.375)
+                fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
                 plt.savefig('../figures/cornerplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
                         file, args.ndim, dlogz, nlive), bbox_inches = 'tight')
             
@@ -417,7 +425,7 @@ def main():
             quantiles = [dyfunc.quantile(samples[:, i], quantile, weights=weights) 
                          for i in range(samples.shape[1])]
         
-            print('{:.1f}<z<={:.1f}'.format(z_bins[args.j], z_bins[args.j+1]))
+            # print('{:.1f}<z<={:.1f}'.format(args.zmin, args.zmax))#z_bins[args.j], z_bins[args.j+1]))
             for k, (lo, mid, hi) in enumerate(quantiles):
                 print(f"{err_labels[k+1]}: {mid:.2f} + {hi-mid:.2f}/-{mid-lo:.2f}")
                 np.save('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_labels[k+1],
@@ -434,35 +442,9 @@ def main():
             
             # Get the maximum likelihood sample from dynesty results
             idx_max = np.argmax(results.logl)
-            # best_fit_param = samples[idx_max]
             np.save('../results/best_fit_params{}_ndim{}_dlogz{}_nlive{}.npy'.format(
                         file, args.ndim, dlogz, nlive), samples[idx_max])
-        
-        # else:
 
-        #     equal_weight_samples = [np.nan]*args.ndim
-
-        #     for k, err_label in enumerate(err_labels[1:]):
-        #         sample[err_label] = [np.nan] #[np.nan]*1000
-        #         median[err_label] = np.nan
-        #         err[err_label] = (np.nan, np.nan)
-
-        #     best_fit_param = [np.nan]*args.ndim
-
-        #     results = np.nan
-
-            # for k, err_label in enumerate(err_labels[1:]):
-            #     np.save('../results/samples_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-            #             file, args.ndim, dlogz, nlive), sample[err_label])
-            #     np.save('../results/median_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-            #             file, args.ndim, dlogz, nlive), median[err_label])
-            #     np.save('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-            #             file, args.ndim, dlogz, nlive), err[err_label])
-    
-            # # # Get the maximum likelihood sample from dynesty results        
-            # np.save('../results/best_fit_params{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-            #             file, args.ndim, dlogz, nlive), best_fit_param)
-            
             # save the results
             with open('../results/results{}_ndim{}_dlogz{}_nlive{}.npy'.format(
                         file, args.ndim, dlogz, nlive), 'wb') as fp:

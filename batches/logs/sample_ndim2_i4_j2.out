@@ -1,0 +1,12 @@
+Starting batch job
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:326: SyntaxWarning: invalid escape sequence '\g'
+  print('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:409: SyntaxWarning: invalid escape sequence '\g'
+  fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]), fontsize = 20, y = 1, x = 0.375)
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 478, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 326, in main
+    print('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+                                                    ~~~~~~^^^^^^^^
+IndexError: index 4 is out of bounds for axis 0 with size 4

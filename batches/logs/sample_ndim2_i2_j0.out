@@ -1,0 +1,16 @@
+Starting batch job
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:326: SyntaxWarning: invalid escape sequence '\g'
+  print('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:409: SyntaxWarning: invalid escape sequence '\g'
+  fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]), fontsize = 20, y = 1, x = 0.375)
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
+  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
+$M_i\geq-26.0, 0.0<z \leq1.0$
+Pixels masked by MC but not already by selfunc: 131
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.52              6079 vs 12557
+running new sampler
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:125: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:145: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+0it [00:00, ?it/s]1it [00:07,  7.19s/it, bound: 0 | nc: 1 | ncall: 501 | eff(%):  0.200 | loglstar:   -inf < -11771.604 <    inf | logz: -11778.514 +/-  0.117 | dlogz:    inf >  0.010]2it [00:14,  7.24s/it, bound: 0 | nc: 1 | ncall: 502 | eff(%):  0.398 | loglstar:   -inf < -11750.499 <    inf | logz: -11757.410 +/-  0.118 | dlogz: 11769.072 >  0.010]3it [00:21,  7.26s/it, bound: 0 | nc: 1 | ncall: 503 | eff(%):  0.596 | loglstar:   -inf < -10970.503 <    inf | logz: -10977.417 +/-  0.118 | dlogz: 11747.967 >  0.010]4it [00:28,  7.22s/it, bound: 0 | nc: 1 | ncall: 504 | eff(%):  0.794 | loglstar:   -inf < -10527.297 <    inf | logz: -10534.213 +/-  0.118 | dlogz: 10967.971 >  0.010]5it [00:35,  7.13s/it, bound: 0 | nc: 1 | ncall: 505 | eff(%):  0.990 | loglstar:   -inf < -9925.317 <    inf | logz: -9932.235 +/-  0.118 | dlogz: 10524.766 >  0.010]  

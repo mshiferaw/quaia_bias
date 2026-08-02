@@ -1,0 +1,14 @@
+Starting batch job
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:326: SyntaxWarning: invalid escape sequence '\g'
+  print('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:409: SyntaxWarning: invalid escape sequence '\g'
+  fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[args.i], z_bins[args.j], z_bins[args.j+1]), fontsize = 20, y = 1, x = 0.375)
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
+  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
+$M_i\geq-20.0, 3.0<z \leq4.6$
+Pixels masked by MC but not already by selfunc: 307
+G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.23              28043 vs 36458
+running new sampler
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:145: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+0it [00:00, ?it/s]1it [00:07,  7.02s/it, bound: 0 | nc: 1 | ncall: 501 | eff(%):  0.200 | loglstar:   -inf < -5579.781 <    inf | logz: -5586.691 +/-  0.117 | dlogz:    inf >  0.010]2it [00:14,  7.01s/it, bound: 0 | nc: 1 | ncall: 502 | eff(%):  0.398 | loglstar:   -inf < -2544.054 <    inf | logz: -2550.966 +/-  0.118 | dlogz: 5601.767 >  0.010]3it [00:21,  7.01s/it, bound: 0 | nc: 1 | ncall: 503 | eff(%):  0.596 | loglstar:   -inf < -2426.975 <    inf | logz: -2433.889 +/-  0.118 | dlogz: 2566.039 >  0.010]4it [00:28,  7.01s/it, bound: 0 | nc: 1 | ncall: 504 | eff(%):  0.794 | loglstar:   -inf < -1806.467 <    inf | logz: -1813.383 +/-  0.118 | dlogz: 2448.960 >  0.010]5it [00:35,  7.02s/it, bound: 0 | nc: 1 | ncall: 505 | eff(%):  0.990 | loglstar:   -inf < -1333.299 <    inf | logz: -1340.217 +/-  0.118 | dlogz: 1828.453 >  0.010]6it [00:42,  7.02s/it, bound: 0 | nc: 1 | ncall: 506 | eff(%):  1.186 | loglstar:   -inf < -1166.974 <    inf | logz: -1173.894 +/-  0.118 | dlogz: 1355.285 >  0.010]7it [00:49,  7.02s/it, bound: 0 | nc: 1 | ncall: 507 | eff(%):  1.381 | loglstar:   -inf < -1142.396 <    inf | logz: -1149.318 +/-  0.118 | dlogz: 1188.959 >  0.010]8it [00:56,  7.01s/it, bound: 0 | nc: 1 | ncall: 508 | eff(%):  1.575 | loglstar:   -inf < -827.262 <    inf | logz: -834.186 +/-  0.118 | dlogz: 1164.381 >  0.010]  

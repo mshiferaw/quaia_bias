@@ -1,0 +1,7 @@
+Starting batch job
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:331: SyntaxWarning: invalid escape sequence '\g'
+  print('$M_i\geq{}$'.format(args.Lmax) #L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 331
+    print('$M_i\geq{}$'.format(args.Lmax) #L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+         ^
+SyntaxError: '(' was never closed
