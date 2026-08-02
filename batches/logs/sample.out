@@ -1,0 +1,27 @@
+Starting batch job
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
+  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
+M_i<=-20.0
+Pixels masked by MC but not already by selfunc: 2468
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.33              218365 vs 324336
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 873, in main
+    sample[err_label][L_bins[i]].append(np.load('../results/erfc_samples_{}{}_1h_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../results/erfc_samples_log10(M_min)_G20.5_rmin0.01_rmax1_nbins30_zmin0.0zmax1.0_Lmax-20.0_N50_Planck_MC_b30_1h_ndim3_dlogz0.01_nlive500.npy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 1107, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 892, in main
+    C = np.load('../results/cov_wtheta{}.npy'.format(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../results/cov_wtheta_G20.5_rmin0.01_rmax1_nbins30_zmin0.0zmax1.0_Lmax-20.0_N50_Planck_MC_b30.npy'
