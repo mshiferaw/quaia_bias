@@ -1,0 +1,24 @@
+Starting batch job
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:387: SyntaxWarning: invalid escape sequence '\g'
+  fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(L_bins[i], z_bins[j], z_bins[j+1]), fontsize = 20, y = 1, x = 0.375)
+Matplotlib is building the font cache; this may take a moment.
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
+  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
+M_i<=-20.0
+Pixels masked by MC but not already by selfunc: 2468
+G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.33              218365 vs 324336
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 344, in main
+    file, ndim, dlogz, nlive)))
+          ^^^^
+NameError: name 'ndim' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 447, in <module>
+    main()
+  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 370, in main
+    sampler = NestedSampler(loglike, ptform, ndim, logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve, 
+                                             ^^^^
+NameError: name 'ndim' is not defined
