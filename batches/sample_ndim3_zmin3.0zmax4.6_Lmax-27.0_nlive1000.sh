@@ -7,7 +7,7 @@
 #SBATCH --mem=360GB
 #SBATCH --time=48:00:00
 
-echo "Starting batch job"
+echo -e "Starting batch job\n"
 source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env

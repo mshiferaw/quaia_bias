@@ -96,7 +96,7 @@ do
 #SBATCH --mem=360GB
 #SBATCH --time=48:00:00
 
-echo "Starting batch job"
+echo -e "Starting batch job\n"
 source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
@@ -116,10 +116,10 @@ do
     do 
         for j in "${!zmin[@]}" 
         do
-            for dlogz in '0.01' '0.001'
-            do 
-                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_dlogz${dlogz}"
-                cat > sample${fname}.sh << EOF
+            # for dlogz in '0.01' '0.001'
+            # do 
+            fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_dlogz0.001" #${dlogz}"
+            cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
 #SBATCH --job-name=pool${fname}
@@ -129,16 +129,16 @@ do
 #SBATCH --mem=360GB
 #SBATCH --time=48:00:00
 
-echo "Starting batch job"
+echo -e "Starting batch job\n"
 source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
-python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --dlogz ${dlogz}
+python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --dlogz 0.001 #${dlogz}
 EOF
 
-                sbatch sample${fname}.sh
-            done
+            sbatch sample${fname}.sh
+            # done
         done
     done
 done
@@ -149,9 +149,9 @@ do
     do 
         for j in "${!zmin[@]}" 
         do
-            for sample in 'auto' 'unif' 'rwalk' 'slice' 'rslice'
+            for sample in 'unif' 'rwalk' 'slice' 'rslice' #'auto'
             do 
-                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_sample${sample}"
+                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_${sample}"
                 cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
@@ -162,7 +162,7 @@ do
 #SBATCH --mem=360GB
 #SBATCH --time=48:00:00
 
-echo "Starting batch job"
+echo -e "Starting batch job\n"
 source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env

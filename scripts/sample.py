@@ -418,6 +418,7 @@ def main():
             results = sampler.results
             
             # Print out a summary of the results.
+            print()
             results.summary()
             # print(f"logZ = {results.logz[-1]:.3f} ± {results.logzerr[-1]:.3f}")
 
@@ -433,7 +434,7 @@ def main():
                 # Create the PdfPages object to which we will save the pages:
                 # The with statement makes sure that the PdfPages object is closed properly at
                 # the end of the block, even if an Exception occurs.
-                with PdfPages('../figures/dyplot{}{}.pdf'.format(file)) as pdf: #_ndim{}_dlogz{}_nlive{}.pdf'.format(
+                with PdfPages('../figures/dyplot{}.pdf'.format(file)) as pdf: #_ndim{}_dlogz{}_nlive{}.pdf'.format(
                         # file, args.ndim, args.dlogz, args.nlive)) as pdf:
 
                     fig, axes = dyplot.runplot(results)  # summary (run) plot
