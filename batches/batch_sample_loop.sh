@@ -29,7 +29,7 @@ do
             cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=sample${fname}
+#SBATCH --job-name=pool${fname}
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48

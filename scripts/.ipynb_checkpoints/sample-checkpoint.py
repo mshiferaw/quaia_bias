@@ -20,6 +20,8 @@ import pickle
 from astropy import constants
 import mcfit
 import matplotlib.colors as mcolors
+from dynesty.pool import Pool
+from matplotlib.backends.backend_pdf import PdfPages
 
 # Model using step-function HOD
 cosmo_planck18 = ccl.Cosmology(
@@ -68,26 +70,45 @@ rpbins = (thetabins*u.deg).to(u.rad)[:, None]*quaia.comoving_dist(dz, units = 'M
 cosmo = 'Planck'
 N_jk = 50 #40 #20 #65 #50 #30 #15 #80
 NFW_200c = ccl.halos.profiles.nfw.HaloProfileNFW(mass_def = '200c', concentration = c_m)
+d_hmf = [hmf(cosmo_planck18, bins, a) for a in da]
+d_b1 = [b1_E_func_tinker10(cosmo_planck18, bins, a) for a in da]
+d_NFW = [NFW_200c.fourier(cosmo_planck18, k_log, bins, a).T/bins for a in da]
 hartlap = (N_jk-nbins-2)/(N_jk-1)
 
+# create classes
+class CholeskySolver:
+    def __init__(self, C_factor):
+        self.C_factor = C_factor
+    def __call__(self, rhs):
+        return linalg.cho_solve(self.C_factor, rhs)
+
+class LUSolver:
+    def __init__(self, C_factor):
+        self.C_factor = C_factor
+    def __call__(self, rhs):
+        return linalg.lu_solve(self.C_factor, rhs)
+        
 ## Define functions
-def n_g_theory(bins, n_total, a = 1, cosmo = cosmo_planck18, hmf = hmf, recenter = True, units = '(h/Mpc)^3'):
+def n_g_theory(bins, n_total, a = 1, cosmo = cosmo_planck18, hmf = hmf, recenter = True, units = '(h/Mpc)^3', d_hmf = None):
 
     if recenter == True:
         bins = quaia.recenter(bins)
+    nm_value = d_hmf if d_hmf is not None else hmf(cosmo, bins, a)
     if units == '(h/Mpc)^3':
-        nm = hmf(cosmo, bins, a)/cosmo['h']**3*(cu.littleh/u.Mpc)**3
+        # nm = hmf(cosmo, bins, a)/cosmo['h']**3*(cu.littleh/u.Mpc)**3
+        nm=nm_value/cosmo['h']**3*(cu.littleh/u.Mpc)**3
     else:
-        nm = hmf(cosmo, bins, a)*(1/u.Mpc)**3
+        # nm = hmf(cosmo, bins, a)*(1/u.Mpc)**3
+        nm=nm_value*(1/u.Mpc)**3
     n_g = nm/(bins*np.log(10))*n_total
     n_g[np.isnan(n_g)]=0
     
     return n_g, nm # (units of Mpc/h)^3
 
 def bias(bins, n_m, a = 1, cosmo = cosmo_planck18, mod = False, recenter = True, hmf = hmf, #method = method,
-         b1_E_func_tinker10 = b1_E_func_tinker10, b1_E_tinker = None, n_g_manual = None, calc_bias = True, units = '(h/Mpc)^3'):
+         b1_E_func_tinker10 = b1_E_func_tinker10, b1_E_tinker = None, n_g_manual = None, calc_bias = True, units = '(h/Mpc)^3', d_hmf = None, d_b1 = None):
 
-    n_g, nm = n_g_theory(bins, n_m, a = a, cosmo = cosmo, recenter = recenter, hmf = hmf, units = units)
+    n_g, nm = n_g_theory(bins, n_m, a = a, cosmo = cosmo, recenter = recenter, hmf = hmf, units = units, d_hmf = d_hmf)
     if recenter == True:
         print('recentering')
         bins = quaia.recenter(bins)
@@ -105,7 +126,8 @@ def bias(bins, n_m, a = 1, cosmo = cosmo_planck18, mod = False, recenter = True,
     
         if b1_E_tinker is None:
             
-            b1_E_tinker = b1_E_func_tinker10(cosmo, bins, a)
+            # b1_E_tinker = b1_E_func_tinker10(cosmo, bins, a)
+            b1_E_tinker = d_b1 if d_b1 is not None else b1_E_func_tinker10(cosmo, bins, a)
             
         n_m[~np.isfinite(n_m)]=0 
         integrand = dn_dm*n_m
@@ -158,9 +180,9 @@ def N_s_exp(M, M1, alpha, Mcut, fduty):
 
     return fduty*(M/M1)**alpha*np.exp(-Mcut/M)
 
-def HOD_2h(bins, M_min, fduty, sigma, a, M1, alpha, ndim, NFW_200c = NFW_200c, k = k_log, cosmo = cosmo_planck18): #, recenter = False): # method = method, 
+def HOD_2h(bins, M_min, fduty, sigma, a, M1, alpha, ndim, NFW_200c = NFW_200c, k = k_log, cosmo = cosmo_planck18, d_NFW = None): #, recenter = False): # method = method, 
 
-    nfw = NFW_200c.fourier(cosmo, k, bins, a).T/bins
+    nfw = d_NFW if d_NFW is not None else NFW_200c.fourier(cosmo, k, bins, a).T/bins
 
     n_c = N_c(bins, M_min, 10**fduty, ndim, sigma = sigma)
     n_s = N_s(bins, 10**fduty, 10**M_min, 10**M1, alpha)
@@ -168,7 +190,7 @@ def HOD_2h(bins, M_min, fduty, sigma, a, M1, alpha, ndim, NFW_200c = NFW_200c, k
     return n_c+nfw*n_s, n_c, n_s #, recenter = recenter
 
 def P_1h(bins, a, n_g, ndim, params_n_m = None, params_HOD = None, k = k_log, cosmo = cosmo_planck18, recenter = False, hmf = hmf, #n_c, n_s #method = method, 
-         b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, damping = False, k_star = 1e-2/Planck18.h, units = '1/Mpc^3'): #[mass_def]
+         b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, damping = False, k_star = 1e-2/Planck18.h, units = '1/Mpc^3', d_hmf = None, d_b1 = None, d_NFW = None): #[mass_def]
 
     if params_n_m is not None:
         
@@ -179,12 +201,12 @@ def P_1h(bins, a, n_g, ndim, params_n_m = None, params_HOD = None, k = k_log, co
         fduty, M_min, sigma, M1, alpha = params_HOD
         n_c = N_c(bins, M_min, 10**fduty, ndim, sigma = sigma)
         n_s = N_s(bins, 10**fduty, 10**M_min, 10**M1, alpha)
-        
-    nfw = NFW_200c.fourier(cosmo, k, bins, a).T/bins
+
+    nfw = d_NFW if d_NFW is not None else NFW_200c.fourier(cosmo, k, bins, a).T/bins
     
     n_m = 2*nfw*n_c*n_s+nfw**2*n_s**2 #(n_s-1) # assume poisson distribution for satellites # should i implement central satellite condition? i think no
     P_qq_1h, _ = bias(bins, n_m, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method,
-                           b1_E_tinker = np.ones(np.shape(bins)), n_g_manual = n_g, units = units)
+                           b1_E_tinker = np.ones(np.shape(bins)), n_g_manual = n_g, units = units, d_hmf = d_hmf, d_b1 = d_b1)
 
     if damping == True:
         P_qq_1h *= (k/k_star)**4/(1+(k/k_star)**4)
@@ -192,23 +214,23 @@ def P_1h(bins, a, n_g, ndim, params_n_m = None, params_HOD = None, k = k_log, co
     return P_qq_1h/n_g #**2
  
 def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, thetabins = thetabins, k = k_log, recenter = False, theta_mask = theta_mask, cosmo = cosmo_planck18, hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = True, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method
-                      NFW_200c = NFW_200c, P_mm = P_mm, da = da, rpbins = rpbins, dz = dz): #, k_integral = np.empty(np.shape(rpbins.T)), z_integrand = np.empty(np.shape(rpbins.T))):
+                      NFW_200c = NFW_200c, P_mm = P_mm, da = da, rpbins = rpbins, dz = dz, d_hmf = d_hmf, d_b1 = d_b1, d_NFW = d_NFW): #, k_integral = np.empty(np.shape(rpbins.T)), z_integrand = np.empty(np.shape(rpbins.T))):
 
     # compute for each z... for statement?
     b_q, P_qq = [], [] #k_integral #, []
     fduty, M_min, sigma, M1, alpha = params_HOD
     for i, a in enumerate(da):
         
-        n_m, n_c, n_s = HOD_2h(bins, M_min, fduty, sigma, a, M1, alpha, ndim, cosmo = cosmo, k = k) #, recenter = recenter)
+        n_m, n_c, n_s = HOD_2h(bins, M_min, fduty, sigma, a, M1, alpha, ndim, cosmo = cosmo, k = k, NFW_200c = NFW_200c, d_NFW = d_NFW[i]) #, recenter = recenter)
     
         n_g = bias(bins, n_c+n_s, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, 
-                               b1_E_tinker = np.ones(np.shape(bins)), calc_bias = False, units = '1/Mpc^3')
+                               b1_E_tinker = np.ones(np.shape(bins)), calc_bias = False, units = '1/Mpc^3', d_hmf = d_hmf[i], d_b1 = d_b1[i])
         
-        b_z, _ = bias(bins, n_m, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, n_g_manual = n_g, units = '1/Mpc^3')
+        b_z, _ = bias(bins, n_m, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, n_g_manual = n_g, units = '1/Mpc^3', d_hmf = d_hmf[i])
             
         P_qq_2h = b_z**2*P_mm[i]*u.Mpc**3
         P_qq_1h = P_1h(bins, a, n_g, ndim, params_HOD = params_HOD, k = k, cosmo = cosmo, recenter = recenter, hmf = hmf, 
-                            b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c) #n_c, n_s
+                            b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, d_hmf = d_hmf[i], d_b1 = d_b1[i], d_NFW = d_NFW[i]) #n_c, n_s
         P_qq.append(P_qq_2h + P_qq_1h)
         b_q.append(b_z)
     
@@ -227,19 +249,20 @@ def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, thetabins = thetabins,
     z_integrand = H0_c_dN_dz[:, None] * k_integral
 
     return np.trapz(z_integrand, dz, axis = 0)
-
+        
 def log_det(C, ix_grid):  
     
     # check if cov is hermitian and positive definite
     if linalg.ishermitian(C[ix_grid]) and np.all(np.linalg.eigvals(C[ix_grid]) > 0):
         C_factor = linalg.cho_factor(C[ix_grid])
         log_det_C = 2 * np.sum(np.log(np.diag(C_factor[0])))
-        solve = lambda rhs: linalg.cho_solve(C_factor, rhs)
+        solve = CholeskySolver(C_factor) #lambda rhs: linalg.cho_solve(C_factor, rhs)
     else:
         print('using LU decomposition')
         C_factor = linalg.lu_factor(C[ix_grid])
         log_det_C = np.sum(np.log(np.abs(np.diag(C_factor[0])))) # does abs value make sense
-        solve = lambda rhs: linalg.lu_solve(C_factor, rhs)
+        # solve = lambda rhs: linalg.lu_solve(C_factor, rhs)
+        solve = LUSolver(C_factor)
 
     return log_det_C, solve
    
@@ -290,8 +313,6 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("ndim", help="number of HOD parameters", type = int)
-    # parser.add_argument("i", help="L_bins index", type = int)
-    # parser.add_argument("j", help="z_array index", type = int)
     parser.add_argument("zmin", help="minimum redshift", type = float)
     parser.add_argument("zmax", help="maximum redshift", type = float)
     parser.add_argument("Lmax", help="luminosity threshold", type = float)
@@ -300,10 +321,8 @@ def main():
 
     ## Define parameters
     G_hi = 20.5
-    nthreads = 18
-    # z_bins = np.array([0.0, 1.0, 2.0, 3.0, 4.6])
-    # z_array = range(len(z_bins)-1)
-    NSIDE = 64
+    # nthreads = 18
+    # NSIDE = 64
 
     # Visualize the luminosity threshold cuts and redshift bins
     L_bins = np.array([-32.0, -27.0, -26.0, -25.0, -20.0])[:0:-1]
@@ -329,8 +348,8 @@ def main():
     err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma'][:args.ndim]
     thetamin, thetamax = 10**log_thetamin, 10**log_thetamax
 
-    print('$M_i\geq{}$'.format(args.Lmax)) #L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
-    print('{:.1f}<z<={:.1f}'.format(args.zmin, args.zmax))#z_bins[args.j], z_bins[args.j+1]))    
+    # print('$M_i\geq{}$'.format(args.Lmax)) #L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
+    # print('{:.1f}<z<={:.1f}'.format(args.zmin, args.zmax))#z_bins[args.j], z_bins[args.j+1]))    
           
     err = {}#i: {L: [] for L in L_bins} for i in err_labels}
     sample = {}#err_label: {L: [] for L in L_bins} for err_label in err_labels}
@@ -341,23 +360,17 @@ def main():
                                                                                   method = ['minmax', 'max'], fac_rand = fac_rand, b = b, 
                                                                                                           mask_type = 'b',
                                                                                                           n_bins = [None, None])
-    # tab_datahi_mask_zbin0, tab_randhi_mask_zbin0, key_zbin0, _, _, _, selfunc_hi_bin0, _, _ = quaia.make_bins(G_hi, [args.j, args.i], True, ['z', 'L'], 
-    #                                                                                  bins = [z_bins, L_bins], tab_gcat_type = 'data', 
-    #                                                                                   method = ['minmax', 'max'], fac_rand = fac_rand, b = b, 
-    #                                                                                                           mask_type = 'b',
-    #                                                                                                           n_bins = [None, None])
 
     N_q = len(tab_datahi_mask_zbin0)
 
     wp_zbin_i = np.load('../results/wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_MC_b{}.npy'.format(G_hi, rmin, rmax, nbins, args.zmin, args.zmax, args.Lmax, #z_bins[args.j], 
-                                                                                                               # z_bins[args.j+1], L_bins[args.i], 
                                                                                                                cosmo, b))
     
     dN_dz = np.sum(stats.norm.pdf(dz[None, :], loc=tab_datahi_mask_zbin0['redshift_quaia'][:, None], scale=tab_datahi_mask_zbin0['redshift_quaia_err'][:, None]), axis = 0)
     dN_dz /= np.sum(stats.norm.cdf(dz[-1], loc=tab_datahi_mask_zbin0['redshift_quaia'], scale=tab_datahi_mask_zbin0['redshift_quaia_err']))
     H0_c_dN_dz_norm = ccl.background.h_over_h0(cosmo_planck18, da)*Planck18.H0.to(1/u.s)/constants.c.to(u.Mpc/u.s)*dN_dz**2
 
-    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b) #z_bins[args.j], z_bins[args.j+1], L_bins[args.i],
+    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b) #z_bins[args.j], z_bins[args.j+1], L_bins[args.i], #nbins
     
     try:
 
@@ -394,11 +407,16 @@ def main():
             log_det_C, solve = log_det(C, ix_grid)
             
             # initialize our nested sampler
-            sampler = NestedSampler(loglike, ptform, args.ndim, logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve, 
-                                                                      H0_c_dN_dz_norm.value, args.ndim], nlive = nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), ptform_args = [args.ndim])#np.random.default_rng(0)) 4*args.i+args.j
-            
+            with Pool(48, loglike, ptform,
+                      logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve,
+                                 H0_c_dN_dz_norm.value, args.ndim],
+                      ptform_args=[args.ndim]) as pool:
+                sampler = NestedSampler(pool.loglike, pool.prior_transform, args.ndim, nlive = nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), pool = pool)
+            # sampler = NestedSampler(loglike, ptform, args.ndim, logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve, 
+            #                                                           H0_c_dN_dz_norm.value, args.ndim], nlive = nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), ptform_args = [args.ndim])#np.random.default_rng(0)) 4*args.i+args.j
             # run the sampler with checkpointing
-            sampler.run_nested(dlogz = dlogz)
+                sampler.run_nested(dlogz = dlogz)
+                
             results = sampler.results
             
             # Print out a summary of the results.
@@ -407,17 +425,37 @@ def main():
             if args.plot:
 
                 print('plotting')
-                
-                # # initialize figure
-                fig, axes = plt.subplots(args.ndim, args.ndim, figsize=(args.ndim*5, args.ndim*5))
-                
-                # plot initial run (res1; left)
-                fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
-                                           show_titles=True, #truth_color='black'
-                                           max_n_ticks=3, quantiles=quantile, labels=labels, fig=(fig, axes[:, :args.ndim]))
-                fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
-                plt.savefig('../figures/cornerplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
-                        file, args.ndim, dlogz, nlive), bbox_inches = 'tight')
+
+                # https://matplotlib.org/stable/gallery/misc/multipage_pdf.html
+                # Create the PdfPages object to which we will save the pages:
+                # The with statement makes sure that the PdfPages object is closed properly at
+                # the end of the block, even if an Exception occurs.
+                with PdfPages('../figures/dyplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
+                        file, args.ndim, dlogz, nlive)) as pdf:
+    
+                    # initialize figure
+                    fig, axes = plt.subplots(args.ndim-1, args.ndim-1, figsize=(args.ndim*5, args.ndim*5))
+                    
+                    # plot initial run (res1; left)
+                    fg, ax = dyplot.cornerpoints(results, cmap='plasma',
+                                                 kde=False, labels=labels, fig=(fig, axes))
+                    fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 0.975, x = 0.575)
+                    pdf.savefig()  # saves the current figure into a pdf page
+                    plt.close()
+                        
+                    # # initialize figure
+                    fig, axes = plt.subplots(args.ndim, args.ndim, figsize=(args.ndim*5, args.ndim*5))
+                    
+                    # plot initial run (res1; left)
+                    fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
+                                               show_titles=True, #truth_color='black'
+                                               max_n_ticks=3, quantiles=quantile, labels=labels, fig=(fig, axes[:, :args.ndim]))
+                    fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
+                    pdf.savefig()  # saves the current figure into a pdf page
+                    plt.close()
+                        
+                # plt.savefig('../figures/cornerplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
+                #         file, args.ndim, dlogz, nlive), bbox_inches = 'tight')
             
             samples, weights = results.samples, results.importance_weights()
         
@@ -425,7 +463,6 @@ def main():
             quantiles = [dyfunc.quantile(samples[:, i], quantile, weights=weights) 
                          for i in range(samples.shape[1])]
         
-            # print('{:.1f}<z<={:.1f}'.format(args.zmin, args.zmax))#z_bins[args.j], z_bins[args.j+1]))
             for k, (lo, mid, hi) in enumerate(quantiles):
                 print(f"{err_labels[k+1]}: {mid:.2f} + {hi-mid:.2f}/-{mid-lo:.2f}")
                 np.save('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_labels[k+1],
