@@ -12,4 +12,4 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
-python -u sample.py 2 2 2.0 3.0 -26.0 --plot --nlive 500
+python -u sample.py 2 2.0 3.0 -26.0 --plot --nlive 500
