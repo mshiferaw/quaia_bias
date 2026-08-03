@@ -12,9 +12,9 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/batches
 conda activate pyccl-env
 
-# zmin=(0.0 1.0 2.0 3.0)
-# zmax=(1.0 2.0 3.0 4.6)
-# Lmax=(-20.0 -25.0 -26.0 -27.0)
+zmin=(0.0 1.0 2.0 3.0)
+zmax=(1.0 2.0 3.0 4.6)
+Lmax=(-20.0 -25.0 -26.0 -27.0)
 
 # for ndim in '2' '3'
 # do
@@ -83,12 +83,10 @@ do
     do 
         for j in "${!zmin[@]}" 
         do
-            for ndim in '2' '3'
-            do
-                for nlive in '500' '1000' '1500' '2000' #3000
-                do 
-                    fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_nlive${nlive}"
-                    cat > sample${fname}.sh << EOF
+            for nlive in '500' '1000' '1500' '2000' #3000
+            do 
+                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_nlive${nlive}"
+                cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
 #SBATCH --job-name=pool${fname}
@@ -106,8 +104,7 @@ conda activate pyccl-env
 python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --nlive ${nlive}
 EOF
 
-                    sbatch sample${fname}.sh
-                done
+                sbatch sample${fname}.sh
             done
         done
     done
@@ -119,12 +116,10 @@ do
     do 
         for j in "${!zmin[@]}" 
         do
-            for ndim in '2' '3'
-            do
-                for dlogz in '0.01' '0.001'
-                do 
-                    fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_dlogz${dlogz}"
-                    cat > sample${fname}.sh << EOF
+            for dlogz in '0.01' '0.001'
+            do 
+                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_dlogz${dlogz}"
+                cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
 #SBATCH --job-name=pool${fname}
@@ -142,8 +137,7 @@ conda activate pyccl-env
 python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --dlogz ${dlogz}
 EOF
 
-                    sbatch sample${fname}.sh
-                done
+                sbatch sample${fname}.sh
             done
         done
     done
@@ -155,12 +149,10 @@ do
     do 
         for j in "${!zmin[@]}" 
         do
-            for ndim in '2' '3'
-            do
-                for sample in 'auto' 'unif' 'rwalk' 'slice' 'rslice'
-                do 
-                    fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_sample${sample}"
-                    cat > sample${fname}.sh << EOF
+            for sample in 'auto' 'unif' 'rwalk' 'slice' 'rslice'
+            do 
+                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_sample${sample}"
+                cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
 #SBATCH --job-name=pool${fname}
@@ -178,8 +170,7 @@ conda activate pyccl-env
 python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --sample ${sample}
 EOF
 
-                    sbatch sample${fname}.sh
-                done
+                sbatch sample${fname}.sh
             done
         done
     done
