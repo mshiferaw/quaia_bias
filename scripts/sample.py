@@ -316,6 +316,7 @@ def main():
     parser.add_argument('--plot', help="summary plots", action=argparse.BooleanOptionalAction, default = True)
     parser.add_argument('--nlive', help="number of live points", type = int, default = 500)
     parser.add_argument('--dlogz', help="evidence threshold", type = float, default = 0.01)
+    parser.add_argument('--sample', help="sampling method", type = str, default = 'auto')
     args = parser.parse_args()
 
     matplotlib.rcParams['ytick.labelsize'] = 18
@@ -344,8 +345,8 @@ def main():
     quantile = [0.16, 0.5, 0.84]
     labels=[r'$\log_{10} M_\mathrm{min}$', r'$\alpha$', r'$\Sigma$'][:args.ndim]
     quantile_2d = 1.0 - np.exp(-0.5 * np.array([1, 2])**2)#, 3])**2)
-    contourf_kwargs = {'colors': make_contour_cmap(cmap_theta[list(L_bins).index(args.Lmax)], len(quantile))} #blue
-    contour_kwargs = {'colors': [cmap_theta[list(L_bins).index(args.Lmax)]]}
+    contourf_kwargs = {'colors': make_contour_cmap('blue', len(quantile))}#cmap_theta[list(L_bins).index(args.Lmax)], len(quantile))} #blue
+    # contour_kwargs = {'colors': [cmap_theta[list(L_bins).index(args.Lmax)]]}
     
     ## Across all $z$
     err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma'][:args.ndim+1]
@@ -370,25 +371,23 @@ def main():
     dN_dz /= np.sum(stats.norm.cdf(dz[-1], loc=tab_datahi_mask_zbin0['redshift_quaia'], scale=tab_datahi_mask_zbin0['redshift_quaia_err']))
     H0_c_dN_dz_norm = ccl.background.h_over_h0(cosmo_planck18, da)*Planck18.H0.to(1/u.s)/constants.c.to(u.Mpc/u.s)*dN_dz**2
 
-    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b) #z_bins[args.j], z_bins[args.j+1], 
+    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}_dlogz{}_nlive{}_{}'.format(G_hi, thetamin, thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, args.dlogz, args.nlive, args.sample) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
     
     try:
 
         for k, err_label in enumerate(err_labels[1:]):
             
-            sample[err_label] = np.load('../results/samples_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                file, args.ndim, args.dlogz, args.nlive))
-            median[err_label] = np.load('../results/median_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                    file, args.ndim, args.dlogz, args.nlive))
-            err[err_label] = np.load('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                    file, args.ndim, args.dlogz, args.nlive))
+            sample[err_label] = np.load('../results/samples_{}{}.npy'.format(err_label, file)) #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(
+            # err_label, file, args.ndim, args.dlogz, args.nlive, args.sample))
+            median[err_label] = np.load('../results/median_{}{}.npy'.format(err_label, file))
+            err[err_label] = np.load('../results/err_{}{}.npy'.format(err_label, file))
             
-        best_fit_param = np.load('../results/best_fit_params_wtheta{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                    file, args.ndim, args.dlogz, args.nlive))
+        best_fit_param = np.load('../results/best_fit_params{}.npy'.format(file)) #_wtheta{}_ndim{}_dlogz{}_nlive{}_{}.npy'.format(
+        # file, args.ndim, args.dlogz, args.nlive, args.sample))
 
         # read the results
-        with open('../results/results{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                    file, args.ndim, args.dlogz, args.nlive), 'rb') as fp:
+        with open('../results/results{}.npy'.format(file), 'rb') as fp: #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(
+                    # file, args.ndim, args.dlogz, args.nlive, args.sample), 'rb') as fp:
             results = pickle.load(fp)
 
         print('sampler already completed in this bin')
@@ -411,7 +410,7 @@ def main():
                       logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve,
                                  H0_c_dN_dz_norm.value, args.ndim],
                       ptform_args=[args.ndim]) as pool:
-                sampler = NestedSampler(pool.loglike, pool.prior_transform, args.ndim, nlive = args.nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), pool = pool)
+                sampler = NestedSampler(pool.loglike, pool.prior_transform, args.ndim, nlive = args.nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), pool = pool, sample = args.sample)
 
                 # run the sampler with checkpointing
                 sampler.run_nested(dlogz = args.dlogz)
@@ -420,12 +419,11 @@ def main():
             
             # Print out a summary of the results.
             results.summary()
-            # print(results.logz[-1], results.logzerr[-1])
-            print(f"logZ = {results.logz[-1]:.3f} ± {results.logzerr[-1]:.3f}")
+            # print(f"logZ = {results.logz[-1]:.3f} ± {results.logzerr[-1]:.3f}")
 
             kld = kld_error(results, error='jitter')
             # print(np.mean(kld), np.std(kld))
-            print(f"kld = {np.mean(kld):.3f} ± {np.std(kld):.3f}")
+            print(f"kld = {np.mean(kld):.3f} +/- {np.std(kld):.3f}")
             
             if args.plot:
 
@@ -435,8 +433,8 @@ def main():
                 # Create the PdfPages object to which we will save the pages:
                 # The with statement makes sure that the PdfPages object is closed properly at
                 # the end of the block, even if an Exception occurs.
-                with PdfPages('../figures/dyplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
-                        file, args.ndim, args.dlogz, args.nlive)) as pdf:
+                with PdfPages('../figures/dyplot{}{}.pdf'.format(file)) as pdf: #_ndim{}_dlogz{}_nlive{}.pdf'.format(
+                        # file, args.ndim, args.dlogz, args.nlive)) as pdf:
 
                     fig, axes = dyplot.runplot(results)  # summary (run) plot
                     fig.subplots_adjust(hspace=0.25)
@@ -467,7 +465,7 @@ def main():
                     fig, axes = plt.subplots(args.ndim, args.ndim, figsize=(args.ndim*5, args.ndim*5))
                     
                     # plot initial run (res1; left)
-                    fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs, 'contour_kwargs': contour_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
+                    fg, ax = dyplot.cornerplot(results, color='blue', hist2d_kwargs = {'contourf_kwargs': contourf_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #truths=np.zeros(args.ndim) #cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs, 'contour_kwargs': contour_kwargs}, 
                                                show_titles=True, #truth_color='black'
                                                max_n_ticks=3, quantiles=quantile, labels=labels, fig=(fig, axes[:, :args.ndim]))
                     fig.suptitle(r'$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
@@ -482,30 +480,29 @@ def main():
         
             for k, (lo, mid, hi) in enumerate(quantiles):
                 print(f"{err_labels[k+1]}: {mid:.2f} + {hi-mid:.2f}/-{mid-lo:.2f}")
-                np.save('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_labels[k+1],
-                        file, args.ndim, args.dlogz, args.nlive), (lo, hi))
+                np.save('../results/err_{}{}'.format(err_labels[k+1],file), (lo, hi)) #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(err_labels[k+1],
+                        # file, args.ndim, args.dlogz, args.nlive, args.sample), (lo, hi))
             print()
             
             equal_weight_samples = dyfunc.resample_equal(samples, weights)
             
             for k, err_label in enumerate(err_labels[1:]):
-                np.save('../results/samples_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                        file, args.ndim, args.dlogz, args.nlive), equal_weight_samples[:,k]) #[ind]
-                np.save('../results/median_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                        file, args.ndim, args.dlogz, args.nlive), quantiles[k][1])
+                np.save('../results/samples_{}{}'.format(err_label, file), equal_weight_samples[:,k]) #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(err_label,
+                        # file, args.ndim, args.dlogz, args.nlive, args.sample), equal_weight_samples[:,k]) #[ind]
+                np.save('../results/median_{}{}'.format(err_label, file), quantiles[k][1]) #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(err_label,
+                        # file, args.ndim, args.dlogz, args.nlive, args.sample), quantiles[k][1])
             
             # Get the maximum likelihood sample from dynesty results
             idx_max = np.argmax(results.logl)
-            np.save('../results/best_fit_params{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                        file, args.ndim, args.dlogz, args.nlive), samples[idx_max])
+            np.save('../results/best_fit_params{}'.format(file), samples[idx_max]) #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(
+                        # file, args.ndim, args.dlogz, args.nlive, args.sample), samples[idx_max])
 
             # save the results
-            with open('../results/results{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                        file, args.ndim, args.dlogz, args.nlive), 'wb') as fp:
+            with open('../results/results{}.npy'.format(file), 'wb') as fp: #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(
+                        # file, args.ndim, args.dlogz, args.nlive, args.sample), 'wb') as fp:
                 pickle.dump(results, fp)
     
-            print('Saved to ../results/*{}_ndim{}_dlogz{}_nlive{}.npy!\n'.format(
-                            file, args.ndim, args.dlogz, args.nlive))
+            print('Success! Saved to ../results/*{}.npy :)\n'.format(file)) #_ndim{}_dlogz{}_nlive{}_{}.npy :)\n'.format(file, args.ndim, args.dlogz, args.nlive, args.sample))
 
         else:
 
