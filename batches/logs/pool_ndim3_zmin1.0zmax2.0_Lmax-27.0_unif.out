@@ -1,0 +1,13 @@
+Starting batch job
+
+Pixels masked by MC but not already by selfunc: 379
+G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.46              20750 vs 38757
+sampler already completed in this bin
+Exception ignored in: <function Cosmology.__del__ at 0x7f0017c39f80>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable
+Exception ignored in: <function Pk2D.__del__ at 0x7f0018a06c00>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
+TypeError: 'NoneType' object is not callable

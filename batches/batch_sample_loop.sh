@@ -16,76 +16,15 @@ zmin=(0.0 1.0 2.0 3.0)
 zmax=(1.0 2.0 3.0 4.6)
 Lmax=(-20.0 -25.0 -26.0 -27.0)
 
-# for ndim in '2' '3'
-# do
-#     # for i in {0..4}
-#     for i in "${!Lmax[@]}"
-#     do 
-#         # for j in {0..4}
-#         for j in "${!zmin[@]}" 
-#         do
-#             # fname="_ndim${ndim}_i${i}_j${j}"
-#             fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}"
-#             cat > sample${fname}.sh << EOF
-# #!/bin/bash
-# #SBATCH --partition=kipac,hns,normal
-# #SBATCH --job-name=pool${fname}
-# #SBATCH --output=logs/%x.out
-# #SBATCH --nodes=1
-# #SBATCH --cpus-per-task=48
-# #SBATCH --mem=360GB
-# #SBATCH --time=48:00:00
-
-# echo "Starting batch job"
-# source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
-# cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
-# conda activate pyccl-env
-
-# # python -u sample.py ${ndim} ${i} ${j} --plot
-# python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot
-# EOF
-
-#             sbatch sample${fname}.sh
-#         done
-#     done
-# done
-
-# for ndim in '2' '3'
-# do
-#     for nlive in '500' '1000' '3000'
-#     do 
-#         fname="_ndim${ndim}_nlive${nlive}"
-#         cat > sample${fname}.sh << EOF
-# #!/bin/bash
-# #SBATCH --partition=kipac,hns,normal
-# #SBATCH --job-name=pool${fname}
-# #SBATCH --output=logs/%x.out
-# #SBATCH --nodes=1
-# #SBATCH --cpus-per-task=48
-# #SBATCH --mem=360GB
-# #SBATCH --time=48:00:00
-
-# echo "Starting batch job"
-# source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
-# cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
-# conda activate pyccl-env
-
-# python -u sample.py ${ndim} 1.0 2.0 -20.0 --plot --nlive ${nlive}
-# EOF
-
-#         sbatch sample${fname}.sh
-#     done
-# done
-
 for ndim in '2' '3'
 do
     for i in "${!Lmax[@]}"
     do 
         for j in "${!zmin[@]}" 
         do
-            for nlive in '500' '1000' '1500' '2000' #3000
+            for dlogz in '0.01' '0.001'
             do 
-                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_nlive${nlive}"
+                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_dlogz${dlogz}"
                 cat > sample${fname}.sh << EOF
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
@@ -101,44 +40,11 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
-python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --nlive ${nlive}
+python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --dlogz ${dlogz}
 EOF
 
                 sbatch sample${fname}.sh
             done
-        done
-    done
-done
-
-for ndim in '2' '3'
-do
-    for i in "${!Lmax[@]}"
-    do 
-        for j in "${!zmin[@]}" 
-        do
-            # for dlogz in '0.01' '0.001'
-            # do 
-            fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_dlogz0.001" #${dlogz}"
-            cat > sample${fname}.sh << EOF
-#!/bin/bash
-#SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=pool${fname}
-#SBATCH --output=logs/%x.out
-#SBATCH --nodes=1
-#SBATCH --cpus-per-task=48
-#SBATCH --mem=360GB
-#SBATCH --time=48:00:00
-
-echo -e "Starting batch job\n"
-source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
-cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
-conda activate pyccl-env
-
-python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --dlogz 0.001 #${dlogz}
-EOF
-
-            sbatch sample${fname}.sh
-            # done
         done
     done
 done
@@ -168,6 +74,39 @@ cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
 python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --sample ${sample}
+EOF
+
+                sbatch sample${fname}.sh
+            done
+        done
+    done
+done
+
+for ndim in '2' '3'
+do
+    for i in "${!Lmax[@]}"
+    do 
+        for j in "${!zmin[@]}" 
+        do
+            for thetamin in '-2.8' '-2.4' #'0.001' '0.002' '0.003' '0.004' '0.005' '0.006' '0.007' '0.008' '0.009' #'0.01'#'auto'
+            do 
+                fname="_ndim${ndim}_zmin${zmin[j]}zmax${zmax[j]}_Lmax${Lmax[i]}_thetamin${thetamin}"
+                cat > sample${fname}.sh << EOF
+#!/bin/bash
+#SBATCH --partition=kipac,hns,normal
+#SBATCH --job-name=pool${fname}
+#SBATCH --output=logs/%x.out
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=48
+#SBATCH --mem=360GB
+#SBATCH --time=48:00:00
+
+echo -e "Starting batch job\n"
+source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
+cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
+conda activate pyccl-env
+
+python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --log_thetamin ${thetamin}
 EOF
 
                 sbatch sample${fname}.sh
