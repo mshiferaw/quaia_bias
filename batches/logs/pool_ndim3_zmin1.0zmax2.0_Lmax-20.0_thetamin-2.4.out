@@ -1,5 +1,7 @@
 Starting batch job
 
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
+  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
 Pixels masked by MC but not already by selfunc: 4785
 G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.30              453228 vs 648196
 Traceback (most recent call last):
@@ -9,11 +11,11 @@ Traceback (most recent call last):
     file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}_dlogz{}_nlive{}_{}'.format(G_hi, args.log_thetamin, args.log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, args.dlogz, args.nlive, args.sample) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
                                                                                                                                ^^^^^^^^^^^^^^^^^
 AttributeError: 'Namespace' object has no attribute 'log_thetamax'. Did you mean: 'log_thetamin'?
-Exception ignored in: <function Cosmology.__del__ at 0x7f66224d1f80>
+Exception ignored in: <function Cosmology.__del__ at 0x7f3bd79c16c0>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
 TypeError: 'NoneType' object is not callable
-Exception ignored in: <function Pk2D.__del__ at 0x7f66232a2c00>
+Exception ignored in: <function Pk2D.__del__ at 0x7f3bd7b2e0c0>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
 TypeError: 'NoneType' object is not callable

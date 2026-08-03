@@ -372,7 +372,7 @@ def main():
     dN_dz /= np.sum(stats.norm.cdf(dz[-1], loc=tab_datahi_mask_zbin0['redshift_quaia'], scale=tab_datahi_mask_zbin0['redshift_quaia_err']))
     H0_c_dN_dz_norm = ccl.background.h_over_h0(cosmo_planck18, da)*Planck18.H0.to(1/u.s)/constants.c.to(u.Mpc/u.s)*dN_dz**2
 
-    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}_dlogz{}_nlive{}_{}'.format(G_hi, args.log_thetamin, args.log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, args.dlogz, args.nlive, args.sample) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
+    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}_dlogz{}_nlive{}_{}'.format(G_hi, args.log_thetamin, log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, args.dlogz, args.nlive, args.sample) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
     
     try:
 
