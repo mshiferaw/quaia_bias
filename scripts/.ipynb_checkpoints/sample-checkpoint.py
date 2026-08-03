@@ -496,7 +496,7 @@ def main():
                         file, args.ndim, dlogz, args.nlive), 'wb') as fp:
                 pickle.dump(results, fp)
     
-            print('\nSaved to ../results/*{}_ndim{}_dlogz{}_nlive{}.npy!'.format(
+            print('Saved to ../results/*{}_ndim{}_dlogz{}_nlive{}.npy!\n'.format(
                             file, args.ndim, dlogz, args.nlive))
 
         else:

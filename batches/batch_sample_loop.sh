@@ -103,7 +103,7 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
-python -u sample.py ${ndim} ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --nlive ${nlive}
+python -u sample.py ${ndim} ${zmin[j]} ${zmax[j]} ${Lmax[i]} --plot --nlive ${nlive}
 EOF
 
                     sbatch sample${fname}.sh

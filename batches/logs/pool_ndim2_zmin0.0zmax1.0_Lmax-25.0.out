@@ -1,18 +1,484 @@
 Starting batch job
-/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
-  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 506, in <module>
-    main()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 319, in main
-    matplotlib.rcParams['ytick.labelsize'] = 18
-    ^^^^^^^^^^
-NameError: name 'matplotlib' is not defined
-Exception ignored in: <function Cosmology.__del__ at 0x7fd8a15baac0>
+Pixels masked by MC but not already by selfunc: 490
+G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.46              29985 vs 55261
+
+Running new sampler...
+
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+0it [00:00, ?it/s]1it [00:00,  2.20it/s, bound: 0 | nc: 1 | ncall: 501 | eff(%):  0.200 | loglstar:   -inf < -10921.903 <    inf | logz: -10928.813 +/-  0.117 | dlogz:    inf >  0.010]46it [00:01, 47.87it/s, bound: 0 | nc: 1 | ncall: 550 | eff(%):  8.364 | loglstar:   -inf < -3626.513 <    inf | logz: -3633.513 +/-  0.118 | dlogz: 3664.140 >  0.010]92it [00:01, 54.11it/s, bound: 0 | nc: 1 | ncall: 604 | eff(%): 15.232 | loglstar:   -inf < -1307.571 <    inf | logz: -1314.663 +/-  0.119 | dlogz: 1348.058 >  0.010]138it [00:02, 56.02it/s, bound: 0 | nc: 2 | ncall: 664 | eff(%): 20.783 | loglstar:   -inf < -393.038 <    inf | logz: -399.548 +/-  0.109 | dlogz: 419.889 >  0.010]  186it [00:03, 64.53it/s, bound: 0 | nc: 3 | ncall: 737 | eff(%): 25.237 | loglstar:   -inf < -315.398 <    inf | logz: -322.546 +/-  0.115 | dlogz: 343.861 >  0.010]231it [00:04, 53.89it/s, bound: 0 | nc: 1 | ncall: 805 | eff(%): 28.696 | loglstar:   -inf < -260.766 <    inf | logz: -266.677 +/-  0.101 | dlogz: 285.955 >  0.010]278it [00:05, 54.36it/s, bound: 0 | nc: 3 | ncall: 883 | eff(%): 31.484 | loglstar:   -inf < -188.171 <    inf | logz: -194.089 +/-  0.104 | dlogz: 213.357 >  0.010]324it [00:06, 54.46it/s, bound: 0 | nc: 1 | ncall: 958 | eff(%): 33.820 | loglstar:   -inf < -134.477 <    inf | logz: -141.602 +/-  0.113 | dlogz: 161.656 >  0.010]370it [00:06, 54.43it/s, bound: 0 | nc: 1 | ncall: 1049 | eff(%): 35.272 | loglstar:   -inf < -79.010 <    inf | logz: -85.417 +/-  0.106 | dlogz: 104.666 >  0.010] 417it [00:07, 49.98it/s, bound: 0 | nc: 1 | ncall: 1143 | eff(%): 36.483 | loglstar:   -inf < -44.292 <    inf | logz: -51.057 +/-  0.108 | dlogz: 70.265 >  0.010] 463it [00:10, 36.42it/s, bound: 0 | nc: 2 | ncall: 1252 | eff(%): 36.981 | loglstar:   -inf < -21.159 <    inf | logz: -27.675 +/-  0.104 | dlogz: 46.529 >  0.010]506it [00:11, 32.35it/s, bound: 0 | nc: 3 | ncall: 1360 | eff(%): 37.206 | loglstar:   -inf < -7.703 <    inf | logz: -12.912 +/-  0.096 | dlogz: 31.318 >  0.010] 552it [00:14, 25.56it/s, bound: 0 | nc: 2 | ncall: 1510 | eff(%): 36.556 | loglstar:   -inf <  4.827 <    inf | logz: -1.002 +/-  0.101 | dlogz: 19.432 >  0.010] /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+598it [00:15, 27.35it/s, bound: 0 | nc: 3 | ncall: 1659 | eff(%): 36.046 | loglstar:   -inf < 10.928 <    inf | logz:  5.649 +/-  0.093 | dlogz: 12.557 >  0.010]643it [00:17, 27.39it/s, bound: 0 | nc: 1 | ncall: 1785 | eff(%): 36.022 | loglstar:   -inf < 12.881 <    inf | logz:  8.905 +/-  0.085 | dlogz:  9.123 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+687it [00:19, 23.83it/s, bound: 0 | nc: 1 | ncall: 1957 | eff(%): 35.105 | loglstar:   -inf < 13.239 <    inf | logz:  9.816 +/-  0.078 | dlogz:  8.110 >  0.010]731it [00:22, 22.46it/s, bound: 0 | nc: 4 | ncall: 2156 | eff(%): 33.905 | loglstar:   -inf < 13.670 <    inf | logz: 10.420 +/-  0.074 | dlogz:  7.415 >  0.010]778it [00:24, 19.96it/s, bound: 0 | nc: 6 | ncall: 2377 | eff(%): 32.730 | loglstar:   -inf < 14.020 <    inf | logz: 10.902 +/-  0.071 | dlogz:  6.837 >  0.010]824it [00:27, 18.39it/s, bound: 0 | nc: 1 | ncall: 2582 | eff(%): 31.913 | loglstar:   -inf < 14.389 <    inf | logz: 11.305 +/-  0.069 | dlogz:  6.342 >  0.010]871it [00:32, 15.50it/s, bound: 0 | nc: 1 | ncall: 2814 | eff(%): 30.952 | loglstar:   -inf < 14.758 <    inf | logz: 11.677 +/-  0.067 | dlogz:  5.877 >  0.010]917it [00:35, 14.11it/s, bound: 0 | nc: 5 | ncall: 3124 | eff(%): 29.353 | loglstar:   -inf < 15.062 <    inf | logz: 12.000 +/-  0.066 | dlogz:  5.462 >  0.010]958it [00:39, 13.42it/s, bound: 0 | nc: 4 | ncall: 3430 | eff(%): 27.930 | loglstar:   -inf < 15.467 <    inf | logz: 12.288 +/-  0.066 | dlogz:  5.094 >  0.010]1003it [00:44, 11.60it/s, bound: 0 | nc: 7 | ncall: 3762 | eff(%): 26.661 | loglstar:   -inf < 15.758 <    inf | logz: 12.590 +/-  0.066 | dlogz:  4.705 >  0.010]1048it [00:49, 10.86it/s, bound: 0 | nc: 21 | ncall: 4172 | eff(%): 25.120 | loglstar:   -inf < 16.058 <    inf | logz: 12.875 +/-  0.066 | dlogz:  4.334 >  0.010]1092it [00:54,  9.74it/s, bound: 0 | nc: 13 | ncall: 4593 | eff(%): 23.775 | loglstar:   -inf < 16.281 <    inf | logz: 13.122 +/-  0.066 | dlogz:  4.003 >  0.010]1137it [01:00,  9.20it/s, bound: 0 | nc: 2 | ncall: 5109 | eff(%): 22.255 | loglstar:   -inf < 16.471 <    inf | logz: 13.344 +/-  0.066 | dlogz:  3.697 >  0.010] 1183it [01:07,  8.03it/s, bound: 0 | nc: 3 | ncall: 5585 | eff(%): 21.182 | loglstar:   -inf < 16.650 <    inf | logz: 13.550 +/-  0.066 | dlogz:  3.407 >  0.010]1228it [01:12,  8.20it/s, bound: 0 | nc: 1 | ncall: 6161 | eff(%): 19.932 | loglstar:   -inf < 16.799 <    inf | logz: 13.728 +/-  0.066 | dlogz:  3.157 >  0.010]1272it [01:20,  7.44it/s, bound: 0 | nc: 14 | ncall: 6668 | eff(%): 19.076 | loglstar:   -inf < 16.925 <    inf | logz: 13.883 +/-  0.065 | dlogz:  2.926 >  0.010]1319it [01:32,  5.79it/s, bound: 0 | nc: 15 | ncall: 7343 | eff(%): 17.963 | loglstar:   -inf < 17.051 <    inf | logz: 14.029 +/-  0.065 | dlogz:  2.700 >  0.010]1367it [01:41,  5.67it/s, bound: 0 | nc: 8 | ncall: 8168 | eff(%): 16.736 | loglstar:   -inf < 17.162 <    inf | logz: 14.161 +/-  0.065 | dlogz:  2.489 >  0.010] 1414it [01:52,  5.18it/s, bound: 0 | nc: 1 | ncall: 8937 | eff(%): 15.822 | loglstar:   -inf < 17.273 <    inf | logz: 14.279 +/-  0.065 | dlogz:  2.327 >  0.010]1461it [02:04,  4.68it/s, bound: 0 | nc: 37 | ncall: 9808 | eff(%): 14.896 | loglstar:   -inf < 17.377 <    inf | logz: 14.384 +/-  0.065 | dlogz:  2.161 >  0.010]1506it [02:16,  4.31it/s, bound: 0 | nc: 13 | ncall: 10749 | eff(%): 14.011 | loglstar:   -inf < 17.447 <    inf | logz: 14.476 +/-  0.064 | dlogz:  2.002 >  0.010]1550it [02:35,  3.49it/s, bound: 0 | nc: 16 | ncall: 11820 | eff(%): 13.113 | loglstar:   -inf < 17.540 <    inf | logz: 14.557 +/-  0.064 | dlogz:  1.857 >  0.010]1596it [02:50,  3.33it/s, bound: 0 | nc: 20 | ncall: 13406 | eff(%): 11.905 | loglstar:   -inf < 17.610 <    inf | logz: 14.635 +/-  0.064 | dlogz:  1.716 >  0.010]1643it [03:03,  3.38it/s, bound: 0 | nc: 35 | ncall: 14777 | eff(%): 11.119 | loglstar:   -inf < 17.690 <    inf | logz: 14.708 +/-  0.064 | dlogz:  1.581 >  0.010]1690it [03:17,  3.40it/s, bound: 0 | nc: 10 | ncall: 16093 | eff(%): 10.501 | loglstar:   -inf < 17.746 <    inf | logz: 14.774 +/-  0.064 | dlogz:  1.456 >  0.010]1738it [03:43,  2.70it/s, bound: 0 | nc: 15 | ncall: 17197 | eff(%): 10.106 | loglstar:   -inf < 17.839 <    inf | logz: 14.836 +/-  0.064 | dlogz:  1.337 >  0.010]1783it [03:43,  3.79it/s, bound: 1 | nc: 16 | ncall: 18606 | eff(%):  9.583 | loglstar:   -inf < 17.902 <    inf | logz: 14.890 +/-  0.064 | dlogz:  1.233 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+1794it [03:44,  4.08it/s, bound: 1 | nc: 1 | ncall: 18618 | eff(%):  9.636 | loglstar:   -inf < 17.911 <    inf | logz: 14.903 +/-  0.064 | dlogz:  1.208 >  0.010] 1828it [03:45,  5.48it/s, bound: 1 | nc: 4 | ncall: 18679 | eff(%):  9.786 | loglstar:   -inf < 17.978 <    inf | logz: 14.940 +/-  0.064 | dlogz:  1.152 >  0.010]1873it [03:46,  7.98it/s, bound: 1 | nc: 2 | ncall: 18782 | eff(%):  9.972 | loglstar:   -inf < 18.031 <    inf | logz: 14.987 +/-  0.064 | dlogz:  1.061 >  0.010]1917it [03:48, 10.38it/s, bound: 1 | nc: 3 | ncall: 18879 | eff(%): 10.154 | loglstar:   -inf < 18.086 <    inf | logz: 15.029 +/-  0.064 | dlogz:  0.978 >  0.010]1963it [03:49, 13.61it/s, bound: 1 | nc: 3 | ncall: 18992 | eff(%): 10.336 | loglstar:   -inf < 18.166 <    inf | logz: 15.070 +/-  0.064 | dlogz:  0.902 >  0.010]2008it [03:49, 19.60it/s, bound: 2 | nc: 1 | ncall: 19128 | eff(%): 10.498 | loglstar:   -inf < 18.235 <    inf | logz: 15.108 +/-  0.064 | dlogz:  0.828 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2024it [03:50, 17.63it/s, bound: 2 | nc: 7 | ncall: 19178 | eff(%): 10.554 | loglstar:   -inf < 18.259 <    inf | logz: 15.121 +/-  0.064 | dlogz:  0.807 >  0.010]2053it [03:52, 18.28it/s, bound: 2 | nc: 1 | ncall: 19249 | eff(%): 10.665 | loglstar:   -inf < 18.288 <    inf | logz: 15.144 +/-  0.064 | dlogz:  0.770 >  0.010]2098it [03:53, 22.97it/s, bound: 2 | nc: 6 | ncall: 19369 | eff(%): 10.832 | loglstar:   -inf < 18.355 <    inf | logz: 15.178 +/-  0.064 | dlogz:  0.706 >  0.010]2144it [03:54, 25.98it/s, bound: 2 | nc: 1 | ncall: 19489 | eff(%): 11.001 | loglstar:   -inf < 18.409 <    inf | logz: 15.210 +/-  0.064 | dlogz:  0.645 >  0.010]2191it [03:57, 22.21it/s, bound: 2 | nc: 20 | ncall: 19640 | eff(%): 11.156 | loglstar:   -inf < 18.470 <    inf | logz: 15.240 +/-  0.064 | dlogz:  0.587 >  0.010]2235it [03:57, 31.41it/s, bound: 3 | nc: 1 | ncall: 19788 | eff(%): 11.295 | loglstar:   -inf < 18.531 <    inf | logz: 15.268 +/-  0.064 | dlogz:  0.538 >  0.010] /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2250it [03:58, 28.52it/s, bound: 3 | nc: 2 | ncall: 19816 | eff(%): 11.354 | loglstar:   -inf < 18.551 <    inf | logz: 15.277 +/-  0.064 | dlogz:  0.522 >  0.010]2282it [03:59, 30.85it/s, bound: 3 | nc: 2 | ncall: 19870 | eff(%): 11.485 | loglstar:   -inf < 18.582 <    inf | logz: 15.295 +/-  0.064 | dlogz:  0.489 >  0.010]2329it [04:00, 32.57it/s, bound: 3 | nc: 1 | ncall: 19970 | eff(%): 11.662 | loglstar:   -inf < 18.632 <    inf | logz: 15.320 +/-  0.064 | dlogz:  0.445 >  0.010]2375it [04:01, 35.66it/s, bound: 3 | nc: 1 | ncall: 20108 | eff(%): 11.811 | loglstar:   -inf < 18.686 <    inf | logz: 15.344 +/-  0.065 | dlogz:  0.405 >  0.010]2419it [04:02, 36.17it/s, bound: 3 | nc: 5 | ncall: 20241 | eff(%): 11.951 | loglstar:   -inf < 18.737 <    inf | logz: 15.365 +/-  0.065 | dlogz:  0.370 >  0.010]2460it [04:02, 49.56it/s, bound: 4 | nc: 1 | ncall: 20369 | eff(%): 12.077 | loglstar:   -inf < 18.789 <    inf | logz: 15.383 +/-  0.065 | dlogz:  0.340 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2476it [04:04, 32.14it/s, bound: 4 | nc: 2 | ncall: 20419 | eff(%): 12.126 | loglstar:   -inf < 18.798 <    inf | logz: 15.390 +/-  0.065 | dlogz:  0.329 >  0.010]2507it [04:06, 23.95it/s, bound: 4 | nc: 2 | ncall: 20508 | eff(%): 12.224 | loglstar:   -inf < 18.824 <    inf | logz: 15.403 +/-  0.065 | dlogz:  0.308 >  0.010]2553it [04:08, 25.33it/s, bound: 4 | nc: 2 | ncall: 20661 | eff(%): 12.357 | loglstar:   -inf < 18.860 <    inf | logz: 15.421 +/-  0.065 | dlogz:  0.280 >  0.010]2597it [04:10, 24.40it/s, bound: 4 | nc: 1 | ncall: 20803 | eff(%): 12.484 | loglstar:   -inf < 18.892 <    inf | logz: 15.437 +/-  0.065 | dlogz:  0.256 >  0.010]2641it [04:10, 35.11it/s, bound: 5 | nc: 1 | ncall: 20970 | eff(%): 12.594 | loglstar:   -inf < 18.923 <    inf | logz: 15.452 +/-  0.065 | dlogz:  0.234 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2656it [04:12, 25.09it/s, bound: 5 | nc: 1 | ncall: 21014 | eff(%): 12.639 | loglstar:   -inf < 18.933 <    inf | logz: 15.457 +/-  0.065 | dlogz:  0.229 >  0.010]2688it [04:13, 26.73it/s, bound: 5 | nc: 1 | ncall: 21089 | eff(%): 12.746 | loglstar:   -inf < 18.951 <    inf | logz: 15.467 +/-  0.065 | dlogz:  0.215 >  0.010]2735it [04:14, 29.71it/s, bound: 5 | nc: 1 | ncall: 21191 | eff(%): 12.906 | loglstar:   -inf < 18.978 <    inf | logz: 15.481 +/-  0.065 | dlogz:  0.195 >  0.010]2782it [04:15, 32.40it/s, bound: 5 | nc: 1 | ncall: 21304 | eff(%): 13.059 | loglstar:   -inf < 19.004 <    inf | logz: 15.493 +/-  0.065 | dlogz:  0.177 >  0.010]2828it [04:16, 33.40it/s, bound: 5 | nc: 3 | ncall: 21435 | eff(%): 13.193 | loglstar:   -inf < 19.029 <    inf | logz: 15.505 +/-  0.065 | dlogz:  0.161 >  0.010]2872it [04:16, 46.57it/s, bound: 6 | nc: 2 | ncall: 21572 | eff(%): 13.314 | loglstar:   -inf < 19.051 <    inf | logz: 15.515 +/-  0.065 | dlogz:  0.147 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2887it [04:17, 39.92it/s, bound: 6 | nc: 1 | ncall: 21598 | eff(%): 13.367 | loglstar:   -inf < 19.062 <    inf | logz: 15.518 +/-  0.065 | dlogz:  0.142 >  0.010]2919it [04:18, 39.18it/s, bound: 6 | nc: 2 | ncall: 21662 | eff(%): 13.475 | loglstar:   -inf < 19.077 <    inf | logz: 15.525 +/-  0.065 | dlogz:  0.133 >  0.010]2965it [04:19, 43.85it/s, bound: 6 | nc: 3 | ncall: 21750 | eff(%): 13.632 | loglstar:   -inf < 19.104 <    inf | logz: 15.534 +/-  0.066 | dlogz:  0.121 >  0.010]3009it [04:20, 43.42it/s, bound: 6 | nc: 4 | ncall: 21860 | eff(%): 13.765 | loglstar:   -inf < 19.120 <    inf | logz: 15.542 +/-  0.066 | dlogz:  0.111 >  0.010]3054it [04:21, 43.03it/s, bound: 6 | nc: 2 | ncall: 21955 | eff(%): 13.910 | loglstar:   -inf < 19.135 <    inf | logz: 15.550 +/-  0.066 | dlogz:  0.101 >  0.010]3099it [04:23, 32.89it/s, bound: 6 | nc: 3 | ncall: 22069 | eff(%): 14.042 | loglstar:   -inf < 19.156 <    inf | logz: 15.557 +/-  0.066 | dlogz:  0.092 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+3146it [04:24, 36.88it/s, bound: 7 | nc: 3 | ncall: 22197 | eff(%): 14.173 | loglstar:   -inf < 19.168 <    inf | logz: 15.563 +/-  0.066 | dlogz:  0.085 >  0.010]3193it [04:25, 37.28it/s, bound: 7 | nc: 1 | ncall: 22287 | eff(%): 14.327 | loglstar:   -inf < 19.181 <    inf | logz: 15.570 +/-  0.066 | dlogz:  0.077 >  0.010]3239it [04:26, 41.31it/s, bound: 7 | nc: 1 | ncall: 22384 | eff(%): 14.470 | loglstar:   -inf < 19.195 <    inf | logz: 15.575 +/-  0.066 | dlogz:  0.070 >  0.010]3284it [04:27, 41.34it/s, bound: 7 | nc: 2 | ncall: 22495 | eff(%): 14.599 | loglstar:   -inf < 19.206 <    inf | logz: 15.580 +/-  0.066 | dlogz:  0.064 >  0.010]3331it [04:29, 38.18it/s, bound: 7 | nc: 11 | ncall: 22629 | eff(%): 14.720 | loglstar:   -inf < 19.218 <    inf | logz: 15.585 +/-  0.066 | dlogz:  0.058 >  0.010]3375it [04:29, 51.92it/s, bound: 8 | nc: 1 | ncall: 22771 | eff(%): 14.821 | loglstar:   -inf < 19.229 <    inf | logz: 15.589 +/-  0.066 | dlogz:  0.053 >  0.010] /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+3391it [04:30, 37.87it/s, bound: 8 | nc: 1 | ncall: 22812 | eff(%): 14.865 | loglstar:   -inf < 19.233 <    inf | logz: 15.590 +/-  0.066 | dlogz:  0.051 >  0.010]3422it [04:32, 24.36it/s, bound: 8 | nc: 2 | ncall: 22896 | eff(%): 14.946 | loglstar:   -inf < 19.238 <    inf | logz: 15.593 +/-  0.066 | dlogz:  0.048 >  0.010]3469it [04:34, 27.01it/s, bound: 8 | nc: 2 | ncall: 23065 | eff(%): 15.040 | loglstar:   -inf < 19.248 <    inf | logz: 15.597 +/-  0.066 | dlogz:  0.044 >  0.010]3512it [04:35, 28.21it/s, bound: 8 | nc: 1 | ncall: 23216 | eff(%): 15.127 | loglstar:   -inf < 19.257 <    inf | logz: 15.600 +/-  0.066 | dlogz:  0.040 >  0.010]3556it [04:35, 40.31it/s, bound: 9 | nc: 1 | ncall: 23346 | eff(%): 15.232 | loglstar:   -inf < 19.264 <    inf | logz: 15.603 +/-  0.066 | dlogz:  0.037 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+3573it [04:39, 19.98it/s, bound: 9 | nc: 1 | ncall: 23419 | eff(%): 15.257 | loglstar:   -inf < 19.268 <    inf | logz: 15.604 +/-  0.066 | dlogz:  0.036 >  0.010]3602it [04:41, 16.04it/s, bound: 9 | nc: 4 | ncall: 23588 | eff(%): 15.270 | loglstar:   -inf < 19.273 <    inf | logz: 15.606 +/-  0.066 | dlogz:  0.034 >  0.010]3646it [04:41, 24.77it/s, bound: 10 | nc: 7 | ncall: 23873 | eff(%): 15.272 | loglstar:   -inf < 19.279 <    inf | logz: 15.608 +/-  0.066 | dlogz:  0.031 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+3664it [04:43, 20.54it/s, bound: 10 | nc: 3 | ncall: 23929 | eff(%): 15.312 | loglstar:   -inf < 19.282 <    inf | logz: 15.609 +/-  0.066 | dlogz:  0.030 >  0.010]3695it [04:45, 19.70it/s, bound: 10 | nc: 3 | ncall: 24025 | eff(%): 15.380 | loglstar:   -inf < 19.285 <    inf | logz: 15.611 +/-  0.066 | dlogz:  0.028 >  0.010]3741it [04:47, 21.35it/s, bound: 10 | nc: 1 | ncall: 24167 | eff(%): 15.480 | loglstar:   -inf < 19.292 <    inf | logz: 15.613 +/-  0.066 | dlogz:  0.025 >  0.010]3789it [04:48, 23.26it/s, bound: 10 | nc: 1 | ncall: 24361 | eff(%): 15.554 | loglstar:   -inf < 19.296 <    inf | logz: 15.615 +/-  0.066 | dlogz:  0.023 >  0.010]3833it [04:48, 33.53it/s, bound: 11 | nc: 1 | ncall: 24546 | eff(%): 15.616 | loglstar:   -inf < 19.303 <    inf | logz: 15.616 +/-  0.066 | dlogz:  0.021 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+3849it [04:52, 18.40it/s, bound: 11 | nc: 18 | ncall: 24649 | eff(%): 15.615 | loglstar:   -inf < 19.304 <    inf | logz: 15.617 +/-  0.066 | dlogz:  0.020 >  0.010]3881it [04:56, 13.17it/s, bound: 11 | nc: 8 | ncall: 24865 | eff(%): 15.608 | loglstar:   -inf < 19.308 <    inf | logz: 15.618 +/-  0.066 | dlogz:  0.019 >  0.010] 3924it [04:56, 20.17it/s, bound: 12 | nc: 10 | ncall: 25191 | eff(%): 15.577 | loglstar:   -inf < 19.313 <    inf | logz: 15.620 +/-  0.066 | dlogz:  0.018 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+3941it [05:01, 10.84it/s, bound: 12 | nc: 4 | ncall: 25302 | eff(%): 15.576 | loglstar:   -inf < 19.316 <    inf | logz: 15.620 +/-  0.066 | dlogz:  0.017 >  0.010] 3968it [05:03, 11.56it/s, bound: 12 | nc: 12 | ncall: 25470 | eff(%): 15.579 | loglstar:   -inf < 19.319 <    inf | logz: 15.621 +/-  0.066 | dlogz:  0.016 >  0.010]4014it [05:08, 10.55it/s, bound: 12 | nc: 1 | ncall: 25643 | eff(%): 15.653 | loglstar:   -inf < 19.323 <    inf | logz: 15.622 +/-  0.066 | dlogz:  0.015 >  0.010] 4057it [05:08, 15.98it/s, bound: 13 | nc: 37 | ncall: 25971 | eff(%): 15.621 | loglstar:   -inf < 19.327 <    inf | logz: 15.623 +/-  0.066 | dlogz:  0.013 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:148: RuntimeWarning: divide by zero encountered in divide
+  return fduty/2*special.erfc(np.log(10**M_min/bins)/(np.sqrt(2)*np.log(10)*sigma))
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:167: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+4073it [05:08, 17.51it/s, bound: 13 | nc: 1 | ncall: 25991 | eff(%): 15.671 | loglstar:   -inf < 19.330 <    inf | logz: 15.624 +/-  0.066 | dlogz:  0.013 >  0.010] 4101it [05:09, 21.40it/s, bound: 13 | nc: 1 | ncall: 26031 | eff(%): 15.754 | loglstar:   -inf < 19.332 <    inf | logz: 15.624 +/-  0.066 | dlogz:  0.012 >  0.010]4147it [05:10, 28.92it/s, bound: 13 | nc: 1 | ncall: 26098 | eff(%): 15.890 | loglstar:   -inf < 19.335 <    inf | logz: 15.625 +/-  0.066 | dlogz:  0.011 >  0.010]4194it [05:10, 36.62it/s, bound: 13 | nc: 5 | ncall: 26178 | eff(%): 16.021 | loglstar:   -inf < 19.339 <    inf | logz: 15.626 +/-  0.066 | dlogz:  0.010 >  0.010]4206it [05:10, 13.52it/s, +500 | bound: 13 | nc: 1 | ncall: 26693 | eff(%): 17.967 | loglstar:   -inf < 19.428 <    inf | logz: 15.636 +/-  0.067 | dlogz:  0.000 >  0.010]
+Summary
+=======
+nlive: 500
+niter: 4206
+ncall: 26193
+eff(%): 17.967
+logz: 15.636 +/-  0.069
+15.635886914010877 0.06910622951093369
+0.24169127292283407 0.16617074734260462
+
+Plotting...
+
+log10(M_min): 12.97 + 0.31/-0.68
+alpha: 1.76 + 0.53/-0.62
+
+
+Saved to ../results/*_G20.5_rmin0.01_rmax1_nbins16_zmin0.0zmax1.0_Lmax-25.0_N50_Planck_MC_b30_ndim2_dlogz0.01_nlive500.npy!
+Exception ignored in: <function Cosmology.__del__ at 0x7f0d80c05f80>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
 TypeError: 'NoneType' object is not callable
-Exception ignored in: <function Pk2D.__del__ at 0x7fd8a154f4c0>
+Exception ignored in: <function Pk2D.__del__ at 0x7f0d819d6c00>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
 TypeError: 'NoneType' object is not callable
