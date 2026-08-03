@@ -22,6 +22,7 @@ import mcfit
 import matplotlib.colors as mcolors
 from dynesty.pool import Pool
 from matplotlib.backends.backend_pdf import PdfPages
+from dynesty.utils import kld_error
 
 # Model using step-function HOD
 cosmo_planck18 = ccl.Cosmology(
@@ -95,10 +96,8 @@ def n_g_theory(bins, n_total, a = 1, cosmo = cosmo_planck18, hmf = hmf, recenter
         bins = quaia.recenter(bins)
     nm_value = d_hmf if d_hmf is not None else hmf(cosmo, bins, a)
     if units == '(h/Mpc)^3':
-        # nm = hmf(cosmo, bins, a)/cosmo['h']**3*(cu.littleh/u.Mpc)**3
         nm=nm_value/cosmo['h']**3*(cu.littleh/u.Mpc)**3
     else:
-        # nm = hmf(cosmo, bins, a)*(1/u.Mpc)**3
         nm=nm_value*(1/u.Mpc)**3
     n_g = nm/(bins*np.log(10))*n_total
     n_g[np.isnan(n_g)]=0
@@ -164,14 +163,12 @@ def N_c(bins_m, M_min, f_duty, ndim, M_max = M_max, sigma = 0):#, step = False):
 def N_s(bins_m, fduty, M0, M1, alpha, exp = False, step = True): #bins_m
 
     if exp == False:
-
         n_m = fduty*((bins_m-M0)/M1)**alpha
         
         if step == True:
             n_m[bins_m<M0]=0
             
     else:
-
         n_m = N_s_exp(bins_m, M1, alpha, M0, fduty)
         
     return n_m
@@ -261,7 +258,6 @@ def log_det(C, ix_grid):
         print('using LU decomposition')
         C_factor = linalg.lu_factor(C[ix_grid])
         log_det_C = np.sum(np.log(np.abs(np.diag(C_factor[0])))) # does abs value make sense
-        # solve = lambda rhs: linalg.lu_solve(C_factor, rhs)
         solve = LUSolver(C_factor)
 
     return log_det_C, solve
@@ -316,13 +312,18 @@ def main():
     parser.add_argument("zmin", help="minimum redshift", type = float)
     parser.add_argument("zmax", help="maximum redshift", type = float)
     parser.add_argument("Lmax", help="luminosity threshold", type = float)
-    parser.add_argument('--plot', action=argparse.BooleanOptionalAction, default = True)
+    parser.add_argument('--plot', help="summary plots", action=argparse.BooleanOptionalAction, default = True)
+    parser.add_argument('--nlive', help="number of live points", type = int, default = 500)
     args = parser.parse_args()
+
+    matplotlib.rcParams['ytick.labelsize'] = 18
+    matplotlib.rcParams['xtick.labelsize'] = 18
+    matplotlib.rcParams['axes.labelsize'] = 22
+    matplotlib.rcParams['legend.fontsize'] = 18
+    matplotlib.rcParams['axes.titlesize'] = 20
 
     ## Define parameters
     G_hi = 20.5
-    # nthreads = 18
-    # NSIDE = 64
 
     # Visualize the luminosity threshold cuts and redshift bins
     L_bins = np.array([-32.0, -27.0, -26.0, -25.0, -20.0])[:0:-1]
@@ -336,7 +337,7 @@ def main():
     # Define the dimensionality of our problem.
     diag = False #True # False
     ix_grid = np.ix_(theta_mask, theta_mask)
-    nlive = 500
+    # nlive = 500
     dlogz = 0.01
     nbins_mask = np.sum(theta_mask)
     quantile = [0.16, 0.5, 0.84]
@@ -346,11 +347,8 @@ def main():
     contour_kwargs = {'colors': [cmap_theta[list(L_bins).index(args.Lmax)]]}
     
     ## Across all $z$
-    err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma'][:args.ndim]
+    err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma'][:args.ndim+1]
     thetamin, thetamax = 10**log_thetamin, 10**log_thetamax
-
-    # print('$M_i\geq{}$'.format(args.Lmax)) #L_bins[args.i], z_bins[args.j], z_bins[args.j+1]))
-    # print('{:.1f}<z<={:.1f}'.format(args.zmin, args.zmax))#z_bins[args.j], z_bins[args.j+1]))    
           
     err = {}#i: {L: [] for L in L_bins} for i in err_labels}
     sample = {}#err_label: {L: [] for L in L_bins} for err_label in err_labels}
@@ -371,25 +369,25 @@ def main():
     dN_dz /= np.sum(stats.norm.cdf(dz[-1], loc=tab_datahi_mask_zbin0['redshift_quaia'], scale=tab_datahi_mask_zbin0['redshift_quaia_err']))
     H0_c_dN_dz_norm = ccl.background.h_over_h0(cosmo_planck18, da)*Planck18.H0.to(1/u.s)/constants.c.to(u.Mpc/u.s)*dN_dz**2
 
-    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b) #z_bins[args.j], z_bins[args.j+1], L_bins[args.i], #nbins
+    file = '_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}'.format(G_hi, thetamin, thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b) #z_bins[args.j], z_bins[args.j+1], 
     
     try:
 
         for k, err_label in enumerate(err_labels[1:]):
             
             sample[err_label] = np.load('../results/samples_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                file, args.ndim, dlogz, nlive))
+                file, args.ndim, dlogz, args.nlive))
             median[err_label] = np.load('../results/median_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                    file, args.ndim, dlogz, nlive))
+                    file, args.ndim, dlogz, args.nlive))
             err[err_label] = np.load('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                    file, args.ndim, dlogz, nlive))
+                    file, args.ndim, dlogz, args.nlive))
             
         best_fit_param = np.load('../results/best_fit_params_wtheta{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                    file, args.ndim, dlogz, nlive))
+                    file, args.ndim, dlogz, args.nlive))
 
         # read the results
         with open('../results/results{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                    file, args.ndim, dlogz, nlive), 'rb') as fp:
+                    file, args.ndim, dlogz, args.nlive), 'rb') as fp:
             results = pickle.load(fp)
 
         print('sampler already completed in this bin')
@@ -398,7 +396,7 @@ def main():
         
         if (np.round(N_q/1000)>1):
 
-            print('running new sampler')
+            print('\nRunning new sampler...\n')
             
             C = np.load('../results/cov_wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}.npy'.format(
             G_hi, rmin, rmax, nbins, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b))
@@ -412,35 +410,47 @@ def main():
                       logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve,
                                  H0_c_dN_dz_norm.value, args.ndim],
                       ptform_args=[args.ndim]) as pool:
-                sampler = NestedSampler(pool.loglike, pool.prior_transform, args.ndim, nlive = nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), pool = pool)
-            # sampler = NestedSampler(loglike, ptform, args.ndim, logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve, 
-            #                                                           H0_c_dN_dz_norm.value, args.ndim], nlive = nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), ptform_args = [args.ndim])#np.random.default_rng(0)) 4*args.i+args.j
-            # run the sampler with checkpointing
+                sampler = NestedSampler(pool.loglike, pool.prior_transform, args.ndim, nlive = args.nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), pool = pool)
+
+                # run the sampler with checkpointing
                 sampler.run_nested(dlogz = dlogz)
                 
             results = sampler.results
             
             # Print out a summary of the results.
             results.summary()
+            print(results.logz[-1], results.logzerr[-1])
 
+            kld = kld_error(results, error='jitter')
+            print(np.mean(kld), np.std(kld))
+            
             if args.plot:
 
-                print('plotting')
+                print('\nPlotting...\n')
 
                 # https://matplotlib.org/stable/gallery/misc/multipage_pdf.html
                 # Create the PdfPages object to which we will save the pages:
                 # The with statement makes sure that the PdfPages object is closed properly at
                 # the end of the block, even if an Exception occurs.
                 with PdfPages('../figures/dyplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
-                        file, args.ndim, dlogz, nlive)) as pdf:
-    
+                        file, args.ndim, dlogz, args.nlive)) as pdf:
+
+                    fig, axes = dyplot.traceplot(results, 
+                                                 show_titles=True,
+                                                 trace_cmap='viridis', connect=True,
+                                                 connect_highlight=range(5), labels=labels, quantiles = quantile, title_quantiles = quantile)
+                    fig.subplots_adjust(hspace=0.7)
+                    fig.suptitle(r'$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1)
+                    pdf.savefig()  # saves the current figure into a pdf page
+                    plt.close()
+
                     # initialize figure
                     fig, axes = plt.subplots(args.ndim-1, args.ndim-1, figsize=(args.ndim*5, args.ndim*5))
                     
                     # plot initial run (res1; left)
                     fg, ax = dyplot.cornerpoints(results, cmap='plasma',
                                                  kde=False, labels=labels, fig=(fig, axes))
-                    fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 0.975, x = 0.575)
+                    # fig.suptitle(r'$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 0.975, x = 0.575)
                     pdf.savefig()  # saves the current figure into a pdf page
                     plt.close()
                         
@@ -451,12 +461,9 @@ def main():
                     fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs, 'contour_kwargs': contour_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
                                                show_titles=True, #truth_color='black'
                                                max_n_ticks=3, quantiles=quantile, labels=labels, fig=(fig, axes[:, :args.ndim]))
-                    fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
+                    # fig.suptitle(r'$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
                     pdf.savefig()  # saves the current figure into a pdf page
                     plt.close()
-                        
-                # plt.savefig('../figures/cornerplot{}_ndim{}_dlogz{}_nlive{}.pdf'.format(
-                #         file, args.ndim, dlogz, nlive), bbox_inches = 'tight')
             
             samples, weights = results.samples, results.importance_weights()
         
@@ -467,33 +474,33 @@ def main():
             for k, (lo, mid, hi) in enumerate(quantiles):
                 print(f"{err_labels[k+1]}: {mid:.2f} + {hi-mid:.2f}/-{mid-lo:.2f}")
                 np.save('../results/err_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_labels[k+1],
-                        file, args.ndim, dlogz, nlive), (lo, hi))
+                        file, args.ndim, dlogz, args.nlive), (lo, hi))
             print()
             
             equal_weight_samples = dyfunc.resample_equal(samples, weights)
             
             for k, err_label in enumerate(err_labels[1:]):
                 np.save('../results/samples_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                        file, args.ndim, dlogz, nlive), equal_weight_samples[:,k]) #[ind]
+                        file, args.ndim, dlogz, args.nlive), equal_weight_samples[:,k]) #[ind]
                 np.save('../results/median_{}{}_ndim{}_dlogz{}_nlive{}.npy'.format(err_label,
-                        file, args.ndim, dlogz, nlive), quantiles[k][1])
+                        file, args.ndim, dlogz, args.nlive), quantiles[k][1])
             
             # Get the maximum likelihood sample from dynesty results
             idx_max = np.argmax(results.logl)
             np.save('../results/best_fit_params{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                        file, args.ndim, dlogz, nlive), samples[idx_max])
+                        file, args.ndim, dlogz, args.nlive), samples[idx_max])
 
             # save the results
             with open('../results/results{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                        file, args.ndim, dlogz, nlive), 'wb') as fp:
+                        file, args.ndim, dlogz, args.nlive), 'wb') as fp:
                 pickle.dump(results, fp)
     
-            print('saved to ../results/*{}_ndim{}_dlogz{}_nlive{}.npy'.format(
-                            file, args.ndim, dlogz, nlive))
+            print('\nSaved to ../results/*{}_ndim{}_dlogz{}_nlive{}.npy!'.format(
+                            file, args.ndim, dlogz, args.nlive))
 
         else:
 
-            print('skipping this bin, only {} quasars'.format(N_q))
+            print('\nSkipping this bin, only {} quasars!'.format(N_q))
           
 if __name__=='__main__':
     main()
