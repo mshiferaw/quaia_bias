@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=kipac,hns,normal
-#SBATCH --job-name=sample_ndim2_zmin3.0zmax4.6_Lmax-25.0
+#SBATCH --job-name=pool_ndim2_zmin3.0zmax4.6_Lmax-25.0
 #SBATCH --output=logs/%x.out
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48

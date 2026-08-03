@@ -343,6 +343,7 @@ def main():
     labels=[r'$\log_{10} M_\mathrm{min}$', r'$\alpha$', r'$\Sigma$'][:args.ndim]
     quantile_2d = 1.0 - np.exp(-0.5 * np.array([1, 2])**2)#, 3])**2)
     contourf_kwargs = {'colors': make_contour_cmap(cmap_theta[list(L_bins).index(args.Lmax)], len(quantile))} #blue
+    contour_kwargs = {'colors': [cmap_theta[list(L_bins).index(args.Lmax)]]}
     
     ## Across all $z$
     err_labels = ['log10(f_duty)', 'log10(M_min)', 'alpha', 'Sigma'][:args.ndim]
@@ -447,7 +448,7 @@ def main():
                     fig, axes = plt.subplots(args.ndim, args.ndim, figsize=(args.ndim*5, args.ndim*5))
                     
                     # plot initial run (res1; left)
-                    fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
+                    fg, ax = dyplot.cornerplot(results, color=cmap_theta[list(L_bins).index(args.Lmax)], hist2d_kwargs = {'contourf_kwargs': contourf_kwargs, 'contour_kwargs': contour_kwargs}, quantiles_2d = quantile_2d, title_quantiles = quantile, #'blue' #truths=np.zeros(args.ndim)
                                                show_titles=True, #truth_color='black'
                                                max_n_ticks=3, quantiles=quantile, labels=labels, fig=(fig, axes[:, :args.ndim]))
                     fig.suptitle('$M_i\geq{}, {:.1f}<z \leq{:.1f}$'.format(args.Lmax, args.zmin, args.zmax), fontsize = 20, y = 1, x = 0.375)
