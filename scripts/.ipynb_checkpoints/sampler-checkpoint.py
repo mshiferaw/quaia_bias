@@ -56,7 +56,7 @@ rmax = 10.0 #80 #+delta_max*offset # 200
 nbins = 30 #10 #20 + int(delta_min+delta_max) #90 #20
 thetabins = np.logspace(np.log10(rmin), np.log10(rmax), nbins+1)
 # log_thetamin = -2 #-1
-log_thetamax = 0
+log_thetamax = 0.0
 # theta_mask=(quaia.recenter(np.log10(thetabins))>=log_thetamin) & (quaia.recenter(np.log10(thetabins))<=log_thetamax)
 
 ### Translate mass definition
@@ -210,8 +210,8 @@ def P_1h(bins, a, n_g, ndim, params_n_m = None, params_HOD = None, k = k_log, co
 
     return P_qq_1h/n_g #**2
  
-def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, thetabins = thetabins, k = k_log, recenter = False, theta_mask = False, cosmo = cosmo_planck18, hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = True, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method #theta_mask = theta_mask,
-                      NFW_200c = NFW_200c, P_mm = P_mm, da = da, rpbins = rpbins, dz = dz, d_hmf = d_hmf, d_b1 = d_b1, d_NFW = d_NFW): #, k_integral = np.empty(np.shape(rpbins.T)), z_integrand = np.empty(np.shape(rpbins.T))):
+def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, k = k_log, recenter = False, theta_mask = False, cosmo = cosmo_planck18, hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = True, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method #theta_mask = theta_mask, #thetabins = thetabins
+                      NFW_200c = NFW_200c, P_mm = P_mm, da = da, rpbins = rpbins, dz = dz, d_hmf = d_hmf, d_b1 = d_b1, d_NFW = d_NFW, one_halo = True, two_halo = True, b_z = None): #, return_b_q = False): #, k_integral = np.empty(np.shape(rpbins.T)), z_integrand = np.empty(np.shape(rpbins.T))):
 
     # compute for each z... for statement?
     b_q, P_qq = [], [] #k_integral #, []
@@ -222,15 +222,27 @@ def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, thetabins = thetabins,
     
         n_g = bias(bins, n_c+n_s, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, 
                                b1_E_tinker = np.ones(np.shape(bins)), calc_bias = False, units = '1/Mpc^3', d_hmf = d_hmf[i], d_b1 = d_b1[i])
-        
-        b_z, _ = bias(bins, n_m, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, n_g_manual = n_g, units = '1/Mpc^3', d_hmf = d_hmf[i])
+
+        if b_z == None:
+            b_z, _ = bias(bins, n_m, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, n_g_manual = n_g, units = '1/Mpc^3', d_hmf = d_hmf[i])
+
+        if (one_halo == False) and (two_halo == True):
             
-        P_qq_2h = b_z**2*P_mm[i]*u.Mpc**3
-        P_qq_1h = P_1h(bins, a, n_g, ndim, params_HOD = params_HOD, k = k, cosmo = cosmo, recenter = recenter, hmf = hmf, 
-                            b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, d_hmf = d_hmf[i], d_b1 = d_b1[i], d_NFW = d_NFW[i]) #n_c, n_s
-        P_qq.append(P_qq_2h + P_qq_1h)
+            P_qq.append(b_z**2*P_mm[i]*u.Mpc**3)
+
+        elif (one_halo == True) and (two_halo == False):
+            P_qq.append(P_1h(bins, a, n_g, ndim, params_HOD = params_HOD, k = k, cosmo = cosmo, recenter = recenter, hmf = hmf, 
+                            b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, d_hmf = d_hmf[i], d_b1 = d_b1[i], d_NFW = d_NFW[i]))
+
+        else:
+            P_qq_2h = b_z**2*P_mm[i]*u.Mpc**3
+            P_qq_1h = P_1h(bins, a, n_g, ndim, params_HOD = params_HOD, k = k, cosmo = cosmo, recenter = recenter, hmf = hmf, 
+                                b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, d_hmf = d_hmf[i], d_b1 = d_b1[i], d_NFW = d_NFW[i]) #n_c, n_s
+            P_qq.append(P_qq_2h + P_qq_1h)
+            
         b_q.append(b_z)
-    
+
+    # print(np.shape(P_qq))
     rpbins_k, wp_k = hankel(np.array(P_qq)/(2*np.pi))
     
     if recenter_thetabins == True:
@@ -240,11 +252,17 @@ def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, thetabins = thetabins,
         rp = rpbins.value
 
     if isinstance(theta_mask, bool):
-        theta_mask = np.full_like(thetabins, True, dtype = bool)
+        # theta_mask = np.full_like(thetabins, True, dtype = bool)
+        theta_mask = np.full_like(rp[:,0], True, dtype = bool)
 
+    # print(np.shape(rp), np.shape(theta_mask), np.shape(rpbins_k), np.shape(wp_k))
     k_integral = [np.interp(rp[theta_mask][:,i], rpbins_k, wp_k[i]) for i in range(len(dz))]
     z_integrand = H0_c_dN_dz[:, None] * k_integral
 
+    # if return_b_q == True:
+    #     return b_q
+        
+    # return (np.trapz(z_integrand, dz, axis = 0)).value
     return np.trapz(z_integrand, dz, axis = 0)
         
 def log_det(C, ix_grid):  
@@ -262,11 +280,11 @@ def log_det(C, ix_grid):
 
     return log_det_C, solve
    
-def loglike(x, log_det_C, wp, nbins, solve, dN_dz, ndim, theta_mask, M_max = M_max, N = N_jk, fduty = 0, recenter_thetabins = True, n_bins = n_bins, bins_m = bins): # = theta_mask
-        
-    M_min, Alpha, sigma = [*x, 0][:3] # assign sigma = 0 if ndim==2
-        
-    wp_2h_zbin = wtheta_2h_dynesty(bins_m, dN_dz, [0, M_min, sigma, np.log10(12*10**M_min), Alpha], ndim, theta_mask = theta_mask)
+def loglike(x, log_det_C, wp, nbins, solve, dN_dz, ndim, theta_mask, sigma_fixed, fsat, frac, M_max = M_max, N = N_jk, fduty = 0, recenter_thetabins = True, n_bins = n_bins, bins_m = bins): # = theta_mask
+
+    M_min, Alpha, sigma = [*x, sigma_fixed][:3] # assign sigma = default value if ndim==2
+    
+    wp_2h_zbin = wtheta_2h_dynesty(bins_m, dN_dz, [0, M_min, sigma, np.log10(frac*fsat*10**M_min), Alpha], ndim, theta_mask = theta_mask)
 
     delta = wp-wp_2h_zbin
     
@@ -316,7 +334,11 @@ def main():
     parser.add_argument('--nlive', help="number of live points", type = int, default = 500)
     parser.add_argument('--dlogz', help="evidence threshold", type = float, default = 0.01)
     parser.add_argument('--sample', help="sampling method", type = str, default = 'auto')
-    parser.add_argument('--log_thetamin', help="minimum angular separation", type = float, default = -2) #0.01
+    parser.add_argument('--log_thetamin', help="minimum angular separation", type = float, default = -2.0) #0.01
+    parser.add_argument('--sigma', help="fixed scatter", type = float, default = 0) #0.01
+    parser.add_argument('--fsat', help="Mmin/M1", type = int, default = 12) #0.01
+    parser.add_argument('--frac', help="fraction of Mmin/M1=12", type = float, default = 1) #0.01
+    parser.add_argument('--diag', help="diagonal covariance", action=argparse.BooleanOptionalAction, default = False) #0.01
     args = parser.parse_args()
 
     matplotlib.rcParams['ytick.labelsize'] = 18
@@ -341,7 +363,7 @@ def main():
 
     # Perform nested sampling with dynesty
     # Define the dimensionality of our problem.
-    diag = False #True # False
+    # diag = False #True # False
     ix_grid = np.ix_(theta_mask, theta_mask)
     nbins_mask = np.sum(theta_mask)
     quantile = [0.16, 0.5, 0.84]
@@ -372,7 +394,15 @@ def main():
     dN_dz /= np.sum(stats.norm.cdf(dz[-1], loc=tab_datahi_mask_zbin0['redshift_quaia'], scale=tab_datahi_mask_zbin0['redshift_quaia_err']))
     H0_c_dN_dz_norm = ccl.background.h_over_h0(cosmo_planck18, da)*Planck18.H0.to(1/u.s)/constants.c.to(u.Mpc/u.s)*dN_dz**2
 
-    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}_dlogz{}_nlive{}_{}'.format(G_hi, args.log_thetamin, log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, args.dlogz, args.nlive, args.sample) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
+    if args.ndim == 2:
+        sigma='_Sigma{:.1f}'.format(args.sigma)
+    else:
+        sigma=''
+    if args.diag == True:
+        diag = '_diag'
+    else:
+        diag = ''
+    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}{}_dlogz{}_nlive{}_{}_fsat{}_frac{}{}'.format(G_hi, args.log_thetamin, log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, sigma, args.dlogz, args.nlive, args.sample, args.fsat, args.frac, diag) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
     
     try:
 
@@ -388,7 +418,7 @@ def main():
         with open('../results/results{}.npy'.format(file), 'rb') as fp: #_ndim{}_dlogz{}_nlive{}_{}.npy'.format(
             results = pickle.load(fp)
 
-        print('sampler already completed in this bin')
+        print('\nSampler already completed in this bin, exiting.\n')
 
     except:
         
@@ -398,7 +428,7 @@ def main():
             
             C = np.load('../results/cov_wtheta_G{}_rmin{}_rmax{}_nbins{}_zmin{}zmax{}_Lmax{}_N{}_{}_MC_b{}.npy'.format(
             G_hi, rmin, rmax, nbins, args.zmin, args.zmax, args.Lmax, N_jk, cosmo, b))
-            if diag == True:
+            if args.diag == True:
                 C*=np.identity(len(C))
     
             log_det_C, solve = log_det(C, ix_grid)
@@ -406,7 +436,7 @@ def main():
             # initialize our nested sampler
             with Pool(48, loglike, ptform,
                       logl_args=[log_det_C, wp_zbin_i[theta_mask], nbins_mask, solve, 
-                                 H0_c_dN_dz_norm.value, args.ndim, theta_mask],
+                                 H0_c_dN_dz_norm.value, args.ndim, theta_mask, args.sigma, args.fsat, args.frac],
                       ptform_args=[args.ndim]) as pool:
                 sampler = NestedSampler(pool.loglike, pool.prior_transform, args.ndim, nlive = args.nlive, rstate=np.random.default_rng([int(args.zmin), int(args.zmax), np.abs(int(args.Lmax))]), pool = pool, sample = args.sample)
 

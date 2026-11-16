@@ -156,7 +156,7 @@ def comoving_dist(z, units = 'Mpc/h', cosmo = Planck18): #0.6844, units = 'Mpc/h
         return comoving_r.to(u.pc)
 
 def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'), h = 0.6844, NSIDE = NSIDE, 
-             k = np.loadtxt('../data/maps/datafile4.txt'), Om0 = None, plot = False):
+             k = np.loadtxt('../data/maps/datafile4.txt'), Om0 = None, plot = False, color1 = None, color2 = None):
     
     r"""Transforms apparent to absolute magnitude.
     
@@ -210,14 +210,38 @@ def absolute(tab_datalo, G, dust = np.load('../data/maps/map_dust_NSIDE64.npy'),
         ind = np.argsort(tab_datalo['redshift_quaia'])
         K_i_hi = k_z(tab_datalo['redshift_quaia']+tab_datalo['redshift_quaia_err'])
         K_i_lo = k_z(tab_datalo['redshift_quaia']-tab_datalo['redshift_quaia_err'])
+        # K_i_lo, K_i_hi = np.minimum(K_i_hi, K_i_lo), np.maximum(K_i_hi, K_i_lo)
 
-        plt.plot(tab_datalo['redshift_quaia'][ind], K_i[ind], label = 'Quaia', linewidth = 2.5)
-        plt.plot(k[:,0], k[:,1], label = 'Richards et al. 2006', linewidth = 2.5, linestyle = '--')
-        plt.fill_between(tab_datalo['redshift_quaia'][ind], K_i_hi[ind], K_i_lo[ind], alpha = 0.5)
+        plt.plot(tab_datalo['redshift_quaia'][ind], K_i[ind], label = 'Quaia', linewidth = 2.5, color = color1)
+        plt.plot(k[:,0], k[:,1], label = 'Richards et al. 2006', linewidth = 2.5, linestyle = '--', color = color2)
+        plt.fill_between(tab_datalo['redshift_quaia'][ind], K_i_hi[ind], K_i_lo[ind], color = color1, linewidth = 0)
+        # plt.vlines(tab_datalo['redshift_quaia'][ind], K_i_lo[ind],K_i_hi[ind], alpha = 0.01, linewidth = 0.5, zorder = 0, rasterized = True)
         plt.xlabel('$z$')
-        plt.ylabel('$K$-correction')
+        plt.ylabel('$K_i$')#$-correction')
+        plt.xlim(0, 4.6)
         plt.legend()
+        
+        plt.savefig('../figures/k_correction.pdf', bbox_inches = 'tight')
         plt.show()
+
+
+#         z = np.asarray(tab_datalo['redshift_quaia'])
+#         z_err = np.asarray(tab_datalo['redshift_quaia_err'])
+
+#         # range of K spanned by z +/- z_err for each source (min/max over the window, so peaks are included)
+#         z_window = z[:, None] + z_err[:, None]*np.linspace(-1, 1, 21)[None, :]
+#         K_i_window = k_z(z_window)
+#         K_i_lo = np.nanmin(K_i_window, axis = 1)
+#         K_i_hi = np.nanmax(K_i_window, axis = 1)
+
+#         plt.vlines(z, K_i_lo, K_i_hi, color = 'C0', alpha = 0.02, linewidth = 1, rasterized = True)
+#         plt.plot(tab_datalo['redshift_quaia'][ind], K_i[ind], label = 'Quaia', linewidth = 2.5)
+#         plt.plot(k[:,0], k[:,1], label = 'Richards et al. 2006', linewidth = 2.5, linestyle = '--')
+#         plt.xlabel('$z$')
+#         plt.ylabel('$K$-correction')
+#         plt.xlim(0, 4.6)
+#         plt.legend()
+#         plt.show()
     
     tab_datalo['M_i']=m_i-25-5*np.log10(d)-A_i-K_i # d is in Mpc
     
