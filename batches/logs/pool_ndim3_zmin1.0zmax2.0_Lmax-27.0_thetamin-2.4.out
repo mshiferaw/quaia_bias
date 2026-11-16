@@ -2,18 +2,179 @@ Starting batch job
 
 Pixels masked by MC but not already by selfunc: 379
 G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.46              20750 vs 38757
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 503, in <module>
-    main()
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 375, in main
-    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}_dlogz{}_nlive{}_{}'.format(G_hi, args.log_thetamin, args.log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, args.dlogz, args.nlive, args.sample) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
-                                                                                                                               ^^^^^^^^^^^^^^^^^
-AttributeError: 'Namespace' object has no attribute 'log_thetamax'. Did you mean: 'log_thetamin'?
-Exception ignored in: <function Cosmology.__del__ at 0x7f3d979e5f80>
+
+Running new sampler...
+
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+0it [00:00, ?it/s]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+1it [00:00,  1.25it/s, bound: 0 | nc: 1 | ncall: 501 | eff(%):  0.200 | loglstar:   -inf < -2702.120 <    inf | logz: -2709.029 +/-  0.117 | dlogz:    inf >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+48it [00:01, 52.18it/s, bound: 0 | nc: 1 | ncall: 549 | eff(%):  8.743 | loglstar:   -inf < -304.748 <    inf | logz: -311.628 +/-  0.114 | dlogz: 318.487 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+93it [00:01, 81.41it/s, bound: 0 | nc: 3 | ncall: 602 | eff(%): 15.449 | loglstar:   -inf < -197.154 <    inf | logz: -203.600 +/-  0.106 | dlogz: 208.692 >  0.010]140it [00:01, 103.08it/s, bound: 0 | nc: 1 | ncall: 658 | eff(%): 21.277 | loglstar:   -inf < -93.869 <    inf | logz: -99.665 +/-  0.100 | dlogz: 104.142 >  0.010]184it [00:02, 96.17it/s, bound: 0 | nc: 1 | ncall: 723 | eff(%): 25.450 | loglstar:   -inf < -37.785 <    inf | logz: -44.223 +/-  0.105 | dlogz: 48.869 >  0.010]  232it [00:02, 88.70it/s, bound: 0 | nc: 1 | ncall: 790 | eff(%): 29.367 | loglstar:   -inf < -14.164 <    inf | logz: -19.663 +/-  0.096 | dlogz: 23.596 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+278it [00:03, 90.19it/s, bound: 0 | nc: 2 | ncall: 872 | eff(%): 31.881 | loglstar:   -inf < -2.116 <    inf | logz: -7.262 +/-  0.090 | dlogz: 11.031 >  0.010]  /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+326it [00:03, 92.69it/s, bound: 0 | nc: 1 | ncall: 948 | eff(%): 34.388 | loglstar:   -inf <  0.892 <    inf | logz: -2.824 +/-  0.079 | dlogz:  6.335 >  0.010]370it [00:04, 89.48it/s, bound: 0 | nc: 4 | ncall: 1028 | eff(%): 35.992 | loglstar:   -inf <  2.254 <    inf | logz: -1.276 +/-  0.073 | dlogz:  4.696 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+416it [00:04, 88.87it/s, bound: 0 | nc: 5 | ncall: 1114 | eff(%): 37.343 | loglstar:   -inf <  2.833 <    inf | logz: -0.179 +/-  0.069 | dlogz:  3.514 >  0.010]462it [00:05, 86.70it/s, bound: 0 | nc: 1 | ncall: 1219 | eff(%): 37.900 | loglstar:   -inf <  3.325 <    inf | logz:  0.547 +/-  0.065 | dlogz:  2.728 >  0.010]506it [00:06, 71.69it/s, bound: 0 | nc: 2 | ncall: 1299 | eff(%): 38.953 | loglstar:   -inf <  3.578 <    inf | logz:  1.034 +/-  0.063 | dlogz:  2.199 >  0.010]552it [00:07, 69.08it/s, bound: 0 | nc: 6 | ncall: 1432 | eff(%): 38.547 | loglstar:   -inf <  3.763 <    inf | logz:  1.405 +/-  0.060 | dlogz:  1.798 >  0.010]599it [00:08, 46.53it/s, bound: 0 | nc: 3 | ncall: 1562 | eff(%): 38.348 | loglstar:   -inf <  3.846 <    inf | logz:  1.688 +/-  0.058 | dlogz:  1.493 >  0.010]646it [00:09, 45.94it/s, bound: 0 | nc: 1 | ncall: 1726 | eff(%): 37.428 | loglstar:   -inf <  3.913 <    inf | logz:  1.905 +/-  0.056 | dlogz:  1.260 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+693it [00:11, 36.98it/s, bound: 0 | nc: 21 | ncall: 1893 | eff(%): 36.609 | loglstar:   -inf <  3.963 <    inf | logz:  2.078 +/-  0.054 | dlogz:  1.075 >  0.010]740it [00:13, 32.83it/s, bound: 0 | nc: 1 | ncall: 2063 | eff(%): 35.870 | loglstar:   -inf <  3.986 <    inf | logz:  2.218 +/-  0.052 | dlogz:  0.928 >  0.010] 786it [00:15, 30.74it/s, bound: 0 | nc: 2 | ncall: 2271 | eff(%): 34.610 | loglstar:   -inf <  4.007 <    inf | logz:  2.330 +/-  0.051 | dlogz:  0.809 >  0.010]830it [00:16, 31.19it/s, bound: 0 | nc: 2 | ncall: 2454 | eff(%): 33.822 | loglstar:   -inf <  4.029 <    inf | logz:  2.420 +/-  0.050 | dlogz:  0.714 >  0.010]873it [00:18, 28.90it/s, bound: 0 | nc: 2 | ncall: 2660 | eff(%): 32.820 | loglstar:   -inf <  4.045 <    inf | logz:  2.496 +/-  0.049 | dlogz:  0.635 >  0.010]921it [00:20, 26.43it/s, bound: 0 | nc: 25 | ncall: 2919 | eff(%): 31.552 | loglstar:   -inf <  4.056 <    inf | logz:  2.569 +/-  0.048 | dlogz:  0.559 >  0.010]966it [00:23, 21.93it/s, bound: 0 | nc: 4 | ncall: 3149 | eff(%): 30.676 | loglstar:   -inf <  4.065 <    inf | logz:  2.628 +/-  0.047 | dlogz:  0.498 >  0.010] 1010it [00:25, 20.55it/s, bound: 0 | nc: 6 | ncall: 3505 | eff(%): 28.816 | loglstar:   -inf <  4.071 <    inf | logz:  2.678 +/-  0.046 | dlogz:  0.446 >  0.010]1057it [00:29, 18.25it/s, bound: 0 | nc: 3 | ncall: 3912 | eff(%): 27.019 | loglstar:   -inf <  4.076 <    inf | logz:  2.725 +/-  0.046 | dlogz:  0.397 >  0.010]1102it [00:32, 16.00it/s, bound: 0 | nc: 17 | ncall: 4388 | eff(%): 25.114 | loglstar:   -inf <  4.081 <    inf | logz:  2.765 +/-  0.045 | dlogz:  0.357 >  0.010]1150it [00:36, 15.13it/s, bound: 0 | nc: 17 | ncall: 4807 | eff(%): 23.923 | loglstar:   -inf <  4.086 <    inf | logz:  2.802 +/-  0.045 | dlogz:  0.318 >  0.010]1197it [00:39, 14.30it/s, bound: 0 | nc: 3 | ncall: 5347 | eff(%): 22.386 | loglstar:   -inf <  4.089 <    inf | logz:  2.834 +/-  0.044 | dlogz:  0.286 >  0.010] 1244it [00:46, 11.26it/s, bound: 0 | nc: 18 | ncall: 5864 | eff(%): 21.214 | loglstar:   -inf <  4.091 <    inf | logz:  2.862 +/-  0.044 | dlogz:  0.257 >  0.010]1290it [00:49, 11.59it/s, bound: 0 | nc: 13 | ncall: 6450 | eff(%): 20.000 | loglstar:   -inf <  4.093 <    inf | logz:  2.887 +/-  0.043 | dlogz:  0.231 >  0.010]1336it [00:54, 11.32it/s, bound: 0 | nc: 4 | ncall: 6966 | eff(%): 19.179 | loglstar:   -inf <  4.096 <    inf | logz:  2.909 +/-  0.043 | dlogz:  0.209 >  0.010] 1382it [00:58, 10.82it/s, bound: 0 | nc: 12 | ncall: 7663 | eff(%): 18.035 | loglstar:   -inf <  4.098 <    inf | logz:  2.929 +/-  0.042 | dlogz:  0.189 >  0.010]1429it [01:06,  8.85it/s, bound: 0 | nc: 8 | ncall: 8403 | eff(%): 17.006 | loglstar:   -inf <  4.100 <    inf | logz:  2.947 +/-  0.042 | dlogz:  0.170 >  0.010] 1476it [01:13,  8.06it/s, bound: 0 | nc: 35 | ncall: 9227 | eff(%): 15.997 | loglstar:   -inf <  4.101 <    inf | logz:  2.963 +/-  0.042 | dlogz:  0.154 >  0.010]1519it [01:20,  7.46it/s, bound: 0 | nc: 10 | ncall: 10126 | eff(%): 15.001 | loglstar:   -inf <  4.102 <    inf | logz:  2.976 +/-  0.042 | dlogz:  0.140 >  0.010]1563it [01:28,  6.72it/s, bound: 0 | nc: 9 | ncall: 11076 | eff(%): 14.112 | loglstar:   -inf <  4.103 <    inf | logz:  2.989 +/-  0.041 | dlogz:  0.128 >  0.010] 1610it [01:40,  5.40it/s, bound: 0 | nc: 1 | ncall: 11922 | eff(%): 13.504 | loglstar:   -inf <  4.104 <    inf | logz:  3.001 +/-  0.041 | dlogz:  0.116 >  0.010]1657it [01:50,  5.30it/s, bound: 0 | nc: 11 | ncall: 13261 | eff(%): 12.495 | loglstar:   -inf <  4.105 <    inf | logz:  3.012 +/-  0.041 | dlogz:  0.105 >  0.010]1701it [02:03,  4.45it/s, bound: 0 | nc: 45 | ncall: 14846 | eff(%): 11.458 | loglstar:   -inf <  4.106 <    inf | logz:  3.021 +/-  0.041 | dlogz:  0.096 >  0.010]1748it [02:17,  4.14it/s, bound: 0 | nc: 3 | ncall: 16370 | eff(%): 10.678 | loglstar:   -inf <  4.107 <    inf | logz:  3.030 +/-  0.041 | dlogz:  0.087 >  0.010] /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+1796it [02:18,  5.72it/s, bound: 1 | nc: 1 | ncall: 18075 | eff(%):  9.936 | loglstar:   -inf <  4.107 <    inf | logz:  3.038 +/-  0.040 | dlogz:  0.078 >  0.010]1841it [02:19,  7.80it/s, bound: 1 | nc: 4 | ncall: 18209 | eff(%): 10.110 | loglstar:   -inf <  4.108 <    inf | logz:  3.045 +/-  0.040 | dlogz:  0.071 >  0.010]1888it [02:20, 10.23it/s, bound: 1 | nc: 2 | ncall: 18350 | eff(%): 10.289 | loglstar:   -inf <  4.108 <    inf | logz:  3.051 +/-  0.040 | dlogz:  0.065 >  0.010]1935it [02:22, 12.58it/s, bound: 1 | nc: 1 | ncall: 18501 | eff(%): 10.459 | loglstar:   -inf <  4.108 <    inf | logz:  3.057 +/-  0.040 | dlogz:  0.059 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+1983it [02:22, 17.22it/s, bound: 2 | nc: 2 | ncall: 18649 | eff(%): 10.633 | loglstar:   -inf <  4.109 <    inf | logz:  3.063 +/-  0.040 | dlogz:  0.053 >  0.010]2027it [02:22, 22.96it/s, bound: 2 | nc: 3 | ncall: 18727 | eff(%): 10.824 | loglstar:   -inf <  4.109 <    inf | logz:  3.067 +/-  0.040 | dlogz:  0.049 >  0.010]2075it [02:23, 28.45it/s, bound: 2 | nc: 1 | ncall: 18798 | eff(%): 11.038 | loglstar:   -inf <  4.109 <    inf | logz:  3.072 +/-  0.040 | dlogz:  0.044 >  0.010]2119it [02:24, 33.91it/s, bound: 2 | nc: 3 | ncall: 18902 | eff(%): 11.210 | loglstar:   -inf <  4.110 <    inf | logz:  3.075 +/-  0.040 | dlogz:  0.040 >  0.010]2163it [02:24, 39.98it/s, bound: 2 | nc: 6 | ncall: 19018 | eff(%): 11.373 | loglstar:   -inf <  4.110 <    inf | logz:  3.079 +/-  0.040 | dlogz:  0.037 >  0.010]2210it [02:25, 46.75it/s, bound: 2 | nc: 4 | ncall: 19124 | eff(%): 11.556 | loglstar:   -inf <  4.110 <    inf | logz:  3.082 +/-  0.040 | dlogz:  0.034 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2258it [02:26, 55.53it/s, bound: 3 | nc: 1 | ncall: 19214 | eff(%): 11.752 | loglstar:   -inf <  4.111 <    inf | logz:  3.085 +/-  0.040 | dlogz:  0.030 >  0.010]2302it [02:26, 63.85it/s, bound: 3 | nc: 1 | ncall: 19282 | eff(%): 11.939 | loglstar:   -inf <  4.111 <    inf | logz:  3.088 +/-  0.040 | dlogz:  0.028 >  0.010]2349it [02:27, 64.08it/s, bound: 3 | nc: 3 | ncall: 19372 | eff(%): 12.126 | loglstar:   -inf <  4.111 <    inf | logz:  3.090 +/-  0.039 | dlogz:  0.025 >  0.010]2396it [02:27, 64.90it/s, bound: 3 | nc: 6 | ncall: 19466 | eff(%): 12.309 | loglstar:   -inf <  4.111 <    inf | logz:  3.093 +/-  0.039 | dlogz:  0.023 >  0.010]2441it [02:29, 55.09it/s, bound: 3 | nc: 9 | ncall: 19582 | eff(%): 12.466 | loglstar:   -inf <  4.112 <    inf | logz:  3.095 +/-  0.039 | dlogz:  0.021 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2488it [02:29, 62.81it/s, bound: 4 | nc: 1 | ncall: 19732 | eff(%): 12.609 | loglstar:   -inf <  4.112 <    inf | logz:  3.096 +/-  0.039 | dlogz:  0.019 >  0.010]2532it [02:30, 60.42it/s, bound: 4 | nc: 3 | ncall: 19830 | eff(%): 12.769 | loglstar:   -inf <  4.112 <    inf | logz:  3.098 +/-  0.039 | dlogz:  0.017 >  0.010]2578it [02:31, 52.62it/s, bound: 4 | nc: 13 | ncall: 19967 | eff(%): 12.911 | loglstar:   -inf <  4.112 <    inf | logz:  3.100 +/-  0.039 | dlogz:  0.016 >  0.010]2626it [02:32, 50.35it/s, bound: 4 | nc: 8 | ncall: 20119 | eff(%): 13.052 | loglstar:   -inf <  4.113 <    inf | logz:  3.101 +/-  0.039 | dlogz:  0.014 >  0.010] /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+2672it [02:33, 57.30it/s, bound: 5 | nc: 1 | ncall: 20254 | eff(%): 13.192 | loglstar:   -inf <  4.113 <    inf | logz:  3.102 +/-  0.039 | dlogz:  0.013 >  0.010]2719it [02:33, 65.24it/s, bound: 5 | nc: 1 | ncall: 20320 | eff(%): 13.381 | loglstar:   -inf <  4.113 <    inf | logz:  3.103 +/-  0.039 | dlogz:  0.012 >  0.010]2766it [02:34, 70.40it/s, bound: 5 | nc: 1 | ncall: 20393 | eff(%): 13.563 | loglstar:   -inf <  4.113 <    inf | logz:  3.105 +/-  0.039 | dlogz:  0.011 >  0.010]2809it [02:34, 18.22it/s, +500 | bound: 5 | nc: 1 | ncall: 20972 | eff(%): 16.164 | loglstar:   -inf <  4.117 <    inf | logz:  3.115 +/-  0.038 | dlogz:  0.000 >  0.010]
+
+Summary
+=======
+nlive: 500
+niter: 2809
+ncall: 20472
+eff(%): 16.164
+logz:  3.115 +/-  0.040
+kld = 0.286 +/- 0.142
+
+Plotting...
+
+log10(M_min): 12.58 + 1.90/-2.24
+alpha: 1.22 + 1.46/-0.84
+Sigma: 0.98 + 0.29/-0.44
+
+Success! Saved to ../results/*_G20.5_logrmin-2.4_logrmax0.0_nbins18_zmin1.0zmax2.0_Lmax-27.0_Planck_ndim3_dlogz0.01_nlive500_auto.npy :)
+
+Exception ignored in: <function Cosmology.__del__ at 0x7f6fda8d9ee0>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
 TypeError: 'NoneType' object is not callable
-Exception ignored in: <function Pk2D.__del__ at 0x7f3d987b6c00>
+Exception ignored in: <function Pk2D.__del__ at 0x7f6fdb6a6b60>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
 TypeError: 'NoneType' object is not callable

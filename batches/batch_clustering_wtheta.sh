@@ -21,4 +21,9 @@ conda activate pyccl-env
 # python -u clustering.py wtheta 20.5 0.001 10 20 log --L max _MC_ --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 #20 30 180 30 linear #1 200 14 log
 # python -u clustering.py wtheta 20.5 0.001 10 20 log --L minmax _MC_ --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6
 # python -u clustering.py wtheta 20.5 0.001 10 30 log --L_method max _MC_ --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 #20 30 180 30 linear #1 200 14 log
-python -u clustering.py wtheta 20.5 0.001 10 24 log --L_method max _MC_ --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 #20 30 180 30 linear #1 200 14 log
+# python -u clustering.py wtheta 20.5 0.001 10 24 log --L_method max _MC_ --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 #20 30 180 30 linear #1 200 14 log
+
+# G=20.5
+b=30
+L_method='minmax'
+python -u clustering.py wtheta 20.5 0.001 10 30 log --L_method ${L_method} _MC_ --b ${b} Planck --z_bins 0.0 1.0 2.0 3.0 4.6 

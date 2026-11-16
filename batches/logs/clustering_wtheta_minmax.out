@@ -1,137 +1,148 @@
 Starting batch job
 
-G20.5: computing wtheta in 24 bins from 0.001 to 10.0 on a log scale...
+G20.5: computing wtheta in 30 bins from 0.001 to 10.0 on a log scale...
 
-Pixels masked by MC but not already by selfunc: 2468
-G20.5_zmin0.0zmax1.0_Lmax-20.0: 0.33              218365 vs 324336
+Pixels masked by MC but not already by selfunc: 35
+G20.5_zmin0.0zmax1.0_Lmin-32.0Lmax-27.0: 0.59              754 vs 1860
+[Warning] The CPU supports AVX512F but the compiler does not.  Can you try another compiler?
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 3.09951
-DR: 125.366449
-RR: 1250.81853
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin0.0zmax1.0_Lmax-20.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 490
-G20.5_zmin0.0zmax1.0_Lmax-25.0: 0.46              29985 vs 55261
+DD: 0.010548
+DR: 0.020426
+RR: 0.016392999999999998
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin0.0zmax1.0_Lmin-32.0Lmax-27.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 88
+G20.5_zmin0.0zmax1.0_Lmin-27.0Lmax-26.0: 0.50              5182 vs 10412
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.270659
-DR: 5.251709
-RR: 26.969793
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin0.0zmax1.0_Lmax-25.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 131
-G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.52              6079 vs 12557
+DD: 0.0052239999999999995
+DR: 0.041733
+RR: 0.079932
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin0.0zmax1.0_Lmin-27.0Lmax-26.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 356
+G20.5_zmin0.0zmax1.0_Lmin-26.0Lmax-25.0: 0.44              23434 vs 41931
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.082629
-DR: 0.886777
-RR: 2.057827
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin0.0zmax1.0_Lmax-26.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 40
-G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.60              776 vs 1922
+DD: 0.014624999999999999
+DR: 0.21514999999999998
+RR: 0.707489
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin0.0zmax1.0_Lmin-26.0Lmax-25.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 1984
+G20.5_zmin0.0zmax1.0_Lmin-25.0Lmax-20.0: 0.30              188995 vs 270122
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.018431
-DR: 0.22072499999999998
-RR: 0.22086999999999998
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin0.0zmax1.0_Lmax-27.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 4785
-G20.5_zmin1.0zmax2.0_Lmax-20.0: 0.30              453228 vs 648196
+DD: 0.110746
+DR: 4.637876
+RR: 37.018204
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin0.0zmax1.0_Lmin-25.0Lmax-20.0_Planck_MC_b30
+index 5 is out of bounds for axis 0 with size 5
+Pixels masked by MC but not already by selfunc: 365
+G20.5_zmin1.0zmax2.0_Lmin-32.0Lmax-27.0: 0.46              20349 vs 38015
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 11.049214
-DR: 486.653269
-RR: 5446.107611
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin1.0zmax2.0_Lmax-20.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 3840
-G20.5_zmin1.0zmax2.0_Lmax-25.0: 0.33              336125 vs 502242
+DD: 0.012355999999999999
+DR: 0.18595399999999998
+RR: 0.594113
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin1.0zmax2.0_Lmin-32.0Lmax-27.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 1173
+G20.5_zmin1.0zmax2.0_Lmin-27.0Lmax-26.0: 0.39              88880 vs 144714
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 6.112157
-DR: 272.306117
-RR: 2944.258433
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin1.0zmax2.0_Lmax-25.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 1559
-G20.5_zmin1.0zmax2.0_Lmax-26.0: 0.40              110789 vs 185134
+DD: 0.039307
+DR: 1.24825
+RR: 7.40247
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin1.0zmax2.0_Lmin-27.0Lmax-26.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 2268
+G20.5_zmin1.0zmax2.0_Lmin-26.0Lmax-25.0: 0.29              224376 vs 316132
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 1.045757
-DR: 36.873572
-RR: 318.326287
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin1.0zmax2.0_Lmax-26.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 379
-G20.5_zmin1.0zmax2.0_Lmax-27.0: 0.46              20750 vs 38757
+DD: 0.137237
+DR: 6.022711
+RR: 52.452811
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin1.0zmax2.0_Lmin-26.0Lmax-25.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 971
+G20.5_zmin1.0zmax2.0_Lmin-25.0Lmax-20.0: 0.20              119623 vs 149321
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.223957
-DR: 3.1717880000000003
-RR: 13.665359
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin1.0zmax2.0_Lmax-27.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 2764
-G20.5_zmin2.0zmax3.0_Lmax-20.0: 0.28              207602 vs 286508
+DD: 0.058455999999999994
+DR: 2.141183
+RR: 14.020894
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin1.0zmax2.0_Lmin-25.0Lmax-20.0_Planck_MC_b30
+index 5 is out of bounds for axis 0 with size 5
+Pixels masked by MC but not already by selfunc: 1035
+G20.5_zmin2.0zmax3.0_Lmin-32.0Lmax-27.0: 0.37              64134 vs 102196
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 2.751404
-DR: 113.321153
-RR: 1124.41047
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin2.0zmax3.0_Lmax-20.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 2764
-G20.5_zmin2.0zmax3.0_Lmax-25.0: 0.28              207602 vs 286508
+DD: 0.026921
+DR: 0.7999890000000001
+RR: 4.09977
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin2.0zmax3.0_Lmin-32.0Lmax-27.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 1522
+G20.5_zmin2.0zmax3.0_Lmin-27.0Lmax-26.0: 0.24              119349 vs 156795
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 2.753254
-DR: 113.375184
-RR: 1125.077739
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin2.0zmax3.0_Lmax-25.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 2573
-G20.5_zmin2.0zmax3.0_Lmax-26.0: 0.29              184109 vs 259755
+DD: 0.05557000000000001
+DR: 2.063298
+RR: 14.001997
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin2.0zmax3.0_Lmin-27.0Lmax-26.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 199
+G20.5_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0: 0.12              24119 vs 27504
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 2.266826
-DR: 90.215154
-RR: 871.622609
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin2.0zmax3.0_Lmax-26.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 1053
-G20.5_zmin2.0zmax3.0_Lmax-27.0: 0.37              64747 vs 103123
+DD: 0.013699
+DR: 0.163327
+RR: 0.413034
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin2.0zmax3.0_Lmin-26.0Lmax-25.0_Planck_MC_b30
+Random catalog is not computed, do not use output
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin2.0zmax3.0_Lmin-25.0Lmax-20.0: nan              0 vs 0
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/core/fromnumeric.py:3502: RuntimeWarning: Mean of empty slice.
+  return mean(axis=axis, dtype=dtype, out=out, **kwargs)
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/core/_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.5465829999999999
-DR: 14.884311
-RR: 106.690707
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin2.0zmax3.0_Lmax-27.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 307
-G20.5_zmin3.0zmax4.6_Lmax-20.0: 0.23              28043 vs 36458
+min() iterable argument is empty
+index 5 is out of bounds for axis 0 with size 5
+Pixels masked by MC but not already by selfunc: 256
+G20.5_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0: 0.26              21337 vs 28856
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.264133
-DR: 3.92546
-RR: 16.925867
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin3.0zmax4.6_Lmax-20.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 307
-G20.5_zmin3.0zmax4.6_Lmax-25.0: 0.23              28043 vs 36458
+DD: 0.011456
+DR: 0.149606
+RR: 0.43267999999999995
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin3.0zmax4.6_Lmin-32.0Lmax-27.0_Planck_MC_b30
+Pixels masked by MC but not already by selfunc: 49
+G20.5_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0: 0.12              6706 vs 7600
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.26119100000000006
-DR: 3.912532
-RR: 16.964525
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin3.0zmax4.6_Lmax-25.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 307
-G20.5_zmin3.0zmax4.6_Lmax-26.0: 0.23              28043 vs 36458
+DD: 0.0050409999999999995
+DR: 0.035199999999999995
+RR: 0.054986999999999994
+saved to _G20.5_rmin0.001_rmax10.0_nbins30_zmin3.0zmax4.6_Lmin-27.0Lmax-26.0_Planck_MC_b30
+Random catalog is not computed, do not use output
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmin-26.0Lmax-25.0: nan              0 vs 0
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/core/fromnumeric.py:3502: RuntimeWarning: Mean of empty slice.
+  return mean(axis=axis, dtype=dtype, out=out, **kwargs)
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/core/_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.262579
-DR: 4.193207
-RR: 17.140859
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin3.0zmax4.6_Lmax-26.0_Planck_MC_b30
-Pixels masked by MC but not already by selfunc: 259
-G20.5_zmin3.0zmax4.6_Lmax-27.0: 0.26              21433 vs 28981
+min() iterable argument is empty
+Random catalog is not computed, do not use output
+Pixels masked by MC but not already by selfunc: 0
+G20.5_zmin3.0zmax4.6_Lmin-25.0Lmax-20.0: nan              0 vs 0
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/core/fromnumeric.py:3502: RuntimeWarning: Mean of empty slice.
+  return mean(axis=axis, dtype=dtype, out=out, **kwargs)
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/numpy/core/_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
 /home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/Corrfunc/utils.py:918: UserWarning: One or more input array has non-native endianness!  A copy will be made with the correct endianness.
   warnings.warn("One or more input array has non-native endianness!  A copy will"\
-DD: 0.20461400000000007
-DR: 2.764963
-RR: 10.306687
-saved to _G20.5_rmin0.001_rmax10.0_nbins24_zmin3.0zmax4.6_Lmax-27.0_Planck_MC_b30
+min() iterable argument is empty
+index 5 is out of bounds for axis 0 with size 5
 done!
-Exception ignored in: <function Cosmology.__del__ at 0x7fedfe319760>
+Exception ignored in: <function Cosmology.__del__ at 0x7f14abfd5800>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
 TypeError: 'NoneType' object is not callable

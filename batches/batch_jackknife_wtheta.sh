@@ -20,4 +20,9 @@ conda activate pyccl-env
 # python -u jackknife.py wtheta 20.5 0.001 10 20 log --L minmax 50 --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 
 # python -u jackknife.py wtheta 20.5 0.001 10 30 log --L_method minmax 50 --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 
 # python -u jackknife.py wtheta 20.5 0.001 10 30 log --L_method max 50 --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 
-python -u jackknife.py wtheta 20.5 0.001 10 24 log --L_method max 50 --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 
+# python -u jackknife.py wtheta 20.5 0.001 10 24 log --L_method max 50 --b 30 Planck --z_bins 0.0 1.0 2.0 3.0 4.6 
+
+# G=20.5
+b=30
+L_method='minmax'
+python -u jackknife.py wtheta 20.5 0.001 10 30 log --L_method ${L_method} 50 --b ${b} Planck --z_bins 0.0 1.0 2.0 3.0 4.6

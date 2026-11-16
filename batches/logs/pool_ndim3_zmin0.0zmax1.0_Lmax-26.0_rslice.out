@@ -1,13 +1,130 @@
 Starting batch job
 
-/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
-  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
-Traceback (most recent call last):
-  File "/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py", line 60, in <module>
-    theta_mask=(quaia.recenter(np.log10(thetabins))>=np.log10(args.thetamin)) & (quaia.recenter(np.log10(thetabins))<=log_thetamax)
-                                                              ^^^^
-NameError: name 'args' is not defined
-Exception ignored in: <function Cosmology.__del__ at 0x7f2489ddc680>
+Pixels masked by MC but not already by selfunc: 131
+G20.5_zmin0.0zmax1.0_Lmax-26.0: 0.52              6079 vs 12557
+
+Running new sampler...
+
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+0it [00:00, ?it/s]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+1it [00:00,  1.28it/s, bound: 0 | nc: 1 | ncall: 501 | eff(%):  0.200 | loglstar:   -inf < -3017.754 <    inf | logz: -3024.664 +/-  0.117 | dlogz:    inf >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+46it [00:01, 36.80it/s, bound: 0 | nc: 2 | ncall: 550 | eff(%):  8.364 | loglstar:   -inf < -305.730 <    inf | logz: -312.450 +/-  0.110 | dlogz: 305.080 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+92it [00:02, 55.43it/s, bound: 0 | nc: 2 | ncall: 602 | eff(%): 15.282 | loglstar:   -inf < -237.315 <    inf | logz: -243.580 +/-  0.107 | dlogz: 235.398 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+137it [00:02, 79.10it/s, bound: 0 | nc: 1 | ncall: 661 | eff(%): 20.726 | loglstar:   -inf < -141.984 <    inf | logz: -147.657 +/-  0.103 | dlogz: 138.718 >  0.010]182it [00:02, 98.83it/s, bound: 0 | nc: 1 | ncall: 719 | eff(%): 25.313 | loglstar:   -inf < -61.303 <    inf | logz: -68.531 +/-  0.119 | dlogz: 62.848 >  0.010]   229it [00:02, 104.42it/s, bound: 0 | nc: 2 | ncall: 784 | eff(%): 29.209 | loglstar:   -inf < -19.862 <    inf | logz: -26.611 +/-  0.106 | dlogz: 18.069 >  0.010]276it [00:03, 108.72it/s, bound: 0 | nc: 1 | ncall: 857 | eff(%): 32.205 | loglstar:   -inf < -12.836 <    inf | logz: -16.721 +/-  0.081 | dlogz:  7.088 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+323it [00:04, 91.69it/s, bound: 0 | nc: 1 | ncall: 945 | eff(%): 34.180 | loglstar:   -inf < -12.552 <    inf | logz: -15.283 +/-  0.071 | dlogz:  5.518 >  0.010] /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+371it [00:04, 77.63it/s, bound: 0 | nc: 3 | ncall: 1042 | eff(%): 35.605 | loglstar:   -inf < -12.522 <    inf | logz: -14.725 +/-  0.064 | dlogz:  4.860 >  0.010]/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+/oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts/sample.py:166: RuntimeWarning: invalid value encountered in power
+  n_m = fduty*((bins_m-M0)/M1)**alpha
+414it [00:05, 64.28it/s, bound: 0 | nc: 3 | ncall: 1135 | eff(%): 36.476 | loglstar:   -inf < -12.493 <    inf | logz: -14.417 +/-  0.060 | dlogz:  4.468 >  0.010]461it [00:06, 54.93it/s, bound: 0 | nc: 2 | ncall: 1243 | eff(%): 37.088 | loglstar:   -inf < -12.446 <    inf | logz: -14.175 +/-  0.056 | dlogz:  4.135 >  0.010]507it [00:07, 57.86it/s, bound: 0 | nc: 6 | ncall: 1360 | eff(%): 37.279 | loglstar:   -inf < -12.397 <    inf | logz: -13.992 +/-  0.053 | dlogz:  3.867 >  0.010]551it [00:08, 49.64it/s, bound: 0 | nc: 4 | ncall: 1493 | eff(%): 36.906 | loglstar:   -inf < -12.324 <    inf | logz: -13.846 +/-  0.051 | dlogz:  3.639 >  0.010]597it [00:10, 45.10it/s, bound: 0 | nc: 1 | ncall: 1640 | eff(%): 36.402 | loglstar:   -inf < -12.264 <    inf | logz: -13.717 +/-  0.049 | dlogz:  3.424 >  0.010]642it [00:11, 43.39it/s, bound: 0 | nc: 1 | ncall: 1790 | eff(%): 35.866 | loglstar:   -inf < -12.208 <    inf | logz: -13.609 +/-  0.047 | dlogz:  3.234 >  0.010]688it [00:13, 34.73it/s, bound: 0 | nc: 8 | ncall: 1962 | eff(%): 35.066 | loglstar:   -inf < -12.134 <    inf | logz: -13.511 +/-  0.046 | dlogz:  3.052 >  0.010]734it [00:14, 37.11it/s, bound: 0 | nc: 1 | ncall: 2212 | eff(%): 33.183 | loglstar:   -inf < -12.060 <    inf | logz: -13.424 +/-  0.045 | dlogz:  2.882 >  0.010]779it [00:15, 32.21it/s, bound: 0 | nc: 6 | ncall: 2416 | eff(%): 32.243 | loglstar:   -inf < -11.979 <    inf | logz: -13.346 +/-  0.044 | dlogz:  2.724 >  0.010]826it [00:17, 32.81it/s, bound: 0 | nc: 1 | ncall: 2636 | eff(%): 31.335 | loglstar:   -inf < -11.895 <    inf | logz: -13.272 +/-  0.043 | dlogz:  2.568 >  0.010]873it [00:19, 30.98it/s, bound: 0 | nc: 14 | ncall: 2908 | eff(%): 30.021 | loglstar:   -inf < -11.809 <    inf | logz: -13.203 +/-  0.042 | dlogz:  2.418 >  0.010]920it [00:21, 24.63it/s, bound: 0 | nc: 14 | ncall: 3184 | eff(%): 28.894 | loglstar:   -inf < -11.721 <    inf | logz: -13.139 +/-  0.041 | dlogz:  2.276 >  0.010]966it [00:25, 20.44it/s, bound: 0 | nc: 3 | ncall: 3513 | eff(%): 27.498 | loglstar:   -inf < -11.592 <    inf | logz: -13.080 +/-  0.041 | dlogz:  2.143 >  0.010] 1011it [00:28, 18.26it/s, bound: 0 | nc: 16 | ncall: 3865 | eff(%): 26.158 | loglstar:   -inf < -11.485 <    inf | logz: -13.023 +/-  0.040 | dlogz:  2.014 >  0.010]1055it [00:30, 19.33it/s, bound: 0 | nc: 28 | ncall: 4264 | eff(%): 24.742 | loglstar:   -inf < -11.368 <    inf | logz: -12.970 +/-  0.040 | dlogz:  1.893 >  0.010]1100it [00:32, 18.70it/s, bound: 0 | nc: 9 | ncall: 4597 | eff(%): 23.929 | loglstar:   -inf < -11.235 <    inf | logz: -12.916 +/-  0.040 | dlogz:  1.773 >  0.010] 1146it [00:35, 17.43it/s, bound: 0 | nc: 4 | ncall: 4980 | eff(%): 23.012 | loglstar:   -inf < -11.118 <    inf | logz: -12.862 +/-  0.040 | dlogz:  1.653 >  0.010]1193it [00:38, 17.27it/s, bound: 0 | nc: 19 | ncall: 5434 | eff(%): 21.954 | loglstar:   -inf < -11.011 <    inf | logz: -12.809 +/-  0.040 | dlogz:  1.536 >  0.010]1239it [00:42, 14.62it/s, bound: 0 | nc: 4 | ncall: 5853 | eff(%): 21.169 | loglstar:   -inf < -10.859 <    inf | logz: -12.758 +/-  0.040 | dlogz:  1.426 >  0.010] 1286it [00:48, 11.96it/s, bound: 0 | nc: 17 | ncall: 6330 | eff(%): 20.316 | loglstar:   -inf < -10.731 <    inf | logz: -12.706 +/-  0.040 | dlogz:  1.317 >  0.010]1332it [00:53, 10.72it/s, bound: 0 | nc: 1 | ncall: 7067 | eff(%): 18.848 | loglstar:   -inf < -10.606 <    inf | logz: -12.656 +/-  0.040 | dlogz:  1.215 >  0.010] 1376it [00:59,  9.37it/s, bound: 0 | nc: 10 | ncall: 7802 | eff(%): 17.637 | loglstar:   -inf < -10.485 <    inf | logz: -12.609 +/-  0.040 | dlogz:  1.122 >  0.010]1423it [01:07,  8.11it/s, bound: 0 | nc: 18 | ncall: 8656 | eff(%): 16.439 | loglstar:   -inf < -10.339 <    inf | logz: -12.559 +/-  0.041 | dlogz:  1.027 >  0.010]1469it [01:14,  7.63it/s, bound: 0 | nc: 18 | ncall: 9693 | eff(%): 15.155 | loglstar:   -inf < -10.215 <    inf | logz: -12.510 +/-  0.041 | dlogz:  0.939 >  0.010]1516it [01:24,  6.33it/s, bound: 0 | nc: 10 | ncall: 10771 | eff(%): 14.075 | loglstar:   -inf < -10.100 <    inf | logz: -12.461 +/-  0.042 | dlogz:  0.855 >  0.010]1563it [01:32,  6.25it/s, bound: 0 | nc: 6 | ncall: 12321 | eff(%): 12.686 | loglstar:   -inf < -9.997 <    inf | logz: -12.414 +/-  0.042 | dlogz:  0.776 >  0.010]  1605it [01:42,  5.52it/s, bound: 0 | nc: 35 | ncall: 13346 | eff(%): 12.026 | loglstar:   -inf < -9.920 <    inf | logz: -12.373 +/-  0.043 | dlogz:  0.711 >  0.010]1650it [01:58,  4.22it/s, bound: 0 | nc: 40 | ncall: 14769 | eff(%): 11.172 | loglstar:   -inf < -9.842 <    inf | logz: -12.332 +/-  0.043 | dlogz:  0.646 >  0.010]1695it [02:11,  4.03it/s, bound: 0 | nc: 8 | ncall: 16107 | eff(%): 10.523 | loglstar:   -inf < -9.771 <    inf | logz: -12.293 +/-  0.044 | dlogz:  0.587 >  0.010] 1742it [02:14,  5.19it/s, bound: 1 | nc: 31 | ncall: 17782 | eff(%):  9.796 | loglstar:   -inf < -9.700 <    inf | logz: -12.254 +/-  0.044 | dlogz:  0.530 >  0.010]1788it [02:17,  6.44it/s, bound: 1 | nc: 29 | ncall: 19171 | eff(%):  9.327 | loglstar:   -inf < -9.637 <    inf | logz: -12.219 +/-  0.045 | dlogz:  0.480 >  0.010]1830it [02:20,  7.48it/s, bound: 1 | nc: 29 | ncall: 20644 | eff(%):  8.865 | loglstar:   -inf < -9.563 <    inf | logz: -12.189 +/-  0.045 | dlogz:  0.438 >  0.010]1878it [02:24,  8.80it/s, bound: 2 | nc: 32 | ncall: 22159 | eff(%):  8.475 | loglstar:   -inf < -9.513 <    inf | logz: -12.156 +/-  0.046 | dlogz:  0.394 >  0.010]1924it [02:28,  9.50it/s, bound: 2 | nc: 36 | ncall: 23721 | eff(%):  8.111 | loglstar:   -inf < -9.476 <    inf | logz: -12.127 +/-  0.046 | dlogz:  0.356 >  0.010]1971it [02:31, 10.54it/s, bound: 3 | nc: 32 | ncall: 25273 | eff(%):  7.799 | loglstar:   -inf < -9.438 <    inf | logz: -12.099 +/-  0.046 | dlogz:  0.321 >  0.010]2016it [02:34, 11.49it/s, bound: 3 | nc: 21 | ncall: 26847 | eff(%):  7.509 | loglstar:   -inf < -9.398 <    inf | logz: -12.075 +/-  0.047 | dlogz:  0.291 >  0.010]2063it [02:37, 12.38it/s, bound: 4 | nc: 32 | ncall: 28352 | eff(%):  7.276 | loglstar:   -inf < -9.362 <    inf | logz: -12.052 +/-  0.047 | dlogz:  0.263 >  0.010]2110it [02:40, 13.38it/s, bound: 4 | nc: 31 | ncall: 29905 | eff(%):  7.056 | loglstar:   -inf < -9.334 <    inf | logz: -12.030 +/-  0.047 | dlogz:  0.237 >  0.010]2157it [02:43, 13.51it/s, bound: 5 | nc: 30 | ncall: 31415 | eff(%):  6.866 | loglstar:   -inf < -9.309 <    inf | logz: -12.011 +/-  0.047 | dlogz:  0.214 >  0.010]2203it [02:47, 13.57it/s, bound: 5 | nc: 27 | ncall: 32914 | eff(%):  6.693 | loglstar:   -inf < -9.284 <    inf | logz: -11.993 +/-  0.048 | dlogz:  0.194 >  0.010]2249it [02:50, 13.57it/s, bound: 5 | nc: 38 | ncall: 34412 | eff(%):  6.536 | loglstar:   -inf < -9.264 <    inf | logz: -11.977 +/-  0.048 | dlogz:  0.176 >  0.010]2295it [02:55, 11.79it/s, bound: 6 | nc: 33 | ncall: 35917 | eff(%):  6.390 | loglstar:   -inf < -9.248 <    inf | logz: -11.962 +/-  0.048 | dlogz:  0.159 >  0.010]2340it [02:59, 12.24it/s, bound: 6 | nc: 30 | ncall: 37467 | eff(%):  6.245 | loglstar:   -inf < -9.233 <    inf | logz: -11.949 +/-  0.048 | dlogz:  0.145 >  0.010]2387it [03:02, 12.99it/s, bound: 7 | nc: 35 | ncall: 39045 | eff(%):  6.113 | loglstar:   -inf < -9.223 <    inf | logz: -11.936 +/-  0.048 | dlogz:  0.131 >  0.010]2433it [03:06, 12.59it/s, bound: 7 | nc: 25 | ncall: 40547 | eff(%):  6.000 | loglstar:   -inf < -9.207 <    inf | logz: -11.925 +/-  0.048 | dlogz:  0.119 >  0.010]2480it [03:09, 13.02it/s, bound: 8 | nc: 29 | ncall: 42066 | eff(%):  5.895 | loglstar:   -inf < -9.199 <    inf | logz: -11.914 +/-  0.049 | dlogz:  0.108 >  0.010]2524it [03:12, 13.01it/s, bound: 8 | nc: 27 | ncall: 43574 | eff(%):  5.792 | loglstar:   -inf < -9.189 <    inf | logz: -11.905 +/-  0.049 | dlogz:  0.098 >  0.010]2571it [03:16, 13.43it/s, bound: 9 | nc: 32 | ncall: 45102 | eff(%):  5.700 | loglstar:   -inf < -9.183 <    inf | logz: -11.897 +/-  0.049 | dlogz:  0.089 >  0.010]2618it [03:19, 13.89it/s, bound: 9 | nc: 30 | ncall: 46620 | eff(%):  5.616 | loglstar:   -inf < -9.175 <    inf | logz: -11.889 +/-  0.049 | dlogz:  0.081 >  0.010]2662it [03:22, 13.82it/s, bound: 10 | nc: 34 | ncall: 48153 | eff(%):  5.528 | loglstar:   -inf < -9.171 <    inf | logz: -11.882 +/-  0.049 | dlogz:  0.074 >  0.010]2707it [03:26, 13.40it/s, bound: 10 | nc: 33 | ncall: 49716 | eff(%):  5.445 | loglstar:   -inf < -9.166 <    inf | logz: -11.876 +/-  0.049 | dlogz:  0.067 >  0.010]2755it [03:29, 13.58it/s, bound: 11 | nc: 26 | ncall: 51275 | eff(%):  5.373 | loglstar:   -inf < -9.161 <    inf | logz: -11.869 +/-  0.049 | dlogz:  0.061 >  0.010]2801it [03:32, 13.54it/s, bound: 11 | nc: 35 | ncall: 52778 | eff(%):  5.307 | loglstar:   -inf < -9.159 <    inf | logz: -11.864 +/-  0.049 | dlogz:  0.055 >  0.010]2849it [03:36, 13.69it/s, bound: 11 | nc: 32 | ncall: 54270 | eff(%):  5.250 | loglstar:   -inf < -9.155 <    inf | logz: -11.859 +/-  0.049 | dlogz:  0.050 >  0.010]2895it [03:39, 13.37it/s, bound: 12 | nc: 35 | ncall: 55732 | eff(%):  5.195 | loglstar:   -inf < -9.153 <    inf | logz: -11.855 +/-  0.049 | dlogz:  0.046 >  0.010]2942it [03:43, 13.75it/s, bound: 12 | nc: 33 | ncall: 57335 | eff(%):  5.131 | loglstar:   -inf < -9.151 <    inf | logz: -11.850 +/-  0.049 | dlogz:  0.042 >  0.010]2990it [03:46, 13.63it/s, bound: 13 | nc: 34 | ncall: 58854 | eff(%):  5.080 | loglstar:   -inf < -9.149 <    inf | logz: -11.847 +/-  0.049 | dlogz:  0.038 >  0.010]3037it [03:49, 13.92it/s, bound: 13 | nc: 33 | ncall: 60398 | eff(%):  5.028 | loglstar:   -inf < -9.148 <    inf | logz: -11.843 +/-  0.049 | dlogz:  0.034 >  0.010]3084it [03:53, 14.18it/s, bound: 14 | nc: 38 | ncall: 61946 | eff(%):  4.979 | loglstar:   -inf < -9.146 <    inf | logz: -11.840 +/-  0.049 | dlogz:  0.031 >  0.010]3129it [03:56, 14.07it/s, bound: 14 | nc: 33 | ncall: 63600 | eff(%):  4.920 | loglstar:   -inf < -9.145 <    inf | logz: -11.838 +/-  0.049 | dlogz:  0.028 >  0.010]3176it [03:59, 14.40it/s, bound: 15 | nc: 33 | ncall: 65160 | eff(%):  4.874 | loglstar:   -inf < -9.144 <    inf | logz: -11.835 +/-  0.049 | dlogz:  0.026 >  0.010]3220it [04:02, 14.25it/s, bound: 15 | nc: 34 | ncall: 66679 | eff(%):  4.829 | loglstar:   -inf < -9.143 <    inf | logz: -11.833 +/-  0.049 | dlogz:  0.024 >  0.010]3264it [04:05, 14.57it/s, bound: 16 | nc: 30 | ncall: 68174 | eff(%):  4.788 | loglstar:   -inf < -9.142 <    inf | logz: -11.831 +/-  0.049 | dlogz:  0.022 >  0.010]3310it [04:09, 13.87it/s, bound: 16 | nc: 32 | ncall: 69609 | eff(%):  4.755 | loglstar:   -inf < -9.142 <    inf | logz: -11.829 +/-  0.049 | dlogz:  0.020 >  0.010]3356it [04:12, 14.36it/s, bound: 16 | nc: 38 | ncall: 71098 | eff(%):  4.720 | loglstar:   -inf < -9.141 <    inf | logz: -11.827 +/-  0.049 | dlogz:  0.018 >  0.010]3403it [04:15, 14.18it/s, bound: 17 | nc: 32 | ncall: 72597 | eff(%):  4.688 | loglstar:   -inf < -9.141 <    inf | logz: -11.826 +/-  0.050 | dlogz:  0.016 >  0.010]3451it [04:18, 14.71it/s, bound: 17 | nc: 31 | ncall: 74179 | eff(%):  4.652 | loglstar:   -inf < -9.140 <    inf | logz: -11.824 +/-  0.050 | dlogz:  0.015 >  0.010]3497it [04:21, 14.58it/s, bound: 18 | nc: 28 | ncall: 75686 | eff(%):  4.620 | loglstar:   -inf < -9.140 <    inf | logz: -11.823 +/-  0.050 | dlogz:  0.014 >  0.010]3543it [04:24, 15.07it/s, bound: 18 | nc: 30 | ncall: 77224 | eff(%):  4.588 | loglstar:   -inf < -9.139 <    inf | logz: -11.822 +/-  0.050 | dlogz:  0.012 >  0.010]3589it [04:27, 15.02it/s, bound: 19 | nc: 36 | ncall: 78724 | eff(%):  4.559 | loglstar:   -inf < -9.139 <    inf | logz: -11.821 +/-  0.050 | dlogz:  0.011 >  0.010]3635it [04:30, 14.95it/s, bound: 19 | nc: 34 | ncall: 80269 | eff(%):  4.529 | loglstar:   -inf < -9.138 <    inf | logz: -11.820 +/-  0.050 | dlogz:  0.010 >  0.010]3647it [04:30, 13.47it/s, +500 | bound: 19 | nc: 1 | ncall: 81136 | eff(%):  5.143 | loglstar:   -inf < -9.134 <    inf | logz: -11.809 +/-  0.050 | dlogz:  0.000 >  0.010]
+
+Summary
+=======
+nlive: 500
+niter: 3647
+ncall: 80636
+eff(%):  5.143
+logz: -11.809 +/-  0.052
+kld = 0.283 +/- 0.153
+
+Plotting...
+
+log10(M_min): 14.76 + 0.85/-1.36
+alpha: 2.14 + 1.28/-1.35
+Sigma: 0.56 + 0.34/-0.25
+
+Success! Saved to ../results/*_G20.5_logrmin-2.0_logrmax0.0_nbins16_zmin0.0zmax1.0_Lmax-26.0_Planck_ndim3_dlogz0.01_nlive500_rslice.npy :)
+
+Exception ignored in: <function Cosmology.__del__ at 0x7fc327105ee0>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
+TypeError: 'NoneType' object is not callable
+Exception ignored in: <function Pk2D.__del__ at 0x7fc327ed2b60>
+Traceback (most recent call last):
+  File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
 TypeError: 'NoneType' object is not callable

@@ -1,14 +1,17 @@
 Starting batch job
 
+Matplotlib is building the font cache; this may take a moment.
+/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/mcfit/kernels.py:10: SyntaxWarning: invalid escape sequence '\l'
+  """Real deriv is wrt :math:`t`, complex deriv is wrt :math:`\ln t`"""
 Pixels masked by MC but not already by selfunc: 40
 G20.5_zmin0.0zmax1.0_Lmax-27.0: 0.60              776 vs 1922
 
 Skipping this bin, only 776 quasars!
-Exception ignored in: <function Cosmology.__del__ at 0x7fc291fa5f80>
+Exception ignored in: <function Cosmology.__del__ at 0x7f6f7b2f16c0>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/cosmology.py", line 464, in __del__
 TypeError: 'NoneType' object is not callable
-Exception ignored in: <function Pk2D.__del__ at 0x7fc292d76c00>
+Exception ignored in: <function Pk2D.__del__ at 0x7f6f7b41a0c0>
 Traceback (most recent call last):
   File "/home/groups/tabel/mahlet/pyccl-env/lib/python3.12/site-packages/pyccl/pk2d.py", line 345, in __del__
 TypeError: 'NoneType' object is not callable
