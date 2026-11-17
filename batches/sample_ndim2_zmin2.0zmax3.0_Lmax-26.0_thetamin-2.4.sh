@@ -12,4 +12,7 @@ source /home/users/mahlet/miniconda3/etc/profile.d/conda.sh
 cd /oak/stanford/orgs/kipac/users/mahlet/quaia_bias/scripts
 conda activate pyccl-env
 
-python -u sample.py 2 2.0 3.0 -26.0 --plot --log_thetamin -2.4
+# python -u sample.py 2 2.0 3.0 -26.0 --plot --log_thetamin -2.4
+python -u sampler.py 2 2.0 3.0 -26.0 --plot --dlogz 0.001 --nlive 1500 --log_thetamin -2.4
+python -u sampler.py 2 2.0 3.0 -26.0 --plot --dlogz 0.001 --nlive 1500 --log_thetamin -2.4 --diag
+

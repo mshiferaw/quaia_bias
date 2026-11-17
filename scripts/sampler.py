@@ -210,7 +210,7 @@ def P_1h(bins, a, n_g, ndim, params_n_m = None, params_HOD = None, k = k_log, co
 
     return P_qq_1h/n_g #**2
  
-def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, k = k_log, recenter = False, theta_mask = False, cosmo = cosmo_planck18, hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = True, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method #theta_mask = theta_mask, #thetabins = thetabins
+def wtheta_2h_dynesty_old(bins, H0_c_dN_dz, params_HOD, ndim, k = k_log, recenter = False, theta_mask = False, cosmo = cosmo_planck18, hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = True, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method #theta_mask = theta_mask, #thetabins = thetabins
                       NFW_200c = NFW_200c, P_mm = P_mm, da = da, rpbins = rpbins, dz = dz, d_hmf = d_hmf, d_b1 = d_b1, d_NFW = d_NFW, one_halo = True, two_halo = True, b_z = None): #, return_b_q = False): #, k_integral = np.empty(np.shape(rpbins.T)), z_integrand = np.empty(np.shape(rpbins.T))):
 
     # compute for each z... for statement?
@@ -263,6 +263,57 @@ def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, k = k_log, recenter = 
     #     return b_q
         
     # return (np.trapz(z_integrand, dz, axis = 0)).value
+    return np.trapz(z_integrand, dz, axis = 0)
+
+# fix bug...
+def wtheta_2h_dynesty(bins, H0_c_dN_dz, params_HOD, ndim, k = k_log, recenter = False, theta_mask = False, cosmo = cosmo_planck18, hankel = mcfit.Hankel(k_log, lowring = True), recenter_thetabins = True, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, #method = method #theta_mask = theta_mask, #thetabins = thetabins
+                      NFW_200c = NFW_200c, P_mm = P_mm, da = da, rpbins = rpbins, dz = dz, d_hmf = d_hmf, d_b1 = d_b1, d_NFW = d_NFW, one_halo = True, two_halo = True, b_z = None): #, return_b_q = False): #, k_integral = np.empty(np.shape(rpbins.T)), z_integrand = np.empty(np.shape(rpbins.T))):
+
+    # compute for each z... for statement?
+    b_q, P_qq = [], [] #k_integral #, []
+    fduty, M_min, sigma, M1, alpha = params_HOD
+    for i, a in enumerate(da):
+        
+        n_m, n_c, n_s = HOD_2h(bins, M_min, fduty, sigma, a, M1, alpha, ndim, cosmo = cosmo, k = k, NFW_200c = NFW_200c, d_NFW = d_NFW[i]) #, recenter = recenter)
+    
+        n_g = bias(bins, n_c+n_s, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, 
+                               b1_E_tinker = np.ones(np.shape(bins)), calc_bias = False, units = '1/Mpc^3', d_hmf = d_hmf[i], d_b1 = d_b1[i])
+
+        if b_z is None:
+            b_z_i, _ = bias(bins, n_m, a, cosmo, recenter = recenter, hmf = hmf, b1_E_func_tinker10 = b1_E_func_tinker10, n_g_manual = n_g, units = '1/Mpc^3', d_hmf = d_hmf[i], d_b1 = d_b1[i])
+        else:
+            b_z_i = b_z
+
+        if (one_halo == False) and (two_halo == True):
+            
+            P_qq.append(b_z_i**2*P_mm[i]*u.Mpc**3)
+
+        elif (one_halo == True) and (two_halo == False):
+            P_qq.append(P_1h(bins, a, n_g, ndim, params_HOD = params_HOD, k = k, cosmo = cosmo, recenter = recenter, hmf = hmf, 
+                            b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, d_hmf = d_hmf[i], d_b1 = d_b1[i], d_NFW = d_NFW[i]))
+
+        else:
+            P_qq_2h = b_z_i**2*P_mm[i]*u.Mpc**3
+            P_qq_1h = P_1h(bins, a, n_g, ndim, params_HOD = params_HOD, k = k, cosmo = cosmo, recenter = recenter, hmf = hmf, 
+                                b1_E_func_tinker10 = b1_E_func_tinker10, NFW_200c = NFW_200c, d_hmf = d_hmf[i], d_b1 = d_b1[i], d_NFW = d_NFW[i]) #n_c, n_s
+            P_qq.append(P_qq_2h + P_qq_1h)
+            
+        b_q.append(b_z_i)
+
+    rpbins_k, wp_k = hankel(np.array(P_qq)/(2*np.pi))
+    
+    if recenter_thetabins == True:
+        rp = quaia.recenter(rpbins.value)
+
+    else:
+        rp = rpbins.value
+
+    if isinstance(theta_mask, bool):
+        theta_mask = np.full_like(rp[:,0], True, dtype = bool)
+
+    k_integral = [np.interp(rp[theta_mask][:,i], rpbins_k, wp_k[i]) for i in range(len(dz))]
+    z_integrand = H0_c_dN_dz[:, None] * k_integral
+    
     return np.trapz(z_integrand, dz, axis = 0)
         
 def log_det(C, ix_grid):  
@@ -402,7 +453,7 @@ def main():
         diag = '_diag'
     else:
         diag = ''
-    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}{}_dlogz{}_nlive{}_{}_fsat{}_frac{}{}'.format(G_hi, args.log_thetamin, log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, sigma, args.dlogz, args.nlive, args.sample, args.fsat, args.frac, diag) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
+    file = '_G{}_logrmin{}_logrmax{}_nbins{}_zmin{}zmax{}_Lmax{}_{}_ndim{}{}_dlogz{}_nlive{}_{}_fsat{}_frac{}{}_bias'.format(G_hi, args.log_thetamin, log_thetamax, nbins_mask, args.zmin, args.zmax, args.Lmax, cosmo, args.ndim, sigma, args.dlogz, args.nlive, args.sample, args.fsat, args.frac, diag) #_N{}_{}_MC_b{}, N_jk, b) #z_bins[args.j], z_bins[args.j+1], 
     
     try:
 
